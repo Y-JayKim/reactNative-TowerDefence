@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default class SignUpScreen extends Component {
+export default class CollectionScreen extends Component {
 
     constructor() {
         super();
@@ -14,8 +14,7 @@ export default class SignUpScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-            <Text style={styles.text}>Sign Up</Text>
-            <Text style={{top:100}}>This page is currently not available. Please just click login</Text>
+            	<Text style={styles.text}>Collection</Text>
             </View>
         )
     }

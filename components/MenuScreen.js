@@ -10,12 +10,12 @@ export default class MenuScreen extends Component {
                 <Text style={styles.text}>Menu</Text>
                 <TouchableHighlight
                      style={[styles.button, {top:100}]}
-                     onPress={()=>console.log('button clicked')}>
+                     onPress={()=>{this.props.navigation.navigate('Map');}}>
                      <Text>Find an Airplane</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
                      style={[styles.button, {top:150}]}
-                     onPress={()=>console.log('button clicked')}>
+                     onPress={()=>{this.props.navigation.navigate('Collection');}}>
                      <Text>Collection</Text>
                 </TouchableHighlight>
                 <TouchableHighlight

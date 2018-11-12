@@ -6,7 +6,8 @@ import HomeScreen from './components/HomeScreen';
 import SignInScreen from './components/SignInScreen';
 import SignUpScreen from './components/SignUpScreen';
 import MenuScreen from './components/MenuScreen';
-
+import MapScreen from './components/MapScreen';
+import CollectionScreen from './components/CollectionScreen';
 
 const RootStack = createStackNavigator(
   {
@@ -21,6 +22,12 @@ const RootStack = createStackNavigator(
     },
     Menu: {
       screen: MenuScreen
+    },
+    Map: {
+      screen: MapScreen
+    },
+    Collection: {
+      screen: CollectionScreen
     }
   },
   {
