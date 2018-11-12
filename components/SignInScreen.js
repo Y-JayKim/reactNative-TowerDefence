@@ -51,12 +51,12 @@ export default class SignInScreen extends Component {
                 />
                 <TouchableHighlight
                      style={styles.button}
-                     onPress={()=>{this.props.navigation.navigate('Menu');}}>
+                     onPress={()=>{this.props.navigation.navigate('Menu', {theUser:'user'});}}>
                      <Text>Sign In</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
                      style={{top:270}}
-                     onPress={()=>console.log("Forgot Password?")}>
+                     onPress={()=>alert('Too Bad')}>
                      <Text>Forgot Password?</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     top:80,
     height: 40,
     width:200, 
-
     borderColor: 'gray', 
     borderWidth: 1
   },

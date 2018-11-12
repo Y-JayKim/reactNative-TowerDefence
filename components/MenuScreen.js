@@ -4,7 +4,18 @@ import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 export default class MenuScreen extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+        }
+    }
+
+    static navigationOptions = {title: 'Menu'};
+  
     render() {
+        const { navigation } = this.props;
+        const user = navigation.getParam('theUser', 'guest');
+
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>Menu</Text>
@@ -13,11 +24,13 @@ export default class MenuScreen extends Component {
                      onPress={()=>{this.props.navigation.navigate('Map');}}>
                      <Text>Find an Airplane</Text>
                 </TouchableHighlight>
-                <TouchableHighlight
+                
+                {user != 'guest' && <TouchableHighlight
                      style={[styles.button, {top:150}]}
                      onPress={()=>{this.props.navigation.navigate('Collection');}}>
                      <Text>Collection</Text>
-                </TouchableHighlight>
+                </TouchableHighlight>}
+                
                 <TouchableHighlight
                      style={[styles.button, {top:200}]}
                      onPress={()=>console.log('button clicked')}>

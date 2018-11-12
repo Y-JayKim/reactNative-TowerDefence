@@ -36,6 +36,17 @@ const RootStack = createStackNavigator(
 );
 
 export default class App extends React.Component {
+
+  static navigationOptions = {
+        headerStyle: {
+            backgroundColor: '#f4511e'
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold'
+        }
+  };
+
   render() {
     return <RootStack />;
   }

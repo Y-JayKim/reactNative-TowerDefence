@@ -8,6 +8,17 @@ export default class HomeScreen extends React.Component {
         }
     }
 
+    static navigationOptions = {
+        title: 'Home',
+        headerStyle: {
+            backgroundColor: '#f4511e'
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold'
+        }
+    };
+
     render() {
         return (
             <View style={styles.container}>
@@ -27,7 +38,7 @@ export default class HomeScreen extends React.Component {
                 
                 <TouchableHighlight
                  style={styles.guestButton}
-                 onPress={()=>console.log("Clicked")}>
+                 onPress={()=>{this.props.navigation.navigate('Menu',{theUser:'guest'});}}>
                  <Text style={styles.buttonText}> Sign In as a Guest </Text>
                 </TouchableHighlight>
 
