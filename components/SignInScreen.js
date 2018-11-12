@@ -55,14 +55,19 @@ export default class SignInScreen extends Component {
                      <Text>Sign In</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
-                     style={{top:270}}
-                     onPress={()=>alert('Too Bad')}>
-                     <Text>Forgot Password?</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
-                     style={{top:200, height:40, width: 230}}
+                     style={{top:210}}
                      onPress={()=>console.log("Sign In with Google")}>
                      <Image style={styles.image} source={require('../assets/google.png')}/>
+                </TouchableHighlight>
+                <TouchableHighlight
+                     style={{top:220}}
+                     onPress={()=>console.log("Sign In with Facebook")}>
+                     <Image style={styles.image} source={require('../assets/facebook.png')}/>
+                </TouchableHighlight>
+                <TouchableHighlight
+                     style={{top:230}}
+                     onPress={()=>alert('Too Bad')}>
+                     <Text>Forgot Password?</Text>
                 </TouchableHighlight>
             </View>
         )
@@ -96,7 +101,9 @@ const styles = StyleSheet.create({
   image:{
     width:"100%",
     height:"100%",
-    resizeMode: 'contain'
+    resizeMode: 'contain', 
+    height:40, 
+    width: 230
   },
   text:{
     fontSize:30,
