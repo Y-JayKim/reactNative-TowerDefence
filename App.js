@@ -3,13 +3,30 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import HomeScreen from './components/HomeScreen';
-// import SecondScreen from './components/SecondScreen';
+import SignInScreen from './components/SignInScreen';
+import SignUpScreen from './components/SignUpScreen';
+import MenuScreen from './components/MenuScreen';
 
-const RootStack = createStackNavigator({
-  Home: {
-    screen: HomeScreen
+
+const RootStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen
+    },
+    SignIn: {
+      screen: SignInScreen
+    },
+    SignUp: {
+      screen: SignUpScreen
+    },
+    Menu: {
+      screen: MenuScreen
+    }
+  },
+  {
+    initialRouteName: 'Home',
   }
-});
+);
 
 export default class App extends React.Component {
   render() {

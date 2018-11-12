@@ -12,21 +12,16 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.textStyle}>Planes Above Me</Text>
-                <TouchableHighlight
-                 style={{top:40, height:40, width: 230}}
-                 onPress={()=>console.log("Sign In with Google")}>
-                 <Image style={styles.image} source={require('../assets/google.png')}/>
-                </TouchableHighlight>
 
                 <TouchableHighlight
                  style={[styles.button,{left:60}]}
-                 onPress={()=>console.log("Sign In")}>
+                 onPress={()=>{this.props.navigation.navigate('SignIn');}}>
                  <Text style={styles.buttonText}> Sign In </Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
                  style={[styles.button,{right:60}]}
-                 onPress={()=>console.log("Sign Up")}>
+                 onPress={()=>{this.props.navigation.navigate('SignUp');}}>
                  <Text style={styles.buttonText}> Sign Up </Text>
                 </TouchableHighlight>
                 
@@ -63,11 +58,6 @@ const styles = StyleSheet.create({
     borderRadius:4,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  image:{
-    width:"100%",
-    height:"100%",
-    resizeMode: 'contain'
   },
   buttonText: {
     fontSize:20
