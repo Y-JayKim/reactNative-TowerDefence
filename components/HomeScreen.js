@@ -1,84 +1,156 @@
 import React from 'react';
-import { TouchableHighlight, Text, View, StyleSheet, Image } from 'react-native';
+import { TouchableHighlight, Text, View, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import { Font } from 'expo';
+
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 export default class HomeScreen extends React.Component {
     constructor() {
         super();
         this.state = {
+          fontLoaded: false,
         }
     }
+ static navigationOptions = { header: null }
 
-    static navigationOptions = {
-        title: 'Home',
-        headerStyle: {
-            backgroundColor: '#f4511e'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
-    };
+  async componentDidMount() {
+    await Font.loadAsync({
+      'BebasNeue-Regular': require('./BebasNeueRegular.otf'),
+      'Nunito-Bold': require('./Nunito-Bold.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
+  }
+
 
     render() {
         return (
+          <ScrollView>
+          <View>
+          {
+                this.state.fontLoaded ? (
             <View style={styles.container}>
-                <Text style={styles.textStyle}>Planes Above Me</Text>
-
-                <TouchableHighlight
-                 style={[styles.button,{left:60}]}
-                 onPress={()=>{this.props.navigation.navigate('SignIn');}}>
-                 <Text style={styles.buttonText}> Sign In </Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight
-                 style={[styles.button,{right:60}]}
-                 onPress={()=>{this.props.navigation.navigate('SignUp');}}>
-                 <Text style={styles.buttonText}> Sign Up </Text>
-                </TouchableHighlight>
+              
+                  <View style={styles.container2}>
+                    <Text style={[styles.textStyle, { marginTop:40}]}>
+                      Airplane
+                    </Text>
+                    <Text style={[styles.textStyle ]}>
+                      Above
+                    </Text>
+                    <Text style={[styles.textStyle]}>
+                      Me
+                    </Text>
+                  </View>
                 
-                <TouchableHighlight
-                 style={styles.guestButton}
-                 onPress={()=>{this.props.navigation.navigate('Menu',{theUser:'guest'});}}>
-                 <Text style={styles.buttonText}> Sign In as a Guest </Text>
-                </TouchableHighlight>
+                <View style={styles.image}>
+                <Image source={{uri: 'https://s17-us2.startpage.com/cgi-bin/serveimage?url=http%3A%2F%2Ft0.gstatic.com%2Fimages%3Fq%3Dtbn%3AANd9GcSd4xfU6KPjWq2217vnlkY1TYB2WwNkBLTZq1nQSqFgbB4ED49jzQ&sp=55b00af7d6ce4e61491a91512b7fe94f&anticache=599360'}} />
+                </View>
+                <View style={styles.bottomContainer}>
+                      
+                      <TouchableHighlight
+                       style={[styles.button]}
+                       onPress={()=>{this.props.navigation.navigate('SignUp');}}>
+                       <Text style={styles.buttonText}> Sign Up </Text>
+                      </TouchableHighlight>
 
+                      <TouchableHighlight
+                       style={[styles.button]}
+                       onPress={()=>{this.props.navigation.navigate('SignIn');}}>
+                       <Text style={styles.buttonText}> Login </Text>
+                      </TouchableHighlight>
+
+                      
+                
+
+                
+                  </View>
+                    <TouchableHighlight
+                     style={styles.guestButton}
+                     onPress={()=>{this.props.navigation.navigate('Menu',{theUser:'guest'});}}>
+                     <Text style={[styles.buttonText, {color: '#625E5E'}]}> Sign In as a Guest </Text>
+                    </TouchableHighlight>
             </View>
+            ) : null
+              }
+              </View>
+
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor:'#E2E2E2',
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    height:height,
+    justifyContent:'flex-end',
+
+  },
+  bottomContainer: {
+    
+    
+    flexDirection:'row',
+    
+    
+    alignItems:'flex-end',
+    justifyContent:'center', 
+  },
+  image: {
+    
+    alignSelf:'center',
+    justifyContent:'center',
+    height:110,
+    width:100,
+    margin:10,
+    
   },
   textStyle: {
-    position:"absolute",
-    fontWeight: 'bold',
-    top: 10,
-    fontSize: 30
+    color:'#625E5E',
+    fontFamily: 'BebasNeue-Regular',
+    width:'auto',
+    height:85,
+    alignSelf:'flex-start',
+    fontSize: 80,
+    padding:4,
+    backgroundColor: 'white',
+    marginLeft:30
   },
   button: {
-    position:"absolute",
-    width:100,
+    width:130,
     height:70,
-    top:400,
-    borderWidth:0.5,
-    borderColor: "black",
-    borderRadius:4,
-    alignItems: 'center',
-    justifyContent: 'center'
+    borderWidth:7,
+    borderColor: "white",
+    borderRadius:50,
+    marginLeft:10,
+    marginRight:10,
+    backgroundColor:'#C4C4C4',
+    alignItems:'center',
+    justifyContent:'center'
+    
+    
   },
   buttonText: {
-    fontSize:20
-  },
-  guestButton: {
-    position:"absolute", 
-    top:480, 
-    height:40, 
-    width:200,
+    fontSize:20, 
+    color:'white',
+    fontFamily: 'Nunito-Bold',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  guestButton: {  
+    flex:1,
+    height:40, 
+    width:200,
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'flex-end', 
+    marginBottom:25
+    
+
+    
+    
+    
   }
 });
