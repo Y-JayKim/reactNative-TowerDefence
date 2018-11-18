@@ -16,8 +16,11 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     await Font.loadAsync({
+     
+      'BebasNeueBold': require('./BebasNeueBold.otf'),
       'BebasNeue-Regular': require('./BebasNeueRegular.otf'),
       'Nunito-Bold': require('./Nunito-Bold.ttf'),
+      'Nunito-Regular': require('./Nunito-Regular.ttf'),
     });
 
     this.setState({ fontLoaded: true });
@@ -69,7 +72,7 @@ export default class HomeScreen extends React.Component {
                     <TouchableHighlight
                      style={styles.guestButton}
                      onPress={()=>{this.props.navigation.navigate('Menu',{theUser:'guest'});}}>
-                     <Text style={[styles.buttonText, {color: '#625E5E'}]}> Sign In as a Guest </Text>
+                     <Text style={[styles.buttonText, {color: '#625E5E', fontFamily: 'Nunito-Regular',}]}> View as Guest </Text>
                     </TouchableHighlight>
             </View>
             ) : null
@@ -104,19 +107,19 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     height:110,
     width:100,
-    margin:10,
+    margin:20,
     
   },
   textStyle: {
     color:'#625E5E',
-    fontFamily: 'BebasNeue-Regular',
+    fontFamily: 'BebasNeueBold',
     width:'auto',
-    height:85,
+    height:79,
     alignSelf:'flex-start',
     fontSize: 80,
     padding:4,
     backgroundColor: 'white',
-    marginLeft:30
+    marginLeft:20
   },
   button: {
     width:130,
