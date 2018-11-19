@@ -11,6 +11,17 @@ export default class CollectionScreen extends Component {
         }
     }
 
+    static navigationOptions = {
+        title: 'Collection',
+        headerStyle: {
+            backgroundColor: '#f4511e'
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold'
+        }
+    };
+
     render() {
         return (
             <View style={styles.container}>
