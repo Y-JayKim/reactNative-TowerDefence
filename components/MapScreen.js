@@ -15,9 +15,9 @@ export default class MapScreen extends Component {
             locationPermission: 'unknown',
             region: {
                 latitude: 50.60254331180157,
-                latitudeDelta: 0.18, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
+                latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
                 longitude: 16.721875704824924,
-                longitudeDelta: 0.18,
+                longitudeDelta: 0.48,
             },
         };
         this.onRegionChange = this.onRegionChange.bind(this);
