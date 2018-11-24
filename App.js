@@ -8,6 +8,9 @@ import SignUpScreen from './components/SignUpScreen';
 import MenuScreen from './components/MenuScreen';
 import MapScreen from './components/MapScreen';
 import CollectionScreen from './components/CollectionScreen';
+import PlaneScreen from './components/PlaneScreen';
+import QuizScreen from './components/QuizScreen';
+import AnswerScreen from './components/AnswerScreen';
 
 const RootStack = createStackNavigator(
   {
@@ -28,6 +31,15 @@ const RootStack = createStackNavigator(
     },
     Collection: {
       screen: CollectionScreen
+    },
+    Plane: {
+      screen: PlaneScreen
+    },
+    Quiz: {
+      screen: QuizScreen
+    },
+    Answer: {
+      screen: AnswerScreen
     }
   },
   {
