@@ -65,7 +65,6 @@ export default class MapScreen extends Component {
     render() {
         return (
             <MapView
-                onPress={()=>console.log("Pressed")}
                 region={this.state.region}
                 onRegionChange={this.onRegionChange}
                 style={styles.map}
