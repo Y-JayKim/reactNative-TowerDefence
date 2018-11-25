@@ -43,7 +43,7 @@ export default class FlightsComponent extends Component {
         return this.state.flights.map((flight) => {
             return (
                 <Marker
-                    onPress={()=>console.log('Pressed')}
+                    // onPress={(flight)=>console.log(flight)}
                     coordinate={{latitude: flight[6], longitude: flight[5]}}
                     key={flight[0]}
                     image={require('../assets/plane.png')}
