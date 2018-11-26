@@ -1,12 +1,7 @@
 import Firebase from 'firebase';
 
 var config = {
-    apiKey: "AIzaSyDCeQN9uPC6hFt4kjewt9nqhB14oueyHuI",
-    authDomain: "airplaneaboveme.firebaseapp.com",
-    databaseURL: "https://airplaneaboveme.firebaseio.com",
-    projectId: "airplaneaboveme",
-    storageBucket: "airplaneaboveme.appspot.com",
-    messagingSenderId: "1022251621310"
+
 };
 
 let app = Firebase.initializeApp(config);
