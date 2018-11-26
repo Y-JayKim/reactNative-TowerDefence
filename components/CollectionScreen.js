@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, ListView, TouchableHighlight, Image, FlatList } from 'react-native';
 import { Font } from 'expo';
 
+import { db2 } from '../db';
+// import { fetchItem } from '../services/DatabaseInterface';
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -84,7 +87,7 @@ export default class CollectionScreen extends Component {
             todoDataSource: this.state.todoDataSource.cloneWithRows(todos)
         });
 
-        console.log(todos)
+        // console.log(todos)
    
     }
 
@@ -119,7 +122,9 @@ export default class CollectionScreen extends Component {
     };
 
     render() {
-        
+
+        console.log(JSON.stringify(db2));
+
         return (
             <View>
             {
