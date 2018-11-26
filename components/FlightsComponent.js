@@ -23,13 +23,14 @@ export default class FlightsComponent extends Component {
     }
 
     fetchFlights() {
-        let lamin = this.props.region.latitude - this.props.region.latitudeDelta / 2;
-        let lomin = this.props.region.longitude - this.props.region.longitudeDelta / 2;
-        let lamax = this.props.region.latitude + this.props.region.latitudeDelta / 2;
-        let lomax = this.props.region.longitude + this.props.region.longitudeDelta / 2;
+        let lamin = this.props.region.latitude - this.props.region.latitudeDelta;
+        let lomin = this.props.region.longitude - this.props.region.longitudeDelta;
+        let lamax = this.props.region.latitude + this.props.region.latitudeDelta;
+        let lomax = this.props.region.longitude + this.props.region.longitudeDelta;
         fetch('https://opensky-network.org/api/states/all?lamin='+lamin+'&lomin='+lomin+'&lamax='+lamax+'&lomax='+lomax)
         .then((response) => response.json())
         .then((response) => {
+            // console.log(response.states)
             this.setState({
                 flights: response.states
             });
@@ -43,16 +44,16 @@ export default class FlightsComponent extends Component {
         return this.state.flights.map((flight) => {
             return (
                 <Marker
-                    onPress={(flight)=>console.log(flight)}
                     coordinate={{latitude: flight[6], longitude: flight[5]}}
                     key={flight[0]}
                     image={require('../assets/plane.png')}
+                    onPress={()=>this.props.props1.navigation.navigate('QuizPrompt')}
                 />
             );
         })
     }
 }
-
+// this.props.navigation.navigate('Collection')
 const styles = StyleSheet.create({
     
 })

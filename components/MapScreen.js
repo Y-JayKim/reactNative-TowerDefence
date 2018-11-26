@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 import Permissions from 'react-native-permissions';
@@ -19,6 +19,12 @@ export default class MapScreen extends Component {
                 longitude: 16.721875704824924,
                 longitudeDelta: 0.48,
             },
+            markerRegion: {
+                latitude: 0.60254331180157,
+                latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
+                longitude: 6.721875704824924,
+                longitudeDelta: 0.48,
+            }
         };
         this.onRegionChange = this.onRegionChange.bind(this);
     }
@@ -42,6 +48,7 @@ export default class MapScreen extends Component {
             newRegion.longitude = position.coords.longitude;
             this.setState({
                 region: newRegion,
+                markerRegion: newRegion
             });
         },
             (error) => console.log(error));
@@ -57,22 +64,25 @@ export default class MapScreen extends Component {
     }
 
     onRegionChange(region){
-        this.setState({
-            region
-        });
+        this.setState({ region });
     }
 
     render() {
         return (
+
             <MapView
                 region={this.state.region}
-                onRegionChange={this.onRegionChange}
+                // onRegionChange={this.onRegionChange}
                 style={styles.map}
             >
                 <Marker
-                    coordinate={{latitude: this.state.region.latitude, longitude: this.state.region.longitude}}
+                    coordinate={{latitude: this.state.markerRegion.latitude, longitude: this.state.markerRegion.longitude}}
                 />
-                <FlightsComponent region={this.state.region}/>
+                <FlightsComponent
+                    region={this.state.region}
+                    props1={this.props}
+                />
+                
             </MapView>
         );
     }
