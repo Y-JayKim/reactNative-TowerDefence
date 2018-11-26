@@ -2,34 +2,36 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, ListView, TouchableHighlight, Image, FlatList } from 'react-native';
 import { Font } from 'expo';
 
-import { db2 } from '../db';
-// import { fetchItem } from '../services/DatabaseInterface';
+// import { db2 } from '../db';
+import { fetchItems } from '../services/DatabaseInterface';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-const todos = [{    key:'1',
-                    name: 'air canada',
-                    image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-                    date_collected: '2018-11-20',
-                    location: 'here'
+// const todos = [{    key:'1',
+//                     name: 'air canada',
+//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
+//                     date_collected: '2018-11-20',
+//                     location: 'here'
 
-                 },
-                 {  key:'2',
-                    name: 'DELTA',
-                    image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-                    date_collected: '2018-11-20',
-                    location: 'here'
+//                  },
+//                  {  key:'2',
+//                     name: 'DELTA',
+//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
+//                     date_collected: '2018-11-20',
+//                     location: 'here'
 
-                 },
-                 {  key:'3',
-                    name: 'not air canada',
-                    image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-                    date_collected: '2018-11-20',
-                    location: 'here'
+//                  },
+//                  {  key:'3',
+//                     name: 'not air canada',
+//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
+//                     date_collected: '2018-11-20',
+//                     location: 'here'
 
-                 }
-              ];
+//                  }
+//               ];
+
+const todos = fetchItems;
 
 export default class CollectionScreen extends Component {
     constructor(props) {
@@ -122,8 +124,6 @@ export default class CollectionScreen extends Component {
     };
 
     render() {
-
-        console.log(JSON.stringify(db2));
 
         return (
             <View>

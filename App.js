@@ -11,7 +11,6 @@ import CollectionScreen from './components/CollectionScreen';
 import PlaneScreen from './components/PlaneScreen';
 import QuizScreen from './components/QuizScreen';
 import AnswerScreen from './components/AnswerScreen';
-import QuizPromptScreen from './components/QuizPromptScreen';
 
 const RootStack = createStackNavigator(
   {
@@ -35,9 +34,6 @@ const RootStack = createStackNavigator(
     },
     Plane: {
       screen: PlaneScreen
-    },
-    QuizPrompt:{
-      screen: QuizPromptScreen
     },
     Quiz: {
       screen: QuizScreen

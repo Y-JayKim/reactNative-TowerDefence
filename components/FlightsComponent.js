@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 
 import { Marker } from 'react-native-maps';
 
@@ -47,7 +47,11 @@ export default class FlightsComponent extends Component {
                     coordinate={{latitude: flight[6], longitude: flight[5]}}
                     key={flight[0]}
                     image={require('../assets/plane.png')}
-                    onPress={()=>this.props.props1.navigation.navigate('QuizPrompt')}
+                    // onPress={()=>this.props.props1.navigation.navigate('QuizPrompt')}
+                    onPress={()=>Alert.alert('Message','Do you want to collect this plane?',[
+                        {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz')},
+                        {text: 'Cancel', onPress:()=> console.log('Cancel button pressed')}
+                    ],{ cancelable: false })}
                 />
             );
         })
