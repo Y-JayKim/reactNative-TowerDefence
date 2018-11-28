@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, ListView, TouchableHighlight, Image, FlatList } from 'react-native';
 import { Font } from 'expo';
 
-// import { db2 } from '../db';
 import { fetchItems } from '../services/DatabaseInterface';
 
 const height = Dimensions.get('window').height;

@@ -30,8 +30,9 @@ export default class FlightsComponent extends Component {
         fetch('https://opensky-network.org/api/states/all?lamin='+lamin+'&lomin='+lomin+'&lamax='+lamax+'&lomax='+lomax)
         .then((response) => response.json())
         .then((response) => {
-            // console.log(response.states)
+            console.log(response.states)
             this.setState({
+                
                 flights: response.states
             });
         })

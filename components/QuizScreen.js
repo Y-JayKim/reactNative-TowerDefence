@@ -140,9 +140,6 @@ const styles = StyleSheet.create({
         margin: 5,
         alignItems:'center',
         justifyContent:'center',
-        
-
-
     },
     buttonText: {
         fontSize:20,

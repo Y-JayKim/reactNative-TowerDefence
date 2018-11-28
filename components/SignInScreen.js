@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, TouchableHighlight, Image, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight, Image, TextInput, Alert } from 'react-native';
 
 export default class SignInScreen extends Component {
 
@@ -66,7 +66,7 @@ export default class SignInScreen extends Component {
                 </TouchableHighlight>
                 <TouchableHighlight
                      style={{top:230}}
-                     onPress={()=>alert('Too Bad')}>
+                     onPress={()=>Alert.alert('Message','Too Bad')}>
                      <Text>Forgot Password?</Text>
                 </TouchableHighlight>
             </View>
