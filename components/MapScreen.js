@@ -32,7 +32,7 @@ export default class MapScreen extends Component {
     static navigationOptions = {
         title: 'Map',
         headerStyle: {
-            backgroundColor: '#f4511e'
+            backgroundColor: '#625E5E'
         },
         headerTintColor: '#fff',
         headerTitleStyle: {

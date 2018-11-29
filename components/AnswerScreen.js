@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         borderRadius:50,
         marginLeft:10,
         marginRight:10,
-        backgroundColor:'#C4C4C4',
+        backgroundColor:'#625E5E',
         alignItems:'center',
         justifyContent:'center',
         alignSelf:'flex-end',

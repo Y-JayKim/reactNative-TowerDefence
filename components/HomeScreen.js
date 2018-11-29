@@ -26,7 +26,6 @@ export default class HomeScreen extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-
     render() {
         return (
           
@@ -63,21 +62,14 @@ export default class HomeScreen extends React.Component {
                        onPress={()=>{this.props.navigation.navigate('SignIn');}}>
                        <Text style={styles.buttonText}> Login </Text>
                       </TouchableHighlight>
-                      
-                
-
-                
+    
                   </View>
                   <TouchableHighlight
                      style={styles.guestButton}
                      onPress={()=>{this.props.navigation.navigate('Menu',{theUser:'guest'});}}>
                      <Text style={[styles.buttonText, {color: '#625E5E', fontFamily: 'Nunito-Regular'}]}> View as Guest </Text>
                     </TouchableHighlight>
-                    
                   </View>
-                
-                
-                
             </View>
             ) : null
               }
@@ -91,30 +83,22 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor:'#E2E2E2',
-    
     height:height,
-    justifyContent:'flex-start',
-
+    justifyContent:'flex-start'
   },
   bottomContainer: {
-    
-    
     flexDirection:'row',
-   
     alignItems:'flex-end',
     justifyContent:'center', 
   },
   image: {
     backgroundColor:'red',
-    
     flexDirection:'row',
     alignItems:'flex-end',
     justifyContent:'center', 
-    
     height:120,
     width:100,
     margin:20,
-    
   },
   textStyle: {
     color:'#625E5E',
@@ -127,7 +111,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginLeft:20
   },
-
   button: {
     width:130,
     height:70,
@@ -136,11 +119,10 @@ const styles = StyleSheet.create({
     borderRadius:50,
     marginLeft:10,
     marginRight:10,
-    backgroundColor:'#C4C4C4',
+    backgroundColor:'#625E5E',
     alignItems:'center',
     justifyContent:'center',
     alignSelf:'flex-end',
-    
   },
   buttonText: {
     fontSize:20, 
@@ -150,19 +132,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   guestButton: {  
-    
     height:40, 
     width:200,
     alignSelf:'center',
     alignItems:'center',
-    justifyContent:'flex-end', 
+    justifyContent:'center', 
     marginTop:10
-
-    
-    
-
-    
-    
-    
   }
 });

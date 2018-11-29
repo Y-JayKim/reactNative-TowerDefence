@@ -11,15 +11,15 @@ export default class MenuScreen extends Component {
     }
 
     static navigationOptions = {
-        title: 'Menu',
-        headerStyle: {
-            backgroundColor: '#f4511e'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
-    };
+      title: 'Menu',
+      headerStyle: {
+          backgroundColor: '#625E5E'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+          fontWeight: 'bold'
+      }
+  };
   
     render() {
         const { navigation } = this.props;

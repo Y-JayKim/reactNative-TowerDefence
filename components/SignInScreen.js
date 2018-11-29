@@ -28,10 +28,14 @@ static navigationOptions = {
 
 _submitPressed(){
   for(let i = 0; i < fetchItems.length; i++){
-      if(fetchItems[i].accountInfo.username == this.state.usernameText && fetchItems[i].accountInfo.password == this.state.passwordText){
-          Alert.alert("Welcome","Hi, "+ fetchItems[i].accountInfo.fullname + "!");
-          this.props.navigation.navigate('Menu', {theUser:fetchItems[i].accountInfo.username});
-          return true;
+      let userInformation = fetchItems[i].accountInfo;
+
+      if(userInformation != undefined){
+        if(userInformation.username == this.state.usernameText && userInformation.password == this.state.passwordText){
+            Alert.alert("Welcome","Hi, "+ userInformation.fullname + "!");
+            this.props.navigation.navigate('Menu', {theUser:userInformation.username});
+            return true;
+        }
       }
   }
   Alert.alert('Message', 'Incorrect user information');

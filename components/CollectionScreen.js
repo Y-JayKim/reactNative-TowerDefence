@@ -51,7 +51,6 @@ export default class CollectionScreen extends Component {
         this.renderRow = this.renderRow.bind(this);
 
     }
-    static navigationOptions = { header: null }
 
     async componentDidMount() {
         await Font.loadAsync({
@@ -114,7 +113,7 @@ export default class CollectionScreen extends Component {
     static navigationOptions = {
         title: 'Collection',
         headerStyle: {
-            backgroundColor: '#f4511e'
+            backgroundColor: '#625E5E'
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
