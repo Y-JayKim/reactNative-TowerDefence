@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, TextInput, TouchableHighlight, Alert } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, TextInput, TouchableHighlight, Alert } from 'react-native';
+
+import { addItem, fetchItems } from '../services/DatabaseInterface';
 
 export default class SignUpScreen extends Component {
 
@@ -13,6 +15,28 @@ export default class SignUpScreen extends Component {
             fullnameText:""
         }
         this.submitPressed = this._submitPressed.bind(this);
+        this.accountCreation = this._accountCreation.bind(this);
+    }
+
+    static navigationOptions = {
+        title: 'Simple Sign Up',
+        headerStyle: {
+            backgroundColor: '#625E5E'
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold'
+        }
+    };
+
+    _accountCreation(){
+        for(let i = 0; i < fetchItems.length; i++){
+            if(fetchItems[i].accountInfo.username == this.state.usernameText){
+                Alert.alert('Message', 'username already exist!');
+                return false;
+            }
+        }
+        return true;
     }
 
     _submitPressed(){
@@ -20,6 +44,15 @@ export default class SignUpScreen extends Component {
             console.log("Filled every section");
             if(this.state.passwordText == this.state.reTypeText){
                 console.log("Password matched");
+                if(this.accountCreation()){
+                    addItem({
+                        username: this.state.usernameText,
+                        psaswordText: this.state.passwordText,
+                        fullname: this.state.fullnameText
+                    });
+                    this.props.navigation.goBack();
+                    Alert.alert("Message", "Thank you!\nAccount has been Created");
+                }
             }else{
                 Alert.alert("Message", "Password does not match");
             }
@@ -32,7 +65,6 @@ export default class SignUpScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.views}>
-                    <Text style={styles.text}>Simple Sign Up</Text>
                     <TextInput
                         style={styles.textInput}
                         onChangeText={(text) => this.setState({usernameText:text})}
@@ -43,12 +75,14 @@ export default class SignUpScreen extends Component {
                         style={styles.textInput}
                         onChangeText={(text) => this.setState({passwordText:text})}
                         placeholder={"Password"}
+                        secureTextEntry={true}
                         value={this.state.passwordText}
                     />
                     <TextInput
                         style={styles.textInput}
                         onChangeText={(text) => this.setState({reTypeText:text})}
                         placeholder={"Re-type your password"}
+                        secureTextEntry={true}
                         value={this.state.reTypeText}
                     />
                     <TextInput
@@ -76,10 +110,10 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     views:{
-        top:40,
+        top:30,
         backgroundColor: '#625E5E',
         width:300,
-        height:450,
+        height:400,
         justifyContent: 'center',
         alignItems: 'center'
     },

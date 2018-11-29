@@ -6,7 +6,5 @@ npm-debug.*
 *.key
 *.mobileprovision
 node_modules/
-
-node_modules/
 package-lock.json
-./db.js
+db.js

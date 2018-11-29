@@ -8,7 +8,7 @@ db.ref('/users').on('value', (snapshot)=>{
 	let items = Object.values(data);
 
 	for(i in items){
-		itemsinDb.push(items[i].name);
+		itemsinDb.push(items[i]);
 	};
 });
 
@@ -16,6 +16,6 @@ export const fetchItems = itemsinDb;
 
 export const addItem = (item) => {
 	db.ref('/users').push({
-		name: item
+		accountInfo: item
 	});
 }
