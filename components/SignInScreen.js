@@ -33,7 +33,7 @@ _submitPressed(){
       if(userInformation != undefined){
         if(userInformation.username == this.state.usernameText && userInformation.password == this.state.passwordText){
             Alert.alert("Welcome","Hi, "+ userInformation.fullname + "!");
-            this.props.navigation.navigate('Menu', {theUser:userInformation.username});
+            this.props.navigation.navigate('Menu', {theUser:fetchItems[i]});
             return true;
         }
       }

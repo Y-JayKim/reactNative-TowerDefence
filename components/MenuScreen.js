@@ -7,6 +7,7 @@ export default class MenuScreen extends Component {
     constructor() {
         super();
         this.state = {
+          collections: null
         }
     }
 
@@ -24,7 +25,11 @@ export default class MenuScreen extends Component {
     render() {
         const { navigation } = this.props;
         const user = navigation.getParam('theUser', 'guest');
-        console.log(user);
+        // if(user != 'guest' && user.collections != undefined){
+        //     this.setState ={collections:user.collections}
+        //     console.log(user.collections);
+        // }
+
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>Menu</Text>
@@ -36,7 +41,7 @@ export default class MenuScreen extends Component {
                 
                 {user != 'guest' && <TouchableHighlight
                      style={[styles.button, {top:150}]}
-                     onPress={()=>{this.props.navigation.navigate('Collection');}}>
+                     onPress={()=>{this.props.navigation.navigate('Collection', {collections: user.collections});}}>
                      <Text>Collection</Text>
                 </TouchableHighlight>}
                 

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, ListView, TouchableHighlight, Image, FlatList } from 'react-native';
 import { Font } from 'expo';
 
-import { fetchItems } from '../services/DatabaseInterface';
-
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
+
+const todos = [];
 
 // const todos = [{    key:'1',
 //                     name: 'air canada',
@@ -30,8 +30,6 @@ const width = Dimensions.get('window').width;
 //                  }
 //               ];
 
-const todos = fetchItems;
-
 export default class CollectionScreen extends Component {
     constructor(props) {
         super(props);
@@ -40,13 +38,13 @@ export default class CollectionScreen extends Component {
         })
 
         this.state = {
-            todoDataSource: ds.cloneWithRows(todos),
+            todoDataSource: ds.cloneWithRows(props.navigation.getParam('collections', [])),
             size: true,
             modalVisible: false,
             poppedImage: '',
-            fontLoaded: false
+            fontLoaded: false,
+            todos: props.navigation.getParam('collections', [])
         }
-
         this.pressRow = this.pressRow.bind(this);
         this.renderRow = this.renderRow.bind(this);
 
@@ -71,24 +69,18 @@ export default class CollectionScreen extends Component {
             const name = navigation.getParam('name', 'no name');
             const date = navigation.getParam('date_collected', 'no date');
             const location = navigation.getParam('location', 'no location');
-            todos.push({name: name, image:image, date_collected: date, location: location, key: JSON.stringify(todos.length + 1)})
-
+            this.state.todos.push({name: name, image:image, date_collected: date, location: location, key: JSON.stringify(todos.length + 1)})
         }
-        
     }
 
     pressRow(rowID) {
         console.log('Row# ' + rowID);
-        
     }
 
     fetchTodos() {   
         this.setState({
-            todoDataSource: this.state.todoDataSource.cloneWithRows(todos)
+            todoDataSource: this.state.todoDataSource.cloneWithRows(this.state.todos)
         });
-
-        // console.log(todos)
-   
     }
 
     renderRow(task) {
@@ -100,7 +92,6 @@ export default class CollectionScreen extends Component {
                     <TouchableHighlight 
                         onPress={() => {
                         this.pressRow(task.name);
-                        
                     }}>
                     <View style={styles.row}>
                         <Image style={styles.small} source={{uri: task.image}}/>
@@ -122,7 +113,6 @@ export default class CollectionScreen extends Component {
     };
 
     render() {
-
         return (
             <View>
             {
@@ -138,7 +128,7 @@ export default class CollectionScreen extends Component {
                     <Text style={styles.text}>Hangar</Text>
                     </View>
                     <FlatList
-                        data = {todos}
+                        data = {this.state.todos}
                         
                         renderItem = {({item}) => 
                         <TouchableHighlight onPress={() => {
