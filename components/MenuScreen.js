@@ -24,7 +24,7 @@ export default class MenuScreen extends Component {
     render() {
         const { navigation } = this.props;
         const user = navigation.getParam('theUser', 'guest');
-
+        console.log(user);
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>Menu</Text>

@@ -47,7 +47,7 @@ export default class SignUpScreen extends Component {
                 if(this.accountCreation()){
                     addItem({
                         username: this.state.usernameText,
-                        psaswordText: this.state.passwordText,
+                        password: this.state.passwordText,
                         fullname: this.state.fullnameText
                     });
                     this.props.navigation.goBack();
@@ -127,13 +127,6 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderRadius:5,
         margin:10
-    },
-    text:{
-        fontSize:30,
-        fontWeight:'bold',
-        color:'white',
-        margin:10,
-        marginBottom:20
     },
     textInput:{
         height: 50,
