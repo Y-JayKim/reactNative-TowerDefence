@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
+import AwesomeAlert from 'react-native-awesome-alerts';
+import { bcrypt } from 'react-native-bcrypt';
+
 export default class MenuScreen extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-          collections: null
+          collections: null,
+          showAlert: true,
+          title: 'Hi!',
+          message: 'Welcome, Guest!'
         }
     }
 
@@ -20,36 +26,82 @@ export default class MenuScreen extends Component {
       headerTitleStyle: {
           fontWeight: 'bold'
       }
-  };
-  
+  } 
+
+    hideAlert = () => {
+      this.setState({
+        showAlert: false
+      });
+    }
+
+    componentDidMount(){
+      if(this.props.navigation.getParam('theUser', 'guest') != 'guest'){
+          this.setState({
+            message: 'Welcome, '+ this.props.navigation.getParam('theUser', 'Guest').accountInfo.fullname + '!'
+          });
+      } 
+    }
+
     render() {
         const { navigation } = this.props;
         const user = navigation.getParam('theUser', 'guest');
+        const { showAlert } = this.state;
         // if(user != 'guest' && user.collections != undefined){
         //     this.setState ={collections:user.collections}
         //     console.log(user.collections);
         // }
-
         return (
+
             <View style={styles.container}>
-                <Text style={styles.text}>Menu</Text>
                 <TouchableHighlight
-                     style={[styles.button, {top:100}]}
+                     style={[styles.button, {top:70, left:70}]}
                      onPress={()=>{this.props.navigation.navigate('Map');}}>
-                     <Text>Find an Airplane</Text>
+                     <Text style={styles.text}>Find Airplane</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                     style={[styles.button, {top:70, left:190}]}
+                     onPress={()=>console.log('button clicked')}>
+                     <Text style={styles.text}>IDONKNOW</Text>
                 </TouchableHighlight>
                 
                 {user != 'guest' && <TouchableHighlight
-                     style={[styles.button, {top:150}]}
+                     style={[styles.button, {top:380, left: 190}]}
                      onPress={()=>{this.props.navigation.navigate('Collection', {collections: user.collections});}}>
-                     <Text>Collection</Text>
+                     <Text style={styles.text}>Collection</Text>
                 </TouchableHighlight>}
                 
                 <TouchableHighlight
-                     style={[styles.button, {top:200}]}
+                     style={[styles.button, {top:230, left:190}]}
                      onPress={()=>console.log('button clicked')}>
-                     <Text>IDONKNOW</Text>
+                     <Text style={styles.text}>IDONKNOW</Text>
                 </TouchableHighlight>
+
+                <TouchableHighlight
+                     style={[styles.button, {top:380, left:70}]}
+                     onPress={()=>console.log('button clicked')}>
+                     <Text style={styles.text}>IDONKNOW</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                     style={[styles.button, {top:230, left:70}]}
+                     onPress={()=>console.log('button clicked')}>
+                     <Text style={styles.text}>IDONKNOW</Text>
+                </TouchableHighlight>
+
+                <AwesomeAlert
+                  show={showAlert}
+                  showProgress={false}
+                  title={this.state.title}
+                  message={this.state.message}
+                  closeOnTouchOutside={true}
+                  closeOnHardwareBackPress={true}
+                  showCancelButton={true}
+                  cancelText="Okay"
+                  onCancelPressed={() => {
+                    this.hideAlert();
+                  }}
+                />
             </View>
         )
     }
@@ -60,19 +112,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center'
   },
   text:{
-    fontSize:30,
-    top:30
+    fontSize:15,
+    top:70
   },
   button:{
-    width:200,
-    height:70,
+    position: 'absolute',
+    width:100,
+    height:100,
     borderWidth:0.5, 
     borderColor:'black',
     borderRadius:10,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#625E5E'
   }
 });

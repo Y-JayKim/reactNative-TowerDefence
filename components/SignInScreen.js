@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, TouchableHighlight, Image, TextInput, Alert } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight, Image, TextInput } from 'react-native';
 
 import { fetchItems } from '../services/DatabaseInterface';
+
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class SignInScreen extends Component {
 
@@ -10,9 +12,13 @@ constructor() {
     super();
     this.state = {
       usernameText: "",
-      passwordText: ""
+      passwordText: "",
+      showAlert: false,
+      title: 'Alert',
+      message: 'This is default message'
     }
     this.submitPressed = this._submitPressed.bind(this);
+    this.showAlert = this.showAlert.bind(this);
 }
 
 static navigationOptions = {
@@ -32,13 +38,16 @@ _submitPressed(){
 
       if(userInformation != undefined){
         if(userInformation.username == this.state.usernameText && userInformation.password == this.state.passwordText){
-            Alert.alert("Welcome","Hi, "+ userInformation.fullname + "!");
+            this.setState({
+              usernameText: "",
+              passwordText: ""
+            });
             this.props.navigation.navigate('Menu', {theUser:fetchItems[i]});
             return true;
         }
       }
   }
-  Alert.alert('Message', 'Incorrect user information');
+  this.showAlert('Incorrect user information');
   return false;
 }
 
@@ -68,7 +77,21 @@ signIn = async () => {
     }
 } 
 
-  render() {
+showAlert = (message) => {
+  this.setState({
+    showAlert: true,
+    message: message
+  });
+}
+
+hideAlert = () => {
+  this.setState({
+    showAlert: false
+  });
+}
+
+render() {
+  const { showAlert } = this.state;
       return (
           <View style={styles.container}>
               <View style={styles.views}>
@@ -105,10 +128,23 @@ signIn = async () => {
                 <Image style={styles.image} source={require('../assets/facebook.png')}/>
               </TouchableHighlight>
               <TouchableHighlight
-                style={styles.extraButton}
-                onPress={()=>Alert.alert('Message','Too Bad')}>
+                style={[styles.extraButton, {width:150,height:40}]}
+                onPress={()=>this.showAlert("          Too Bad         ")}>
                 <Text>Forgot Password?</Text>
               </TouchableHighlight>
+              <AwesomeAlert
+                show={showAlert}
+                showProgress={false}
+                title={this.state.title}
+                message={this.state.message}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={true}
+                showCancelButton={true}
+                cancelText="Okay"
+                onCancelPressed={() => {
+                  this.hideAlert();
+                }}
+              />
           </View>
       )
   }
@@ -140,6 +176,7 @@ const styles = StyleSheet.create({
       margin:10
   },
   extraButton: {
+    alignItems: 'center',
     marginTop:10
   },  
   textInput:{
