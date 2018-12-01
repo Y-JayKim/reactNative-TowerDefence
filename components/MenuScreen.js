@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { Text, Image, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { bcrypt } from 'react-native-bcrypt';
@@ -55,24 +55,25 @@ export default class MenuScreen extends Component {
             <View style={styles.container}>
                 <TouchableHighlight
                      style={[styles.button, {top:70, left:70}]}
-                     onPress={()=>{this.props.navigation.navigate('Map');}}>
-                     <Text style={styles.text}>Find Airplane</Text>
+                     onPress={()=>console.log('button clicked')}>
+                     <Image style={{width:90, height:90}} source={require('../assets/account.png')} />
                 </TouchableHighlight>
-
+                <Text style={[styles.text,{top:180, left:93}]}>Account</Text>
                 <TouchableHighlight
                      style={[styles.button, {top:70, left:190}]}
-                     onPress={()=>console.log('button clicked')}>
-                     <Text style={styles.text}>IDONKNOW</Text>
+                     onPress={()=>{this.props.navigation.navigate('Map');}}>
+                     <Image style={{width:90, height:90}} source={require('../assets/maps-icon.png')} />
                 </TouchableHighlight>
-                
-                {user != 'guest' && <TouchableHighlight
-                     style={[styles.button, {top:380, left: 190}]}
-                     onPress={()=>{this.props.navigation.navigate('Collection', {collections: user.collections});}}>
-                     <Text style={styles.text}>Collection</Text>
-                </TouchableHighlight>}
+                <Text style={[styles.text,{top:180, left:205}]}>Find Plane</Text>
                 
                 <TouchableHighlight
                      style={[styles.button, {top:230, left:190}]}
+                     onPress={()=>console.log('button clicked')}>
+                     <Text style={styles.text}>IDONKNOW</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                     style={[styles.button, {top:230, left:70}]}
                      onPress={()=>console.log('button clicked')}>
                      <Text style={styles.text}>IDONKNOW</Text>
                 </TouchableHighlight>
@@ -83,11 +84,15 @@ export default class MenuScreen extends Component {
                      <Text style={styles.text}>IDONKNOW</Text>
                 </TouchableHighlight>
 
+                {user != 'guest' && 
                 <TouchableHighlight
-                     style={[styles.button, {top:230, left:70}]}
-                     onPress={()=>console.log('button clicked')}>
-                     <Text style={styles.text}>IDONKNOW</Text>
-                </TouchableHighlight>
+                     style={[styles.button, {top:380, left: 190}]}
+                     onPress={()=>{this.props.navigation.navigate('Collection', {collections: user.collections});}}>
+                     <Image style={{width:70, height:70}} source={require('../assets/plane.png')}/>
+                </TouchableHighlight>}
+                {user != 'guest' && 
+                <Text style={[styles.text,{top:480, left:205}]}>Collection</Text>}
+                
 
                 <AwesomeAlert
                   show={showAlert}
@@ -114,8 +119,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   text:{
+    position:'absolute',
     fontSize:15,
-    top:70
+    top:100,
+    fontWeight:'bold',
+    color:'#625E5E'
   },
   button:{
     position: 'absolute',
