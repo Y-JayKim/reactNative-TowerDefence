@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, Text, View, StyleSheet, TextInput, TouchableHighlight, Alert } from 'react-native';
+import { ScrollView, Image, Text, View, StyleSheet, TextInput, TouchableHighlight, Alert } from 'react-native';
 
 import { addItem, fetchItems } from '../services/DatabaseInterface';
 
@@ -64,6 +64,10 @@ export default class SignUpScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
+                    source={require('../assets/background.png')} 
+                    resizeMode="cover"
+                />
                 <View style={styles.views}>
                     <TextInput
                         style={styles.textInput}
@@ -107,10 +111,11 @@ export default class SignUpScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex:1,
     },
     views:{
-        top:30,
+        top:-70,
         backgroundColor: '#625E5E',
         width:300,
         height:400,

@@ -58,6 +58,10 @@ export default class MenuScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
+                  source={require('../assets/background.png')} 
+                  resizeMode="cover"
+                />
                 <TouchableHighlight
                      style={[styles.button, {top:30, left:70}]}
                      onPress={()=>this.showAlert('Account Page','Sorry, Account Page is \ncurrently not working')}>
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width:100,
     height:100,
-    borderWidth:0.5, 
+    borderWidth:1.5, 
     borderColor:'black',
     borderRadius:10,
     alignItems: 'center',

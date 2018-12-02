@@ -6,13 +6,23 @@ const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 export default class HomeScreen extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-          fontLoaded: false,
-        }
+  constructor() {
+      super();
+      this.state = {
+        fontLoaded: false,
+      }
+      this.signInPressed = this.signInPressed.bind(this);
+  }
+  static navigationOptions = { header: null }
+
+  signInPressed(){
+    if(userInfo == 'guest'){
+      this.props.navigation.navigate('SignIn');
+    }else{
+      this.props.navigation.navigate('Menu');
     }
- static navigationOptions = { header: null }
+    
+  }
 
   async componentDidMount() {
     await Font.loadAsync({
@@ -33,7 +43,10 @@ export default class HomeScreen extends React.Component {
           {
                 this.state.fontLoaded ? (
             <View style={styles.container}>
-              
+                  <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
+                    source={require('../assets/background.png')} 
+                    resizeMode="cover"
+                  />
                   <View style={styles.container2}>
                     <Text style={[styles.textStyle, {marginTop: 40 }]}>
                       Airplane
@@ -59,15 +72,15 @@ export default class HomeScreen extends React.Component {
 
                       <TouchableHighlight
                        style={styles.button}
-                       onPress={()=>{this.props.navigation.navigate('SignIn');}}>
+                       onPress={()=>this.signInPressed()}>
                        <Text style={styles.buttonText}> Login </Text>
                       </TouchableHighlight>
     
                   </View>
                   <TouchableHighlight
                      style={styles.guestButton}
-                     onPress={()=>{this.props.navigation.navigate('Menu',{theUser:'guest'});}}>
-                     <Text style={[styles.buttonText, {color: '#625E5E', fontFamily: 'Nunito-Regular'}]}> View as Guest </Text>
+                     onPress={()=>{this.props.navigation.navigate('Menu');}}>
+                     <Text style={[styles.buttonText, {color: '#625E5E', fontFamily: 'Nunito-Regular', textDecorationLine:'underline'}]}> View as Guest </Text>
                     </TouchableHighlight>
                   </View>
             </View>
@@ -114,9 +127,9 @@ const styles = StyleSheet.create({
   button: {
     width:130,
     height:70,
-    borderWidth:7,
+    borderWidth:3,
     borderColor: "white",
-    borderRadius:50,
+    borderRadius:20,
     marginLeft:10,
     marginRight:10,
     backgroundColor:'#625E5E',

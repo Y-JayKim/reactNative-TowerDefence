@@ -114,10 +114,15 @@ export default class CollectionScreen extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
+                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
+                    source={require('../assets/background.png')} 
+                    resizeMode="cover"
+                />
             {
                 this.state.fontLoaded ? (
                 <View style={styles.container}>
+
                     <View style={{alignSelf:'center'}}>
                     <View style={styles.titleAndButton}>
                     <TouchableHighlight
@@ -163,7 +168,6 @@ export default class CollectionScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#E2E2E2',
         height: height,
         justifyContent: 'flex-start',
     },
