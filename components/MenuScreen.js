@@ -10,11 +10,12 @@ export default class MenuScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          collections: null,
           showAlert: true,
           title: 'Hi!',
-          message: 'Welcome, Guest!'
+          message: 'Welcome, Guest!',
+          signOut: "Sign Out"
         }
+        this.showAlert = this.showAlert.bind(this);
     }
 
     static navigationOptions = {
@@ -26,7 +27,15 @@ export default class MenuScreen extends Component {
       headerTitleStyle: {
           fontWeight: 'bold'
       }
-  } 
+    } 
+
+    showAlert = (title, message) => {
+      this.setState({
+        showAlert: true,
+        title: title,
+        message: message
+      });
+    }
 
     hideAlert = () => {
       this.setState({
@@ -35,67 +44,71 @@ export default class MenuScreen extends Component {
     }
 
     componentDidMount(){
-      if(this.props.navigation.getParam('theUser', 'guest') != 'guest'){
+      if(userInfo != 'guest'){
           this.setState({
-            message: 'Welcome, '+ this.props.navigation.getParam('theUser', 'Guest').accountInfo.fullname + '!'
+            message: 'Welcome, '+ userInfo.accountInfo.fullname + '!'
           });
-      } 
+      }else{
+        this.setState({
+          signOut: "Go Back Home"
+        })
+      }
     }
 
     render() {
-        const { navigation } = this.props;
-        const user = navigation.getParam('theUser', 'guest');
-        const { showAlert } = this.state;
-        // if(user != 'guest' && user.collections != undefined){
-        //     this.setState ={collections:user.collections}
-        //     console.log(user.collections);
-        // }
         return (
-
             <View style={styles.container}>
                 <TouchableHighlight
-                     style={[styles.button, {top:70, left:70}]}
-                     onPress={()=>console.log('button clicked')}>
+                     style={[styles.button, {top:30, left:70}]}
+                     onPress={()=>this.showAlert('Account Page','Sorry, Account Page is \ncurrently not working')}>
                      <Image style={{width:90, height:90}} source={require('../assets/account.png')} />
                 </TouchableHighlight>
-                <Text style={[styles.text,{top:180, left:93}]}>Account</Text>
+                <Text style={[styles.text,{top:140, left:93}]}>Account</Text>
                 <TouchableHighlight
-                     style={[styles.button, {top:70, left:190}]}
+                     style={[styles.button, {top:30, left:190}]}
                      onPress={()=>{this.props.navigation.navigate('Map');}}>
                      <Image style={{width:90, height:90}} source={require('../assets/maps-icon.png')} />
                 </TouchableHighlight>
-                <Text style={[styles.text,{top:180, left:205}]}>Find Plane</Text>
+                <Text style={[styles.text,{top:140, left:205}]}>Find Plane</Text>
                 
                 <TouchableHighlight
-                     style={[styles.button, {top:230, left:190}]}
-                     onPress={()=>console.log('button clicked')}>
-                     <Text style={styles.text}>IDONKNOW</Text>
+                     style={[styles.button, {top:190, left:190}]}
+                     onPress={()=>this.showAlert('Help Page','Sorry, Help Page is \ncurrently not working')}>
+                     <Image style={{width:70, height:70}} source={require('../assets/help.png')} />
                 </TouchableHighlight>
+                <Text style={[styles.text,{top:290, left:205}]}>Help</Text>
+                <TouchableHighlight
+                     style={[styles.button, {top:190, left:70}]}
+                     onPress={()=>this.showAlert('Setting Page','Sorry, Setting Page is \ncurrently not working')}>
+                     <Image style={{width:70, height:70}} source={require('../assets/setting.png')} />
+                </TouchableHighlight>
+                <Text style={[styles.text,{top:290, left:95}]}>Setting</Text>
 
                 <TouchableHighlight
-                     style={[styles.button, {top:230, left:70}]}
-                     onPress={()=>console.log('button clicked')}>
-                     <Text style={styles.text}>IDONKNOW</Text>
+                     style={[styles.button, {top:340, left:70}]}
+                     onPress={()=>this.showAlert('Alert Page','Sorry, Alert Page is \ncurrently not working')}>
+                     <Image style={{width:70, height:70}} source={require('../assets/alert.png')} />
                 </TouchableHighlight>
-
+                <Text style={[styles.text,{top:445, left:105}]}>Alert</Text>
+                {userInfo != 'guest' && 
                 <TouchableHighlight
-                     style={[styles.button, {top:380, left:70}]}
-                     onPress={()=>console.log('button clicked')}>
-                     <Text style={styles.text}>IDONKNOW</Text>
-                </TouchableHighlight>
-
-                {user != 'guest' && 
-                <TouchableHighlight
-                     style={[styles.button, {top:380, left: 190}]}
-                     onPress={()=>{this.props.navigation.navigate('Collection', {collections: user.collections});}}>
+                     style={[styles.button, {top:340, left: 190}]}
+                     onPress={()=>{this.props.navigation.navigate('Collection');}}>
                      <Image style={{width:70, height:70}} source={require('../assets/plane.png')}/>
                 </TouchableHighlight>}
-                {user != 'guest' && 
-                <Text style={[styles.text,{top:480, left:205}]}>Collection</Text>}
+                {userInfo != 'guest' && 
+                <Text style={[styles.text,{top:440, left:205}]}>Collection</Text>}
                 
+                <TouchableHighlight
+                     style={{position:'absolute',alignItems: 'center', justifyContent: 'center',top:480, width:'100%'}}
+                     onPress={()=>{
+                      global.userInfo = 'guest';
+                      this.props.navigation.navigate('Home')}}>
+                    <Text style={{textDecorationLine:'underline', fontSize:18}}> {this.state.signOut} </Text>
+                </TouchableHighlight>
 
                 <AwesomeAlert
-                  show={showAlert}
+                  show={this.state.showAlert}
                   showProgress={false}
                   title={this.state.title}
                   message={this.state.message}

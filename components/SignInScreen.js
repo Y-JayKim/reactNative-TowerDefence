@@ -42,7 +42,8 @@ _submitPressed(){
               usernameText: "",
               passwordText: ""
             });
-            this.props.navigation.navigate('Menu', {theUser:fetchItems[i]});
+            global.userInfo = fetchItems[i];
+            this.props.navigation.navigate('Menu');
             return true;
         }
       }
