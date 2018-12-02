@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, TouchableHighlight, Image, TextInput } from 'react-native';
+import { Keyboard, Text, View, StyleSheet, TouchableHighlight, Image, TextInput } from 'react-native';
 
 import { fetchItems } from '../services/DatabaseInterface';
 
@@ -48,6 +48,7 @@ _submitPressed(){
         }
       }
   }
+  Keyboard.dismiss();
   this.showAlert('Incorrect user information');
   return false;
 }
