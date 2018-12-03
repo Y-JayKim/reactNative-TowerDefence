@@ -42,7 +42,7 @@ export default class QuizScreen extends Component {
         this.setState({mainVisible: false});
     }
   
-    render() {
+    render() {  
         
         return (
             <View>
