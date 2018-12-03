@@ -8,15 +8,14 @@ import Permissions from 'react-native-permissions';
 import FlightsComponent from './FlightsComponent';
 
 export default class MapScreen extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             locationPermission: 'unknown',
             region: {
-                latitude: 49.1966913,
+                latitude: 0.1966913,
                 latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
-                longitude: -123.183701,
+                longitude: 0.183701,
                 longitudeDelta: 0.48,
             },
             markerRegion: {
@@ -24,31 +23,40 @@ export default class MapScreen extends Component {
                 latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
                 longitude: -123.183701,
                 longitudeDelta: 0.48,
-            }
+            },
+            buttonOpacity: 0
         };
-        this.onRegionChange = this.onRegionChange.bind(this);
     }
 
-    static navigationOptions = {
-
+    static navigationOptions = ({ navigation  }) => ({
         headerStyle: {
-            backgroundColor:'grey'
+            backgroundColor:"grey"
         },
         headerTintColor: '#fff',
-        
         headerLeft: (
-      <Button
-        onPress={() => {this.props.navigation.navigate('Home')}}
-        title="Log Out"
-        
-      />),
-      headerRight: (
-      <Button
-        onPress={() => {this.props.navigation.navigate('Collection')}}
-        title="Hangar"
-        
-      />)
-    };
+          <Button
+            onPress={()=>{
+                global.userInfo = 'guest'
+                navigation.navigate('Home')
+            }}
+            // onPress={() => {this.props.navigation.navigate('Home')}}
+            title="Log Out"
+          />
+        ),
+        headerRight: (
+            
+          <Button
+            onPress={() => {
+                if(userInfo != 'guest'){
+                    navigation.navigate('Collection')
+                }else{
+                    alert("YOU ARE A GUEST"); 
+                }
+            }}
+            title="Hangar"
+          />
+        )
+    });
 
     componentDidMount() {
         this._requestPermission();
@@ -62,6 +70,13 @@ export default class MapScreen extends Component {
             });
         },
             (error) => console.log(error));
+
+
+        if(userInfo != 'guest'){
+            this.setState({
+                buttonOpacity: 1
+            })
+        }
     }
 
     _requestPermission() {
@@ -73,13 +88,13 @@ export default class MapScreen extends Component {
             });
     }
 
-    onRegionChange(region){
+    onRegionChange = (region) =>{
         this.setState({ region });
     }
 
     render() {
-        return (
 
+        return (
             <MapView
                 region={this.state.region}
                 // onRegionChange={this.onRegionChange}
@@ -92,7 +107,6 @@ export default class MapScreen extends Component {
                     region={this.state.region}
                     props1={this.props}
                 />
-                
             </MapView>
         );
     }

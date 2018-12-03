@@ -120,7 +120,12 @@ export default class CollectionScreen extends Component {
                     resizeMode="cover"
                 />
             {
-                this.state.fontLoaded ? (
+                userInfo.collections[0] == {"nothing":"nothing"} &&
+                <Text>You have nothing in your collection</Text>
+
+            }
+            {
+                userInfo.collections[0] != {"nothing":"nothing"} && this.state.fontLoaded ? (
                 <View style={styles.container}>
 
                     <View style={{alignSelf:'center'}}>
