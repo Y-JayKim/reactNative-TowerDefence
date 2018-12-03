@@ -113,6 +113,7 @@ export default class CollectionScreen extends Component {
     };
 
     render() {
+        console.log(userInfo.collections);
         return (
             <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
                 <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
@@ -120,12 +121,12 @@ export default class CollectionScreen extends Component {
                     resizeMode="cover"
                 />
             {
-                userInfo.collections[0] == {"nothing":"nothing"} &&
+                userInfo.collections == "null" &&
                 <Text>You have nothing in your collection</Text>
 
             }
             {
-                userInfo.collections[0] != {"nothing":"nothing"} && this.state.fontLoaded ? (
+                userInfo.collections != "null" && this.state.fontLoaded ? (
                 <View style={styles.container}>
 
                     <View style={{alignSelf:'center'}}>
