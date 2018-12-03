@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight, Button } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 import Permissions from 'react-native-permissions';
@@ -14,15 +14,15 @@ export default class MapScreen extends Component {
         this.state = {
             locationPermission: 'unknown',
             region: {
-                latitude: 50.60254331180157,
+                latitude: 49.1966913,
                 latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
-                longitude: 16.721875704824924,
+                longitude: -123.183701,
                 longitudeDelta: 0.48,
             },
             markerRegion: {
-                latitude: 0.60254331180157,
+                latitude: 49.1966913,
                 latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
-                longitude: 6.721875704824924,
+                longitude: -123.183701,
                 longitudeDelta: 0.48,
             }
         };
@@ -30,14 +30,24 @@ export default class MapScreen extends Component {
     }
 
     static navigationOptions = {
-        title: 'Map',
+
         headerStyle: {
-            backgroundColor: '#625E5E'
+            backgroundColor:'grey'
         },
         headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
+        
+        headerLeft: (
+      <Button
+        onPress={() => {this.props.navigation.navigate('Home')}}
+        title="Log Out"
+        
+      />),
+      headerRight: (
+      <Button
+        onPress={() => {this.props.navigation.navigate('Collection')}}
+        title="Hangar"
+        
+      />)
     };
 
     componentDidMount() {

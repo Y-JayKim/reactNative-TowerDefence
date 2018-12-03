@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, DrawerNavigator } from 'react-navigation';
 
 import HomeScreen from './components/HomeScreen';
 import SignInScreen from './components/SignInScreen';
@@ -46,6 +46,7 @@ const RootStack = createStackNavigator(
     initialRouteName: 'Home',
   }
 );
+
 
 export default class App extends React.Component {
 
