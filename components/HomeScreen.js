@@ -43,9 +43,9 @@ export default class HomeScreen extends React.Component {
           {
                 this.state.fontLoaded ? (
             <View style={styles.container}>
-                  <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
-                    source={require('../assets/background.png')} 
-                    resizeMode="cover"
+                  <Image style={{position:'absolute', height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
+                    source={require('../assets/bg1.png')} 
+                    resizeMode="repeat"
                   />
                   <View style={styles.container2}>
                     <Text style={[styles.textStyle, {marginTop: 40 }]}>

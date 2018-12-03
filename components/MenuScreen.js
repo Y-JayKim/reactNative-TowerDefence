@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, Image, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { Text, Image, View, StyleSheet, TouchableHighlight, Dimensions } from 'react-native';
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { bcrypt } from 'react-native-bcrypt';
+
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 export default class MenuScreen extends Component {
 
@@ -58,59 +61,69 @@ export default class MenuScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
-                  source={require('../assets/background.png')} 
-                  resizeMode="cover"
+                <Image style={{ position:'absolute', flex:1,opacity:0.6, backgroundColor: '#E2E2E2', }} 
+                  source={require('../assets/bg1.png')} 
+                  resizeMode="repeat"
                 />
+                <View style={styles.menuBox}>
                 <TouchableHighlight
-                     style={[styles.button, {top:30, left:70}]}
+                     style={[styles.button]}
                      onPress={()=>this.showAlert('Account Page','Sorry, Account Page is \ncurrently not working')}>
-                     <Image style={{width:90, height:90}} source={require('../assets/account.png')} />
+                     <Image style={{width:90, height:90, justifyContent:'center', alignItems:'center'}} source={require('../assets/account.png')} />
                 </TouchableHighlight>
-                <Text style={[styles.text,{top:140, left:93}]}>Account</Text>
+                <Text style={[styles.text]}>Account</Text>
+                </View>
+                <View style={styles.menuBox}>
                 <TouchableHighlight
-                     style={[styles.button, {top:30, left:190}]}
+                     style={[styles.button]}
                      onPress={()=>{this.props.navigation.navigate('Map');}}>
-                     <Image style={{width:90, height:90}} source={require('../assets/maps-icon.png')} />
+                     <Image style={{width:90, height:90, justifyContent:'center', alignItems:'center'}} source={require('../assets/maps-icon.png')} />
                 </TouchableHighlight>
-                <Text style={[styles.text,{top:140, left:205}]}>Find Plane</Text>
-                
+                <Text style={[styles.text]}>Find Plane</Text>
+                </View>
+                <View style={styles.menuBox}>
                 <TouchableHighlight
-                     style={[styles.button, {top:190, left:190}]}
+                     style={[styles.button]}
                      onPress={()=>this.showAlert('Help Page','Sorry, Help Page is \ncurrently not working')}>
-                     <Image style={{width:70, height:70}} source={require('../assets/help.png')} />
+                     <Image style={{width:70, height:70, justifyContent:'center', alignItems:'center'}} source={require('../assets/help.png')} />
                 </TouchableHighlight>
-                <Text style={[styles.text,{top:290, left:205}]}>Help</Text>
+                <Text style={[styles.text]}>Help</Text>
+                </View>
+                <View style={styles.menuBox}>
                 <TouchableHighlight
-                     style={[styles.button, {top:190, left:70}]}
+                     style={[styles.button]}
                      onPress={()=>this.showAlert('Setting Page','Sorry, Setting Page is \ncurrently not working')}>
-                     <Image style={{width:70, height:70}} source={require('../assets/setting.png')} />
+                     <Image style={{width:70, height:70, justifyContent:'center', alignItems:'center'}} source={require('../assets/setting.png')} />
                 </TouchableHighlight>
-                <Text style={[styles.text,{top:290, left:95}]}>Setting</Text>
-
+                <Text style={[styles.text]}>Setting</Text>
+                </View>
+                <View style={styles.menuBox}>
                 <TouchableHighlight
-                     style={[styles.button, {top:340, left:70}]}
+                     style={[styles.button]}
                      onPress={()=>this.showAlert('Alert Page','Sorry, Alert Page is \ncurrently not working')}>
                      <Image style={{width:70, height:70}} source={require('../assets/alert.png')} />
                 </TouchableHighlight>
-                <Text style={[styles.text,{top:445, left:105}]}>Alert</Text>
+                <Text style={[styles.text]}>Alert</Text>
+                </View>
+                <View style={styles.menuBox}>
                 {userInfo != 'guest' && 
                 <TouchableHighlight
-                     style={[styles.button, {top:340, left: 190}]}
+                     style={[styles.button]}
                      onPress={()=>{this.props.navigation.navigate('Collection');}}>
-                     <Image style={{width:70, height:70}} source={require('../assets/plane.png')}/>
+                     <Image style={{width:70, height:70, justifyContent:'center', alignItems:'center'}} source={require('../assets/plane.png')}/>
                 </TouchableHighlight>}
                 {userInfo != 'guest' && 
-                <Text style={[styles.text,{top:440, left:205}]}>Collection</Text>}
-                
+                <Text style={[styles.text]}>Collection</Text>}
+                </View>
+                <View style={styles.menuBox}>
                 <TouchableHighlight
-                     style={{position:'absolute',alignItems: 'center', justifyContent: 'center',top:480, width:'100%'}}
+                     style={{alignItems: 'center', justifyContent: 'center', width:'100%'}}
                      onPress={()=>{
                       global.userInfo = 'guest';
                       this.props.navigation.navigate('Home')}}>
-                    <Text style={{textDecorationLine:'underline', fontSize:18}}> {this.state.signOut} </Text>
+                    <Text style={{textDecorationLine:'underline', fontSize:18, justifyContent:'center',alignItems:'flex-end'}}> {this.state.signOut} </Text>
                 </TouchableHighlight>
-
+                </View>
                 <AwesomeAlert
                   show={this.state.showAlert}
                   showProgress={false}
@@ -124,6 +137,7 @@ export default class MenuScreen extends Component {
                     this.hideAlert();
                   }}
                 />
+                
             </View>
         )
     }
@@ -132,25 +146,38 @@ export default class MenuScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    ...StyleSheet.absoluteFillObject,
+    flexWrap:'wrap',
+    flexDirection:'row'
+    
+    
   },
   text:{
-    position:'absolute',
+    alignItems:'center',
+    alignSelf:'center',
+    justifyContent:'center',
     fontSize:15,
-    top:100,
     fontWeight:'bold',
-    color:'#625E5E'
+    color:'#625E5E',
+    backgroundColor:'white'
   },
   button:{
-    position: 'absolute',
+    alignItems:'center',
+    alignContent:'center',
+    justifyContent:'center',
+    margin:30,
+    marginBottom:9,
     width:100,
     height:100,
     borderWidth:1.5, 
     borderColor:'black',
     borderRadius:10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    
     backgroundColor: '#625E5E'
+  },
+  menuBox: {
+    height:150,
+    width:width/3.2,
+    flexDirection:'column'
   }
 });

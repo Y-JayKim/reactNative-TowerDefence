@@ -1,22 +1,267 @@
-[
 {
-    "key": "1",
-    "name": "air canada",
-    "image": "https://cms-media.lyonaeroports.com/media/cache/image_slideshow/83441857/file.jpg",
-    "date_collected": "2018-11-20",
-    "location": "here"
-},
-{
-    "key": "2",
-    "name": "DELTA",
-    "image": "https://media.bizj.us/view/img/2174171/delta-air-lines*750xx2700-1517-0-12.jpg",
-    "date_collected": "2018-11-20",
-    "location": "here"
-},
-{
-    "key": "3",
-    "name": "not air canada",
-    "image": "https://i0.wp.com/thepointsguy.com/wp-content/uploads/2018/06/1_REG_4453.jpg?resize=480%2C270px&ssl=1",
-    "date_collected": "2018-11-20",
-    "location": "here"
-}]
+
+  "users" : {
+
+    "-LSRcZjDZiNGPjMJ872W" : {
+
+      "accountInfo" : {
+
+        "fullname" : "Jay Kim",
+
+        "password" : "1234",
+
+        "username" : "jay"
+
+      },
+
+      "collections" : [ {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "http://flightsnation.com/wp-content/uploads/2016/02/ac_034.jpg",
+
+        "key" : "1",
+
+        "location" : "here",
+
+        "name" : "air canada"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://media.bizj.us/view/img/2174171/delta-air-lines*750xx2700-1517-0-12.jpg",
+
+        "key" : "2",
+
+        "location" : "here",
+
+        "name" : "DELTA"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://i0.wp.com/thepointsguy.com/wp-content/uploads/2018/06/1_REG_4453.jpg?resize=480%2C270px&ssl=1",
+
+        "key" : "3",
+
+        "location" : "here",
+
+        "name" : "Korean Air"
+
+      } ]
+
+    },
+
+    "-LSRj4g2GFN2Qut2XKHx" : {
+
+      "accountInfo" : {
+
+        "fullname" : "Sangheun Lee",
+
+        "password" : "1234",
+
+        "username" : "Sangheun"
+
+      },
+
+      "collections" : [ {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://cms-media.lyonaeroports.com/media/cache/image_slideshow/83441857/file.jpg",
+
+        "key" : "1",
+
+        "location" : "here",
+
+        "name" : "air canada"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://media.bizj.us/view/img/2174171/delta-air-lines*750xx2700-1517-0-12.jpg",
+
+        "key" : "2",
+
+        "location" : "here",
+
+        "name" : "DELTA"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://i0.wp.com/thepointsguy.com/wp-content/uploads/2018/06/1_REG_4453.jpg?resize=480%2C270px&ssl=1",
+
+        "key" : "3",
+
+        "location" : "here",
+
+        "name" : "not air canada"
+
+      } ]
+
+    },
+
+    "-LSRjAhIeebhGpsj5mYs" : {
+
+      "accountInfo" : {
+
+        "fullname" : "Jay Kim",
+
+        "password" : "1234",
+
+        "username" : "Jay"
+
+      },
+
+      "collections" : [ {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://cms-media.lyonaeroports.com/media/cache/image_slideshow/83441857/file.jpg",
+
+        "key" : "1",
+
+        "location" : "here",
+
+        "name" : "air canada"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://media.bizj.us/view/img/2174171/delta-air-lines*750xx2700-1517-0-12.jpg",
+
+        "key" : "2",
+
+        "location" : "here",
+
+        "name" : "DELTA"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://i0.wp.com/thepointsguy.com/wp-content/uploads/2018/06/1_REG_4453.jpg?resize=480%2C270px&ssl=1",
+
+        "key" : "3",
+
+        "location" : "here",
+
+        "name" : "not air canada"
+
+      } ]
+
+    },
+
+    "-LSRl_LaWoEJ8v0UDEdZ" : {
+
+      "accountInfo" : {
+
+        "fullname" : "Ko Iketani",
+
+        "password" : "1234",
+
+        "username" : "Ko"
+
+      },
+
+      "collections" : [ {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://cms-media.lyonaeroports.com/media/cache/image_slideshow/83441857/file.jpg",
+
+        "key" : "1",
+
+        "location" : "here",
+
+        "name" : "air canada"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://media.bizj.us/view/img/2174171/delta-air-lines*750xx2700-1517-0-12.jpg",
+
+        "key" : "2",
+
+        "location" : "here",
+
+        "name" : "DELTA"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://i0.wp.com/thepointsguy.com/wp-content/uploads/2018/06/1_REG_4453.jpg?resize=480%2C270px&ssl=1",
+
+        "key" : "3",
+
+        "location" : "here",
+
+        "name" : "not air canada"
+
+      } ]
+
+    },
+
+    "-LSmCRwzkxPNo1-rIlAq" : {
+
+      "accountInfo" : {
+
+        "fullname" : "Sorina Schirhei",
+
+        "password" : "1234",
+
+        "username" : "Sorina"
+
+      },
+
+      "collections" : [ {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://cms-media.lyonaeroports.com/media/cache/image_slideshow/83441857/file.jpg",
+
+        "key" : "1",
+
+        "location" : "here",
+
+        "name" : "air canada"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://media.bizj.us/view/img/2174171/delta-air-lines*750xx2700-1517-0-12.jpg",
+
+        "key" : "2",
+
+        "location" : "here",
+
+        "name" : "DELTA"
+
+      }, {
+
+        "date_collected" : "2018-11-20",
+
+        "image" : "https://i0.wp.com/thepointsguy.com/wp-content/uploads/2018/06/1_REG_4453.jpg?resize=480%2C270px&ssl=1",
+
+        "key" : "3",
+
+        "location" : "here",
+
+        "name" : "not air canada"
+
+      } ]
+
+    }
+
+  }
+
+}

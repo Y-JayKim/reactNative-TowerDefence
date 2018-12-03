@@ -12,7 +12,8 @@ export default class FlightsComponent extends Component {
         super(props);
         this.state = {
             flights: null,
-            showAlert: false
+            showAlert: false,
+            quizAnswers:{'correct':[], 'wrong':[]}
         };
     }
 
@@ -23,6 +24,7 @@ export default class FlightsComponent extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.region != prevProps.region)
             this.fetchFlights();
+
     }
 
     fetchFlights() {
@@ -33,19 +35,27 @@ export default class FlightsComponent extends Component {
         fetch('https://opensky-network.org/api/states/all?lamin='+lamin+'&lomin='+lomin+'&lamax='+lamax+'&lomax='+lomax)
         .then((response) => response.json())
         .then((response) => {
-            console.log(response.states)
+            
             this.setState({
-                
-                flights: response.states
+                flights: response.states,
             });
+            
+            for (i = 0; i < response.states.length; i++){
+                console.log(response.states[i][1]);
+                
+                this.state.quizAnswers['wrong'].push(response.states[i][1])
+                
+            }
         })
     }
 
     render() {
+        console.log(this.state.quizAnswers['wrong']);
         if (this.state.flights === null) 
             return (null);
 
         return this.state.flights.map((flight) => {
+
             return (
                 <Marker
                     coordinate={{latitude: flight[6], longitude: flight[5]}}
@@ -54,7 +64,10 @@ export default class FlightsComponent extends Component {
                     // onPress={()=>this.props.props1.navigation.navigate('QuizPrompt')}
                     onPress={()=>Alert.alert('Message','Do you want to collect this plane?',[
                         {text: 'Cancel', onPress:()=> console.log('Cancel button pressed')},
-                        {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz')}
+                        {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz', {
+                                            callsign: flight[1]
+                                
+                                        })}
                     ],{ cancelable: false })}
                 />
             );
