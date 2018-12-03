@@ -12,6 +12,8 @@ import PlaneScreen from './components/PlaneScreen';
 import QuizScreen from './components/QuizScreen';
 import AnswerScreen from './components/AnswerScreen';
 
+global.userInfo = 'guest';
+
 const RootStack = createStackNavigator(
   {
     Home: {
@@ -44,6 +46,11 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
+  },
+  {
+    appGlobalVariables: {
+      thisis:"default"
+    }
   }
 );
 

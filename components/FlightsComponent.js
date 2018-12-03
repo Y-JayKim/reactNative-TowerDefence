@@ -4,12 +4,15 @@ import { View, StyleSheet, Alert } from 'react-native';
 
 import { Marker } from 'react-native-maps';
 
+import AwesomeAlert from 'react-native-awesome-alerts';
+
 export default class FlightsComponent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             flights: null,
+            showAlert: false
         };
     }
 
@@ -50,8 +53,8 @@ export default class FlightsComponent extends Component {
                     image={require('../assets/plane.png')}
                     // onPress={()=>this.props.props1.navigation.navigate('QuizPrompt')}
                     onPress={()=>Alert.alert('Message','Do you want to collect this plane?',[
-                        {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz')},
-                        {text: 'Cancel', onPress:()=> console.log('Cancel button pressed')}
+                        {text: 'Cancel', onPress:()=> console.log('Cancel button pressed')},
+                        {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz')}
                     ],{ cancelable: false })}
                 />
             );

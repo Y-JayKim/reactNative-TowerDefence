@@ -38,12 +38,12 @@ export default class CollectionScreen extends Component {
         })
 
         this.state = {
-            todoDataSource: ds.cloneWithRows(props.navigation.getParam('collections', [])),
+            todoDataSource: ds.cloneWithRows(userInfo.collections),
             size: true,
             modalVisible: false,
             poppedImage: '',
             fontLoaded: false,
-            todos: props.navigation.getParam('collections', [])
+            todos: userInfo.collections
         }
         this.pressRow = this.pressRow.bind(this);
         this.renderRow = this.renderRow.bind(this);
@@ -114,16 +114,21 @@ export default class CollectionScreen extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
+                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
+                    source={require('../assets/background.png')} 
+                    resizeMode="cover"
+                />
             {
                 this.state.fontLoaded ? (
                 <View style={styles.container}>
+
                     <View style={{alignSelf:'center'}}>
                     <View style={styles.titleAndButton}>
                     <TouchableHighlight
                         style={styles.mapButton}
                         onPress={()=>{this.props.navigation.navigate('Map')}}>
-                            <Text>Map</Text> 
+                            <Text style={{fontSize:20, fontWeight:'bold'}}>Map</Text> 
                     </TouchableHighlight>
                     <Text style={styles.text}>Hangar</Text>
                     </View>
@@ -163,10 +168,8 @@ export default class CollectionScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#E2E2E2',
         height: height,
         justifyContent: 'flex-start',
-
     },
     text: {
         fontFamily: 'Nunito-Bold',
@@ -185,11 +188,9 @@ const styles = StyleSheet.create({
         borderRadius:50,
         height:70,
         margin: 10,
-        
     },
     textContainer: {
         flexDirection:'column',
-
     },
     image: {
         flexDirection:'row',
@@ -224,13 +225,11 @@ const styles = StyleSheet.create({
         borderWidth:7,
         borderColor: "white",
         borderRadius:50,
-        
-        backgroundColor:'#C4C4C4',
+        backgroundColor:'#FF8C00',
+        justifyContent: 'center',
+        alignItems: 'center',
         alignSelf:'flex-start',
-        
         margin: 20,
-       
-        
     },
     titleAndButton: {
         flexDirection:'row'
