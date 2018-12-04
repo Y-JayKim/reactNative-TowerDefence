@@ -36,7 +36,9 @@ export default class FlightsComponent extends Component {
         .then((response) => response.json())
         .then((response) => {
             let results = response.states;
-
+            this.state.quizAnswers['correct'] = [];
+            this.state.quizAnswers['wrong'] = [];
+          
             if (results && results.length) {
                 for (i = results.length - 1; i >= 0; i--) {
                     if (results[i][1].trim() === "")
@@ -47,6 +49,7 @@ export default class FlightsComponent extends Component {
                     this.state.quizAnswers['wrong'].push(results[i][1]);
                 }
             }
+          
             this.setState({
                 flights: results,
             });
@@ -54,7 +57,8 @@ export default class FlightsComponent extends Component {
     }
 
     render() {
-        console.log(this.state.quizAnswers['wrong']);
+        console.log(this.state.quizAnswers);
+
         if (this.state.flights === null) 
             return (null);
 
@@ -68,10 +72,18 @@ export default class FlightsComponent extends Component {
                     // onPress={()=>this.props.props1.navigation.navigate('QuizPrompt')}
                     onPress={()=>Alert.alert('Message','Do you want to collect this plane?',[
                         {text: 'Cancel', onPress:()=> console.log('Cancel button pressed')},
-                        {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz', {
-                                            callsign: flight[1],
-                                            icao: flight[0].trim()
-                                        })}
+                        {text: 'Yes!', onPress: () => {
+                            this.state.quizAnswers['correct'].push(flight[7])
+                            console.log(this.state.quizAnswers)
+                            this.props.props1.navigation.navigate('Quiz', {
+                                callsign: flight[1],
+                                lat:flight[6],
+                                long: flight[5],
+                                answers: this.state.quizAnswers,
+                                icao: flight[0].trim()
+                        })}
+                        }
+                        
                     ],{ cancelable: false })}
                 />
             );
