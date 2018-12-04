@@ -19,23 +19,23 @@ export default class QuizScreen extends Component {
           mainVisible: true,
           answerName: '',
           icao: this.props.navigation.getParam('icao', 'NO ICAO'),
-          aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png',
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
         this.setMainVisible = this.setMainVisible.bind(this);
 
-        //this.getAircraftimage();
     }
     static navigationOptions = { header: null }
 
     async componentDidMount() {
-    await Font.loadAsync({
-        'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
-        'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
-    });
+        await Font.loadAsync({
+            'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
+            'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
+        });
 
-    this.setState({ fontLoaded: true });
+        this.setState({ fontLoaded: true });
+
+        this.getAircraftImage();
     }
 
     setCorrectVisible() {
@@ -48,7 +48,7 @@ export default class QuizScreen extends Component {
         this.setState({mainVisible: false});
     }
 
-    getAircraftimage() {
+    getAircraftImage() {
         console.log('quiz on \'' + this.state.icao + '\'');
         fetch('https://aviation-edge.com/v2/public/airplaneDatabase?key=' + AVEDGE_API_KEY + '&hexIcaoAirplane=' + this.state.icao)
         .then((response) => response.json())
@@ -62,19 +62,13 @@ export default class QuizScreen extends Component {
                 .then((response2) => {
                     if (response2) {
                         console.log(response2.items[0].image.thumbnailLink);
-                        this.state = {
-                            ...this.state,
-                            aircraftImageURL: response2.items[0].image.thumbnailLink,
-                        }
+                        this.setState({aircraftImageURL: response2.items[0].image.thumbnailLink});
                     }
                 })
             }
             else {
                 console.log('fallback');
-                this.state = {
-                    ...this.state,
-                    aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png',
-                }
+                this.setState({aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png'});
             }
         })
     }
