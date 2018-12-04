@@ -35,18 +35,21 @@ export default class FlightsComponent extends Component {
         fetch('https://opensky-network.org/api/states/all?lamin='+lamin+'&lomin='+lomin+'&lamax='+lamax+'&lomax='+lomax)
         .then((response) => response.json())
         .then((response) => {
-            
-            this.setState({
-                flights: response.states,
-            });
-            if (response.states && response.states.length) {
-                for (i = 0; i < response.states.length; i++){
-                    console.log(response.states[i][1]);
-                    
-                    this.state.quizAnswers['wrong'].push(response.states[i][1])
-                    
+            let results = response.states;
+
+            if (results && results.length) {
+                for (i = results.length - 1; i >= 0; i--) {
+                    if (results[i][1].trim() === "")
+                        results.splice(i, 1);
+                }
+                for (i = 0; i < results.length; i++){
+                    console.log(results[i][1]);
+                    this.state.quizAnswers['wrong'].push(results[i][1]);
                 }
             }
+            this.setState({
+                flights: results,
+            });
         })
     }
 
@@ -66,8 +69,8 @@ export default class FlightsComponent extends Component {
                     onPress={()=>Alert.alert('Message','Do you want to collect this plane?',[
                         {text: 'Cancel', onPress:()=> console.log('Cancel button pressed')},
                         {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz', {
-                                            callsign: flight[1]
-                                
+                                            callsign: flight[1],
+                                            icao: flight[0]
                                         })}
                     ],{ cancelable: false })}
                 />

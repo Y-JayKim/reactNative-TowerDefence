@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, TouchableHighlight, Dimensions, Modal, Image } from 'react-native';
 import { Font } from 'expo';
 
+import { AVEDGE_API_KEY, GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX } from '../db';
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -15,11 +17,14 @@ export default class QuizScreen extends Component {
           wrongVisible: false,
           correctVisible: false,
           mainVisible: true,
-          answerName: ''
+          answerName: '',
+          icao: navigation.getParam('icao', 'NO ICAO'),
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
         this.setMainVisible = this.setMainVisible.bind(this);
+
+        this.getAircraftimage();
     }
     static navigationOptions = { header: null }
 
@@ -41,6 +46,33 @@ export default class QuizScreen extends Component {
     setMainVisible() {
         this.setState({mainVisible: false});
     }
+
+    getAircraftimage() {
+        fetch('https://aviation-edge.com/v2/public/airplaneDatabase?key=' + AVEDGE_API_KEY + '&hexIcaoAirplane=' + this.state.icao)
+        .then((response) => response.json())
+        .then((response) => {
+            if (response && response.length) {
+                let productionLine = response[0].productionLine;
+
+                fetch(`https://www.googleapis.com/customsearch/v1?key=${GOOGLE_SEARCH_API_KEY}&cx=${GOOGLE_SEARCH_CX}&q=${productionLine}&num=1&searchType=image`)
+                .then((response2) => response2.json())
+                .then((response2) => {
+                    if (response2) {
+                        this.state = {
+                            ...this.state,
+                            aircraftImageURL: response2.items[0].image.thumbnailLink,
+                        }
+                    }
+                })
+            }
+            else {
+                this.state = {
+                    ...this.state,
+                    aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png',
+                }
+            }
+        })
+    }
   
     render() {  
         
@@ -57,6 +89,13 @@ export default class QuizScreen extends Component {
                         onRequestClose={ () => {this.setState({mainVisible: false})}}
                     >
                     <Text style={styles.title}>What kind of plane is it?</Text>
+
+                    <View style={styles.aircraftView}>
+                        <Image 
+                            source={{uri: this.state.aircraftImageURL}}
+                            style={styles.aircraftImage}
+                        />
+                    </View>
 
                     <View style={styles.answerButtons}>
                         <TouchableHighlight
@@ -288,5 +327,16 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         
         justifyContent: 'space-between',
-    }
+    },
+    aircraftView: {
+        top: height * 0.3,
+        width: width * 0.7,
+        height: width * 0.7,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    aircraftImage: {
+        width: '100%',
+        resizeMode: 'contain',
+    },
 });
