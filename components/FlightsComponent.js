@@ -59,7 +59,7 @@ export default class FlightsComponent extends Component {
             return (null);
 
         return this.state.flights.map((flight) => {
-
+            console.log(flight[0]);
             return (
                 <Marker
                     coordinate={{latitude: flight[6], longitude: flight[5]}}
@@ -70,7 +70,7 @@ export default class FlightsComponent extends Component {
                         {text: 'Cancel', onPress:()=> console.log('Cancel button pressed')},
                         {text: 'Yes!', onPress: () => this.props.props1.navigation.navigate('Quiz', {
                                             callsign: flight[1],
-                                            icao: flight[0]
+                                            icao: flight[0].trim()
                                         })}
                     ],{ cancelable: false })}
                 />

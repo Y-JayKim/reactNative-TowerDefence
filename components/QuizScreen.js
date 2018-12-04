@@ -10,21 +10,22 @@ const width = Dimensions.get('window').width;
 
 export default class QuizScreen extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           fontLoaded: false,
           wrongVisible: false,
           correctVisible: false,
           mainVisible: true,
           answerName: '',
-          icao: navigation.getParam('icao', 'NO ICAO'),
+          icao: this.props.navigation.getParam('icao', 'NO ICAO'),
+          aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png',
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
         this.setMainVisible = this.setMainVisible.bind(this);
 
-        this.getAircraftimage();
+        //this.getAircraftimage();
     }
     static navigationOptions = { header: null }
 
@@ -48,16 +49,19 @@ export default class QuizScreen extends Component {
     }
 
     getAircraftimage() {
+        console.log('quiz on \'' + this.state.icao + '\'');
         fetch('https://aviation-edge.com/v2/public/airplaneDatabase?key=' + AVEDGE_API_KEY + '&hexIcaoAirplane=' + this.state.icao)
         .then((response) => response.json())
         .then((response) => {
-            if (response && response.length) {
+            console.log(response);
+            if (response && response.length && !("error" in response)) {
                 let productionLine = response[0].productionLine;
-
+                console.log(productionLine);
                 fetch(`https://www.googleapis.com/customsearch/v1?key=${GOOGLE_SEARCH_API_KEY}&cx=${GOOGLE_SEARCH_CX}&q=${productionLine}&num=1&searchType=image`)
                 .then((response2) => response2.json())
                 .then((response2) => {
                     if (response2) {
+                        console.log(response2.items[0].image.thumbnailLink);
                         this.state = {
                             ...this.state,
                             aircraftImageURL: response2.items[0].image.thumbnailLink,
@@ -66,6 +70,7 @@ export default class QuizScreen extends Component {
                 })
             }
             else {
+                console.log('fallback');
                 this.state = {
                     ...this.state,
                     aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png',
@@ -75,7 +80,6 @@ export default class QuizScreen extends Component {
     }
   
     render() {  
-        
         return (
             <View>
             {
@@ -329,13 +333,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     aircraftView: {
-        top: height * 0.3,
-        width: width * 0.7,
-        height: width * 0.7,
+        top: 0,
+        width: width,
+        height: width,
         justifyContent: 'center',
         alignItems: 'center'
     },
     aircraftImage: {
+        height: '100%',
         width: '100%',
         resizeMode: 'contain',
     },
