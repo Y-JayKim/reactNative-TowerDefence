@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, TouchableHighlight, Dimensions, Modal, Image } from 'react-native';
 import { Font } from 'expo';
 
+import { addItem, fetchItems, addCollections } from '../services/DatabaseInterface';
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -40,6 +42,44 @@ export default class QuizScreen extends Component {
     }
     setMainVisible() {
         this.setState({mainVisible: false});
+    }
+
+    saveToCollection = () =>{
+        for(let i = 0; i < fetchItems.length; i++){
+            if(fetchItems[i].accountInfo.username == userInfo.accountInfo.username){
+                if(fetchItems[i].collections == "null"){
+                    addCollections(
+                        i
+                    ,{
+                        key:'4',
+                        name: 'Plane 1',
+                        date_collected: '2018-11-24',
+                        location: 'I wish i was in antartica',
+                        image: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'
+                    })
+                }else{
+                    addCollections(userInfo.accountInfo.username, String(fetchItems[i].collections.length),
+                        {
+                            key:String(fetchItems[i].collections.length),
+                            name: 'Plane 1',
+                            date_collected: '2018-11-24',
+                            location: 'I wish i was in antartica',
+                            image: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'
+                        }
+                    );
+                }
+                
+            }
+        }
+
+        this.setState({correctVisible: false})
+
+        this.props.navigation.navigate('Collection', {
+            name: 'Plane 1',
+            date_collected: '2018-11-24',
+            location: 'I wish i was in antartica',
+            image: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'
+        });
     }
   
     render() {  
@@ -124,17 +164,8 @@ export default class QuizScreen extends Component {
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
                                         style={[styles.buttonAnswer]}
-                                        onPress={()=>{
-                                            this.setState({correctVisible: false})
-                                            this.props.navigation.navigate('Collection', {
-                                            name: 'Plane 1',
-                                            date_collected: '2018-11-24',
-                                            location: 'I wish i was in antartica',
-                                            image: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'
-                                
-                                        })
-                                        
-                                        }}>
+                                        onPress={()=>this.saveToCollection()}
+                                    >
                                         <Text style={styles.buttonText}> Yes </Text>
                                     </TouchableHighlight>
 

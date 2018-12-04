@@ -41,7 +41,7 @@ export default class FlightsComponent extends Component {
             });
             
             for (i = 0; i < response.states.length; i++){
-                console.log(response.states[i][1]);
+                // console.log(response.states[i][1]);
                 
                 this.state.quizAnswers['wrong'].push(response.states[i][1])
                 
