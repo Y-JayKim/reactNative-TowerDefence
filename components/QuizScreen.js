@@ -3,35 +3,43 @@ import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, TouchableHighlight, Dimensions, Modal, Image } from 'react-native';
 import { Font } from 'expo';
 
-import { addItem, fetchItems, addCollections } from '../services/DatabaseInterface';
+import { AVEDGE_API_KEY, GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX } from '../db';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 export default class QuizScreen extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           fontLoaded: false,
           wrongVisible: false,
           correctVisible: false,
           mainVisible: true,
-          answerName: ''
+          answerName: '',
+          icao: this.props.navigation.getParam('icao', 'NO ICAO'),
+          questions:[],
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
         this.setMainVisible = this.setMainVisible.bind(this);
+
     }
     static navigationOptions = { header: null }
 
     async componentDidMount() {
-    await Font.loadAsync({
-        'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
-        'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
-    });
+        await Font.loadAsync({
+            'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
+            'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
+        });
+        this.setState({ fontLoaded: true });
 
-    this.setState({ fontLoaded: true });
+        this.getAircraftImage();
+    }
+
+    componentWillMount() {
+        this.getAnswers()
     }
 
     setCorrectVisible() {
@@ -42,6 +50,43 @@ export default class QuizScreen extends Component {
     }
     setMainVisible() {
         this.setState({mainVisible: false});
+    }
+
+    getAircraftImage() {
+        console.log('quiz on \'' + this.state.icao + '\'');
+        fetch('https://aviation-edge.com/v2/public/airplaneDatabase?key=' + AVEDGE_API_KEY + '&hexIcaoAirplane=' + this.state.icao)
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response);
+            if (response && response.length && !("error" in response)) {
+                let productionLine = response[0].productionLine;
+                console.log(productionLine);
+                fetch(`https://www.googleapis.com/customsearch/v1?key=${GOOGLE_SEARCH_API_KEY}&cx=${GOOGLE_SEARCH_CX}&q=${productionLine}&num=1&searchType=image`)
+                .then((response2) => response2.json())
+                .then((response2) => {
+                    if (response2) {
+                        console.log(response2.items[0].image.thumbnailLink);
+                        this.setState({aircraftImageURL: response2.items[0].image.thumbnailLink});
+                    }
+                })
+            }
+            else {
+                console.log('fallback');
+                this.setState({aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png'});
+            }
+        })
+    }
+  
+    getAnswers() {
+        const { navigation } = this.props;
+        const answers = navigation.getParam('answers', 'no answers');
+        this.state.questions.push(answers['correct'][0])
+        for(i = 0; i < 3; i++){
+
+            this.state.questions.push(Math.round( (Math.random() * 1000) * 10 ) / 10)
+  
+        }
+        this.state.questions.sort(() => Math.random() - 0.5);
     }
 
     saveToCollection = () =>{
@@ -83,7 +128,12 @@ export default class QuizScreen extends Component {
     }
   
     render() {  
-        
+        const { navigation } = this.props;
+        const answers = navigation.getParam('answers', 'no answers');
+        const name = navigation.getParam('callsign', 'no name');
+        const lat = navigation.getParam('lat', 'no lat');
+        const long = navigation.getParam('long', 'no long');
+        const picture = navigation.getParam('picture', 'no picture');
         return (
             <View>
             {
@@ -96,55 +146,81 @@ export default class QuizScreen extends Component {
                         visible={this.state.mainVisible}
                         onRequestClose={ () => {this.setState({mainVisible: false})}}
                     >
-                    <Text style={styles.title}>What kind of plane is it?</Text>
+                    <Text style={styles.title}>How high is the plane?</Text>
+
+                    <View style={styles.aircraftView}>
+                        <Image 
+                            source={{uri: this.state.aircraftImageURL}}
+                            style={styles.aircraftImage}
+                        />
+                    </View>
 
                     <View style={styles.answerButtons}>
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                this.setCorrectVisible()
+                                if (this.state.questions[0] == answers['correct'][0]){
+                                    this.setCorrectVisible()
+                                } else {
+                                    this.setWrongVisible()
+                                }
+                                
                                 this.setMainVisible()
-                                this.state.answerName = 'Plane 1'
+                                this.state.answerName = this.state.questions[0]
                               
                             }}
                             >
-                            <Text style={styles.buttonText}>Plane 1</Text>
+                            <Text style={styles.buttonText}>{this.state.questions[0]}</Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                this.state.answerName = 'Plane 2'
-                                this.setWrongVisible()
+                                if (this.state.questions[1] == answers['correct'][0]){
+                                    this.setCorrectVisible()
+                                } else {
+                                    this.setWrongVisible()
+                                }
+                                this.state.answerName = this.state.questions[1]
+                                
                                 this.setMainVisible()
                                 
                             
                               
                             }}
                             >
-                            <Text style={styles.buttonText}>Plane 2</Text>
+                            <Text style={styles.buttonText}>{this.state.questions[1]}</Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                this.state.answerName = 'Plane 3'
-                                this.setWrongVisible()
+                                this.state.answerName = this.state.questions[2]
+                                if (this.state.questions[2] == answers['correct'][0]){
+                                    this.setCorrectVisible()
+                                } else {
+                                    this.setWrongVisible()
+                                }
                                 this.setMainVisible()
 
                               
                             }}
                             >
-                            <Text style={styles.buttonText}>Plane 3</Text>
+                            <Text style={styles.buttonText}>{this.state.questions[2]}</Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                this.state.answerName = 'Plane 4'
-                                this.setWrongVisible()
+                                if (this.state.questions[3] == answers['correct'][0]){
+                                    this.setCorrectVisible()
+                                } else {
+                                    this.setWrongVisible()
+                                }
+                                this.state.answerName = this.state.questions[3]
+                               
                                 this.setMainVisible()
                               
                             }}
                             >
-                            <Text style={styles.buttonText}>Plane 4</Text>
+                            <Text style={styles.buttonText}>{this.state.questions[3]}</Text>
                         </TouchableHighlight>
                    
                    
@@ -163,17 +239,28 @@ export default class QuizScreen extends Component {
                                 <Text style={styles.text}>Would you like to add the plane to your hangar?</Text>
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
-                                        style={[styles.buttonAnswer]}
-                                        onPress={()=>this.saveToCollection()}
-                                    >
+                                        style={[styles.button]}
+                                        onPress={()=>{
+                                            this.setState({correctVisible: false})
+                                            this.props.navigation.navigate('Collection', {
+                                            name: name,
+                                            date_collected: new Date().format('m-d-Y'),
+                                            location: lat + ' ' + long,
+                                            image: picture
+                                
+                                        })
+                                        
+                                        }}>
                                         <Text style={styles.buttonText}> Yes </Text>
                                     </TouchableHighlight>
 
                                     <TouchableHighlight
-                                        style={[styles.buttonAnswer]}
+                                        style={[styles.button]}
                                        
-                                        onPress={()=>{this.props.navigation.navigate('Collection');
+                                        onPress={()=>{
                                             this.setState({correctVisible: false})
+                                            this.props.navigation.navigate('Collection');
+                                            
                                         }}>
                                         <Text style={styles.buttonText}> No </Text>
                                     </TouchableHighlight>
@@ -192,11 +279,11 @@ export default class QuizScreen extends Component {
                       <View>
                                 <Text style={styles.title}> Wrong! </Text>
                                 <View style={styles.planeImage}></View>
-                                <Text style={styles.text}>The plane was not {this.state.answerName}!</Text>
+                                <Text style={styles.text}>The plane was not {this.state.answerName}m high!</Text>
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
                                     
-                                        style={[styles.buttonAnswer]}
+                                        style={[styles.button]}
                                         
                                         onPress={()=>{this.props.navigation.navigate('Collection')
                                     this.setState({wrongVisible: false})}}>
@@ -205,7 +292,7 @@ export default class QuizScreen extends Component {
 
                                     <TouchableHighlight
                                      
-                                        style={[styles.buttonAnswer]}
+                                        style={[styles.button]}
                                        
                                         onPress={()=>{this.props.navigation.navigate('Map');
                                     this.setState({wrongVisible: false})}}>
@@ -319,5 +406,17 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         
         justifyContent: 'space-between',
-    }
+    },
+    aircraftView: {
+        top: 0,
+        width: width,
+        height: width,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    aircraftImage: {
+        height: '100%',
+        width: '100%',
+        resizeMode: 'contain',
+    },
 });

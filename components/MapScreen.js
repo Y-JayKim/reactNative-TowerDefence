@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, TouchableHighlight, Button } from 'react-native';
@@ -8,24 +9,25 @@ import Permissions from 'react-native-permissions';
 import FlightsComponent from './FlightsComponent';
 
 export default class MapScreen extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             locationPermission: 'unknown',
             region: {
-                latitude: 0.1966913,
-                latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
-                longitude: 0.183701,
-                longitudeDelta: 0.48,
-            },
-            markerRegion: {
                 latitude: 49.1966913,
                 latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
                 longitude: -123.183701,
                 longitudeDelta: 0.48,
             },
-            buttonOpacity: 0
+            markerRegion: {
+                latitude: 0.60254331180157,
+                latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
+                longitude: 6.721875704824924,
+                longitudeDelta: 0.48,
+}, buttonOpacity: 0
         };
+        this.onRegionChange = this.onRegionChange.bind(this);
     }
 
     static navigationOptions = ({ navigation  }) => ({
@@ -56,7 +58,7 @@ export default class MapScreen extends Component {
             title="Hangar"
           />
         )
-    });
+});
 
     componentDidMount() {
         this._requestPermission();
@@ -66,17 +68,15 @@ export default class MapScreen extends Component {
             newRegion.longitude = position.coords.longitude;
             this.setState({
                 region: newRegion,
-                markerRegion: newRegion
             });
         },
             (error) => console.log(error));
 
-
-        if(userInfo != 'guest'){
+         if(userInfo != 'guest'){
             this.setState({
                 buttonOpacity: 1
             })
-        }
+}
     }
 
     _requestPermission() {
@@ -88,9 +88,9 @@ export default class MapScreen extends Component {
             });
     }
 
-    onRegionChange = (region) =>{
+      onRegionChange = (region) =>{
         this.setState({ region });
-    }
+}
 
     render() {
 
@@ -110,6 +110,7 @@ export default class MapScreen extends Component {
             </MapView>
         );
     }
+
 }
 
 const styles = StyleSheet.create({

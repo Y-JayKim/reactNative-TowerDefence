@@ -121,7 +121,7 @@ export default class MenuScreen extends Component {
                      onPress={()=>{
                       global.userInfo = 'guest';
                       this.props.navigation.navigate('Home')}}>
-                    <Text style={{textDecorationLine:'underline', fontSize:18, justifyContent:'center',alignItems:'flex-end'}}> {this.state.signOut} </Text>
+                    <Text style={{bottom: 0, left: 10, textDecorationLine:'underline', fontSize:18}}> {this.state.signOut} </Text>
                 </TouchableHighlight>
                 </View>
                 <AwesomeAlert
@@ -148,18 +148,20 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     flexWrap:'wrap',
-    flexDirection:'row'
-    
-    
+    flexDirection:'row',
+    justifyContent: 'space-between'
   },
   text:{
     alignItems:'center',
     alignSelf:'center',
     justifyContent:'center',
-    fontSize:15,
+    fontSize:20,
     fontWeight:'bold',
-    color:'#625E5E',
-    backgroundColor:'white'
+    color:'white',
+    backgroundColor: 'transparent',
+    textShadowColor: 'rgba(0, 0, 0, 1)',
+    textShadowOffset: {width: 1.25, height: 1.25},
+    textShadowRadius: 1,
   },
   button:{
     alignItems:'center',
@@ -178,6 +180,8 @@ const styles = StyleSheet.create({
   menuBox: {
     height:150,
     width:width/3.2,
-    flexDirection:'column'
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center',
   }
 });
