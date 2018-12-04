@@ -199,8 +199,8 @@ export default class QuizScreen extends Component {
                     >
                     <View>
                                 <Text style={styles.title}> Correct! </Text>
-                                <Image source={{uri: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'}} style={styles.planeImage}/>
-                                <Text style={styles.text}>Would you like to add the plane to your hangar?</Text>
+                                <Image source={{uri: this.state.aircraftImageURL}} style={styles.planeImage}/>
+                                <Text style={styles.text}>Would you like to add this plane to your hangar?</Text>
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
                                         style={[styles.button]}
@@ -242,7 +242,7 @@ export default class QuizScreen extends Component {
                       >
                       <View>
                                 <Text style={styles.title}> Wrong! </Text>
-                                <View style={styles.planeImage}></View>
+                                <Image source={{uri: this.state.aircraftImageURL}} style={styles.planeImage}/>
                                 <Text style={styles.text}>The plane was not {this.state.answerName}m high!</Text>
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
