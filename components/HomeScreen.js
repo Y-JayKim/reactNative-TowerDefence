@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
     justifyContent:'center', 
   },
   image: {
-    backgroundColor:'red',
     flexDirection:'row',
     alignItems:'flex-end',
     justifyContent:'center', 
