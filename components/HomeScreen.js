@@ -80,7 +80,7 @@ export default class HomeScreen extends React.Component {
                   <TouchableHighlight
                      style={styles.guestButton}
                      onPress={()=>{this.props.navigation.navigate('Menu');}}>
-                     <Text style={[styles.buttonText, {color: '#625E5E', fontFamily: 'Nunito-Regular', textDecorationLine:'underline'}]}> View as Guest </Text>
+                     <Text style={styles.guestButtonText}> View as Guest </Text>
                     </TouchableHighlight>
                   </View>
             </View>
@@ -120,16 +120,18 @@ const styles = StyleSheet.create({
     height:79,
     alignSelf:'flex-start',
     fontSize: 80,
-    padding:4,
-    backgroundColor: 'white',
-    marginLeft:20
+    marginLeft:20,
+    backgroundColor: 'transparent',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: 1.5, height: 1.5},
+    textShadowRadius: 5,
   },
   button: {
     width:130,
     height:70,
     borderWidth:3,
     borderColor: "white",
-    borderRadius:20,
+    borderRadius:5,
     marginLeft:10,
     marginRight:10,
     backgroundColor:'#625E5E',
@@ -151,5 +153,16 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center', 
     marginTop:10
-  }
+  },
+  guestButtonText: {
+    fontSize:20, 
+    color:'#625E5E',
+    fontFamily: 'Nunito-Regular',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textDecorationLine: 'underline',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: 0.5, height: 0.5},
+    textShadowRadius: 5,
+  },
 });

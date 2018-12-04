@@ -179,12 +179,15 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: 'Nunito-Bold',
-        color: '#625E5E',
+        color: 'white',
         fontSize: 40,
         margin: 30,
         justifyContent: 'flex-start',
         alignSelf:'center',
-        backgroundColor:'white'
+        backgroundColor:'transparent',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 1,
     },
     row: {
         flex:1,

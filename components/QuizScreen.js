@@ -3,40 +3,42 @@ import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, TouchableHighlight, Dimensions, Modal, Image } from 'react-native';
 import { Font } from 'expo';
 
+import { AVEDGE_API_KEY, GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX } from '../db';
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 export default class QuizScreen extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           fontLoaded: false,
           wrongVisible: false,
           correctVisible: false,
           mainVisible: true,
+          answerName: '',
+          icao: this.props.navigation.getParam('icao', 'NO ICAO'),
           questions:[],
-          answerName: ''
-
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
         this.setMainVisible = this.setMainVisible.bind(this);
+
     }
     static navigationOptions = { header: null }
 
     async componentDidMount() {
-    await Font.loadAsync({
-        'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
-        'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
-    });
+        await Font.loadAsync({
+            'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
+            'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
+        });
+        this.setState({ fontLoaded: true });
 
-    this.setState({ fontLoaded: true });
-     
+        this.getAircraftImage();
     }
 
     componentWillMount() {
-
         this.getAnswers()
     }
 
@@ -50,6 +52,31 @@ export default class QuizScreen extends Component {
         this.setState({mainVisible: false});
     }
 
+    getAircraftImage() {
+        console.log('quiz on \'' + this.state.icao + '\'');
+        fetch('https://aviation-edge.com/v2/public/airplaneDatabase?key=' + AVEDGE_API_KEY + '&hexIcaoAirplane=' + this.state.icao)
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response);
+            if (response && response.length && !("error" in response)) {
+                let productionLine = response[0].productionLine;
+                console.log(productionLine);
+                fetch(`https://www.googleapis.com/customsearch/v1?key=${GOOGLE_SEARCH_API_KEY}&cx=${GOOGLE_SEARCH_CX}&q=${productionLine}&num=1&searchType=image`)
+                .then((response2) => response2.json())
+                .then((response2) => {
+                    if (response2) {
+                        console.log(response2.items[0].image.thumbnailLink);
+                        this.setState({aircraftImageURL: response2.items[0].image.thumbnailLink});
+                    }
+                })
+            }
+            else {
+                console.log('fallback');
+                this.setState({aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png'});
+            }
+        })
+    }
+  
     getAnswers() {
         const { navigation } = this.props;
         const answers = navigation.getParam('answers', 'no answers');
@@ -84,6 +111,13 @@ export default class QuizScreen extends Component {
                         onRequestClose={ () => {this.setState({mainVisible: false})}}
                     >
                     <Text style={styles.title}>How high is the plane?</Text>
+
+                    <View style={styles.aircraftView}>
+                        <Image 
+                            source={{uri: this.state.aircraftImageURL}}
+                            style={styles.aircraftImage}
+                        />
+                    </View>
 
                     <View style={styles.answerButtons}>
                         <TouchableHighlight
@@ -336,5 +370,17 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         
         justifyContent: 'space-between',
-    }
+    },
+    aircraftView: {
+        top: 0,
+        width: width,
+        height: width,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    aircraftImage: {
+        height: '100%',
+        width: '100%',
+        resizeMode: 'contain',
+    },
 });
