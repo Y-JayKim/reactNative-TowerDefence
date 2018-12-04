@@ -39,12 +39,13 @@ export default class FlightsComponent extends Component {
             this.setState({
                 flights: response.states,
             });
-            
-            for (i = 0; i < response.states.length; i++){
-                console.log(response.states[i][1]);
-                
-                this.state.quizAnswers['wrong'].push(response.states[i][1])
-                
+            if (response.states && response.states.length) {
+                for (i = 0; i < response.states.length; i++){
+                    console.log(response.states[i][1]);
+                    
+                    this.state.quizAnswers['wrong'].push(response.states[i][1])
+                    
+                }
             }
         })
     }
