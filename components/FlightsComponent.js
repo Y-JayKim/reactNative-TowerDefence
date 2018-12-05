@@ -19,6 +19,7 @@ export default class FlightsComponent extends Component {
 
     componentDidMount() {
         this.fetchFlights();
+        this.forceUpdate();
     }
 
     componentDidUpdate(prevProps) {
@@ -36,8 +37,9 @@ export default class FlightsComponent extends Component {
         .then((response) => response.json())
         .then((response) => {
             let results = response.states;
-            this.state.quizAnswers['correct'] = [];
-            this.state.quizAnswers['wrong'] = [];
+          
+            this.setState({quizAnswers:{'correct':[], 'wrong':[]}})
+            
           
             if (results && results.length) {
                 for (i = results.length - 1; i >= 0; i--) {

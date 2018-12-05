@@ -10,6 +10,7 @@ import aircraftModels from '../assets/aircraftModels.js';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
+let today = new Date().toISOString().slice(0, 10)
 
 export default class QuizScreen extends Component {
 
@@ -139,23 +140,25 @@ export default class QuizScreen extends Component {
     }
 
     saveToCollection = () =>{
+        
         if(userInfo.accountInfo == 'guest'){
             if(userInfo.collections == "null"){
+
                 userInfo.collections = [{
-                                            name: this.state.name,
+                                            name: this.state.correctAnswer,
                                             key:0,
-                                            date_collected: 2018-11-20,
+                                            date_collected: today,
                                             location: this.state.lat + ' ' + this.state.long,
-                                            image: this.state.picture,
+                                            image: this.state.aircraftImageURL,
                                             icao: this.props.navigation.getParam('icao', 'NO ICAO')
                                         }]
             }else{
                 userInfo.collections.push({
-                                            name: this.state.name,
+                                            name: this.state.correctAnswer,
                                             key: this.state.keyNumber,
-                                            date_collected: 2018-11-20,
+                                            date_collected: today,
                                             location: this.state.lat + ' ' + this.state.long,
-                                            image: this.state.picture,
+                                            image: this.state.aircraftImageURL,
                                             icao: this.props.navigation.getParam('icao', 'NO ICAO')
                                         })
             }
@@ -239,6 +242,9 @@ export default class QuizScreen extends Component {
                             style={styles.button}
                             onPress={() => {
                                 if (this.state.questions[0] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()
@@ -255,6 +261,9 @@ export default class QuizScreen extends Component {
                             style={styles.button}
                             onPress={() => {
                                 if (this.state.questions[1] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()
@@ -271,6 +280,9 @@ export default class QuizScreen extends Component {
                             onPress={() => {
                                 this.state.answerName = this.state.questions[2]
                                 if (this.state.questions[2] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()
@@ -284,6 +296,9 @@ export default class QuizScreen extends Component {
                             style={styles.button}
                             onPress={() => {
                                 if (this.state.questions[3] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()

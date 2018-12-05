@@ -93,6 +93,11 @@ export default class SignInScreen extends Component {
       const { showAlert } = this.state;
           return (
               <View style={styles.container}>
+              <TouchableHighlight
+                                style={styles.mapButton}
+                                onPress={()=>{this.props.navigation.navigate('Home')}}>
+                                <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Back</Text> 
+                            </TouchableHighlight>
                   <Text style={styles.header}>Login</Text>
                   <View style={styles.views}>
                       <TextInput
@@ -206,5 +211,19 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         color:'darkorange',
         marginBottom:20
-    }
+    },
+    mapButton: {
+        position:'absolute',
+        right:20,
+        top:40,
+        width:70,
+        height:50,
+        backgroundColor:'darkorange',
+        alignItems:'center',
+        justifyContent: 'center',
+        alignSelf:'flex-end',
+        marginTop:40,
+        marginRight:20
+       
+    },
 });
