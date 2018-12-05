@@ -113,15 +113,13 @@ export default class MenuScreen extends Component {
                 </TouchableHighlight>
                 <Text style={[styles.text]}>Collection</Text>
                 </View>
-                <View style={styles.menuBox}>
                 <TouchableHighlight
-                     style={{alignItems: 'center', justifyContent: 'center', width:'100%'}}
+                     style={{alignItems: 'center', justifyContent: 'center', width:'100%',marginTop:20}}
                      onPress={()=>{
                       global.userInfo = guestDefault;
                       this.props.navigation.navigate('Home')}}>
-                    <Text style={{bottom: 0, left: 10, textDecorationLine:'underline', fontSize:18}}> {this.state.signOut} </Text>
+                    <Text style={{bottom: 0, left: 10, textDecorationLine:'underline', fontSize:18, fontWeight:'bold'}}> {this.state.signOut} </Text>
                 </TouchableHighlight>
-                </View>
                 <AwesomeAlert
                   show={this.state.showAlert}
                   showProgress={false}
@@ -172,12 +170,11 @@ const styles = StyleSheet.create({
     borderWidth:1.5, 
     borderColor:'black',
     borderRadius:10,
-    
     backgroundColor: '#625E5E'
   },
   menuBox: {
     height:150,
-    width:width/3.2,
+    width:width/2,
     flexDirection:'column',
     justifyContent:'center',
     alignItems:'center',
