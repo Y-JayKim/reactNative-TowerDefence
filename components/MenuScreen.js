@@ -52,7 +52,7 @@ export default class MenuScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                
+                <View style={styles.whole}>
                 <View style={styles.menuBox}>
                 <TouchableHighlight
                      style={[styles.button]}
@@ -96,16 +96,19 @@ export default class MenuScreen extends Component {
                 </View>
 
                 <TouchableHighlight
-                     style={{alignItems: 'flex-end', justifyContent: 'center', width:'100%',margin:20}}
+                     style={{alignItems: 'center', justifyContent: 'flex-end', width:'100%',margin:20}}
 
                      onPress={()=>{
                       global.userInfo = guestDefault;
                       this.props.navigation.navigate('Home')}}>
 
-                    <Text style={{ fontSize:20, color:'darkorange'}}> {this.state.signOut} </Text>
+                    <Text style={{ fontSize:width/13, color:'darkorange', fontFamily: 'Nunito-Regular',alignItems: 'center',justifyContent: 'center', }}> {this.state.signOut} </Text>
                 </TouchableHighlight>
                
 
+                
+              
+                </View>
                 <AwesomeAlert
                   show={this.state.showAlert}
                   showProgress={false}
@@ -119,8 +122,6 @@ export default class MenuScreen extends Component {
                     this.hideAlert();
                   }}
                 />
-              
-                
             </View>
         )
     }
@@ -172,6 +173,12 @@ const styles = StyleSheet.create({
     marginTop:20,
     
   },
+  whole: {
+    flexWrap:'wrap',
+    flexDirection:'row',
+    alignSelf:'center',
+    justifyContent:'center'
   
+  }
 });
 
