@@ -61,16 +61,16 @@ export default class CollectionScreen extends Component {
 
         this.setState({ fontLoaded: true });
         this.fetchTodos();
-        const { navigation } = this.props;
+        // const { navigation } = this.props;
         
-        const image = navigation.getParam('image', 'noimage');
+        // const image = navigation.getParam('image', 'noimage');
 
-        if (image != 'noimage'){
-            const name = navigation.getParam('name', 'no name');
-            const date = navigation.getParam('date_collected', 'no date');
-            const location = navigation.getParam('location', 'no location');
-            this.state.todos.push({name: name, image:image, date_collected: date, location: location, key: JSON.stringify(todos.length + 1)})
-        }
+        // if (image != 'noimage'){
+        //     const name = navigation.getParam('name', 'no name');
+        //     const date = navigation.getParam('date_collected', 'no date');
+        //     const location = navigation.getParam('location', 'no location');
+        //     this.state.todos.push({name: name, image:image, date_collected: date, location: location, key: JSON.stringify(todos.length + 1)})
+        // }
     }
 
     pressRow(rowID) {

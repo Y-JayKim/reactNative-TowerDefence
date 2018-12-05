@@ -75,12 +75,14 @@ export default class FlightsComponent extends Component {
                         {text: 'Yes!', onPress: () => {
                             this.state.quizAnswers['correct'].push(flight[7])
                             console.log(this.state.quizAnswers)
+
                             this.props.props1.navigation.navigate('Quiz', {
                                 callsign: flight[1],
                                 lat:flight[6],
                                 long: flight[5],
                                 answers: this.state.quizAnswers,
-                                icao: flight[0].trim()
+                                icao: flight[0].trim(),
+                                keyNumber: userInfo.collections.length
                         })}
                         }
                         

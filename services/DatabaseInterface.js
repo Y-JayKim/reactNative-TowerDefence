@@ -23,10 +23,11 @@ export const addItem = (item) => {
 	});
 }
 
-export const addCollections = (name, theLength, collections) => {
+export const addCollections = (name,  theLength,collections) => {
 	for(let key in data){
 		if(data[key].accountInfo.username == name){
-			db.ref('/users/'+String(key)+'/collections/'+ theLength).update(collections);
+			db.ref('/users/'+String(key)+'/collections/'+theLength).update(collections);
+			userInfo = data[key];
 		}
 	}
 }

@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, TouchableHighlight, Dimensions, Modal, Image } 
 import { Font } from 'expo';
 
 import { AVEDGE_API_KEY, GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX } from '../db';
+import { fetchItems, addCollections } from '../services/DatabaseInterface';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -20,11 +21,14 @@ export default class QuizScreen extends Component {
           answerName: '',
           icao: this.props.navigation.getParam('icao', 'NO ICAO'),
           questions:[],
+          name: '',
+          lat: 0,
+          long: 0,
+          picture: ''
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
         this.setMainVisible = this.setMainVisible.bind(this);
-
     }
     static navigationOptions = { header: null }
 
@@ -33,8 +37,14 @@ export default class QuizScreen extends Component {
             'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
             'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
         });
-        this.setState({ fontLoaded: true });
 
+        this.setState({ 
+            fontLoaded: true,
+            name: this.props.navigation.getParam('callsign', 'no name'),
+            lat:this.props.navigation.getParam('lat', 'no lat'),
+            long: this.props.navigation.getParam('long', 'no long'),
+            picture: this.props.navigation.getParam('picture', 'no picture') 
+        });
         this.getAircraftImage();
     }
 
@@ -94,22 +104,25 @@ export default class QuizScreen extends Component {
             if(fetchItems[i].accountInfo.username == userInfo.accountInfo.username){
                 if(fetchItems[i].collections == "null"){
                     addCollections(
-                        i
+                        userInfo.accountInfo.username, 
+                        this.props.navigation.getParam('keyNumber', '9999')
                     ,{
-                        key:'4',
-                        name: 'Plane 1',
-                        date_collected: '2018-11-24',
-                        location: 'I wish i was in antartica',
-                        image: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'
+                        name: this.state.name,
+                        date_collected: 2018-11-20,
+                        location: this.state.lat + ' ' + this.state.long,
+                        image: this.state.picture,
+                        icao: this.props.navigation.getParam('icao', 'NO ICAO')
                     })
                 }else{
-                    addCollections(userInfo.accountInfo.username, String(fetchItems[i].collections.length),
+                    
+                    addCollections(userInfo.accountInfo.username, this.props.navigation.getParam('keyNumber', '9999'),
                         {
-                            key:String(fetchItems[i].collections.length),
-                            name: 'Plane 1',
-                            date_collected: '2018-11-24',
-                            location: 'I wish i was in antartica',
-                            image: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'
+                            name: this.state.name,
+                            key: this.props.navigation.getParam('keyNumber', '9999'),
+                            date_collected: 2018-11-20,
+                            location: this.state.lat + ' ' + this.state.long,
+                            image: this.state.picture,
+                            icao: this.props.navigation.getParam('icao', 'NO ICAO')
                         }
                     );
                 }
@@ -119,21 +132,13 @@ export default class QuizScreen extends Component {
 
         this.setState({correctVisible: false})
 
-        this.props.navigation.navigate('Collection', {
-            name: 'Plane 1',
-            date_collected: '2018-11-24',
-            location: 'I wish i was in antartica',
-            image: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'
-        });
+        this.props.navigation.navigate('Collection')
     }
   
     render() {  
         const { navigation } = this.props;
         const answers = navigation.getParam('answers', 'no answers');
-        const name = navigation.getParam('callsign', 'no name');
-        const lat = navigation.getParam('lat', 'no lat');
-        const long = navigation.getParam('long', 'no long');
-        const picture = navigation.getParam('picture', 'no picture');
+
         return (
             <View>
             {
@@ -144,7 +149,7 @@ export default class QuizScreen extends Component {
                         animationType={"fade"}
                         transparent={true}
                         visible={this.state.mainVisible}
-                        onRequestClose={ () => {this.setState({mainVisible: false})}}
+                        onRequestClose={ () => {this.setState({mainVisible: true})}}
                     >
                     <Text style={styles.title}>How high is the plane?</Text>
 
@@ -183,9 +188,6 @@ export default class QuizScreen extends Component {
                                 this.state.answerName = this.state.questions[1]
                                 
                                 this.setMainVisible()
-                                
-                            
-                              
                             }}
                             >
                             <Text style={styles.buttonText}>{this.state.questions[1]}</Text>
@@ -199,9 +201,7 @@ export default class QuizScreen extends Component {
                                 } else {
                                     this.setWrongVisible()
                                 }
-                                this.setMainVisible()
-
-                              
+                                this.setMainVisible()                  
                             }}
                             >
                             <Text style={styles.buttonText}>{this.state.questions[2]}</Text>
@@ -231,7 +231,7 @@ export default class QuizScreen extends Component {
                         animationType={"fade"}
                         transparent={true}
                         visible={this.state.correctVisible}
-                        onRequestClose={ () => {this.setState({correctVisible: false})}}
+                        onRequestClose={()=>this.setState({correctVisible: false})}
                     >
                     <View>
                                 <Text style={styles.title}> Correct! </Text>
@@ -240,17 +240,7 @@ export default class QuizScreen extends Component {
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
                                         style={[styles.button]}
-                                        onPress={()=>{
-                                            this.setState({correctVisible: false})
-                                            this.props.navigation.navigate('Collection', {
-                                            name: name,
-                                            date_collected: new Date().format('m-d-Y'),
-                                            location: lat + ' ' + long,
-                                            image: picture
-                                
-                                        })
-                                        
-                                        }}>
+                                        onPress={()=>this.saveToCollection()}>
                                         <Text style={styles.buttonText}> Yes </Text>
                                     </TouchableHighlight>
 
