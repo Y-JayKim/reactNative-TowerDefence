@@ -15,6 +15,7 @@ export default class FlightsComponent extends Component {
             showAlert: false,
             quizAnswers:{'correct':[], 'wrong':[]}
         };
+        var timer;
         this.fetchFlights = this.fetchFlights.bind(this);
     }
 
@@ -23,7 +24,8 @@ export default class FlightsComponent extends Component {
     }
 
     componentDidMount() {
-        var timer = setInterval(this.fetchFlights, 10000);
+        this.fetchFlights;
+        timer = setInterval(this.fetchFlights, 10000);
     }
 
     componentDidUpdate(prevProps) {
