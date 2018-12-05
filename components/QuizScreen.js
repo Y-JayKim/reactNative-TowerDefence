@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, TouchableHighlight, Dimensions, Modal, Image } 
 import { Font } from 'expo';
 
 import { AVEDGE_API_KEY, GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX } from '../db';
-import { fetchItems, addCollections } from '../services/DatabaseInterface';
+import { fetchItems, addCollections, setCollections } from '../services/DatabaseInterface';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -100,38 +100,61 @@ export default class QuizScreen extends Component {
     }
 
     saveToCollection = () =>{
-        for(let i = 0; i < fetchItems.length; i++){
-            if(fetchItems[i].accountInfo.username == userInfo.accountInfo.username){
-                if(fetchItems[i].collections == "null"){
-                    addCollections(
-                        userInfo.accountInfo.username, 
-                        this.props.navigation.getParam('keyNumber', '9999')
-                    ,{
-                        name: this.state.name,
-                        date_collected: 2018-11-20,
-                        location: this.state.lat + ' ' + this.state.long,
-                        image: this.state.picture,
-                        icao: this.props.navigation.getParam('icao', 'NO ICAO')
-                    })
-                }else{
-                    
-                    addCollections(userInfo.accountInfo.username, this.props.navigation.getParam('keyNumber', '9999'),
-                        {
-                            name: this.state.name,
-                            key: this.props.navigation.getParam('keyNumber', '9999'),
-                            date_collected: 2018-11-20,
-                            location: this.state.lat + ' ' + this.state.long,
-                            image: this.state.picture,
-                            icao: this.props.navigation.getParam('icao', 'NO ICAO')
-                        }
-                    );
+        if(userInfo.accountInfo == 'guest'){
+            if(userInfo.collections == "null"){
+                userInfo.collections = [{
+                                            name: this.state.name,
+                                            key:0,
+                                            date_collected: 2018-11-20,
+                                            location: this.state.lat + ' ' + this.state.long,
+                                            image: this.state.picture,
+                                            icao: this.props.navigation.getParam('icao', 'NO ICAO')
+                                        }]
+            }else{
+                userInfo.collections.push({
+                                            name: this.state.name,
+                                            key: this.props.navigation.getParam('keyNumber', '9999'),
+                                            date_collected: 2018-11-20,
+                                            location: this.state.lat + ' ' + this.state.long,
+                                            image: this.state.picture,
+                                            icao: this.props.navigation.getParam('icao', 'NO ICAO')
+                                        })
+            }
+        }else{
+            for(let i = 0; i < fetchItems.length; i++){
+                if(fetchItems[i].accountInfo.username == userInfo.accountInfo.username){
+                    if(fetchItems[i].collections == "null"){
+                        setCollections(
+                            userInfo.accountInfo.username, 
+                            {
+                                name: this.state.name,
+                                key:0,
+                                date_collected: 2018-11-20,
+                                location: this.state.lat + ' ' + this.state.long,
+                                image: this.state.picture,
+                                icao: this.props.navigation.getParam('icao', 'NO ICAO')
+                            }
+                        )
+                        i = fetchItems.length;
+                    }else{
+                        addCollections(userInfo.accountInfo.username, this.props.navigation.getParam('keyNumber', '9999'),
+                            {
+                                name: this.state.name,
+                                key: this.props.navigation.getParam('keyNumber', '9999'),
+                                date_collected: 2018-11-20,
+                                location: this.state.lat + ' ' + this.state.long,
+                                image: this.state.picture,
+                                icao: this.props.navigation.getParam('icao', 'NO ICAO')
+                            }
+                        );
+                        i = fetchItems.length;
+                    }
                 }
-                
             }
         }
+        
 
         this.setState({correctVisible: false})
-
         this.props.navigation.navigate('Collection')
     }
   

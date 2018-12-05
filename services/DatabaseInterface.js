@@ -24,9 +24,19 @@ export const addItem = (item) => {
 }
 
 export const addCollections = (name,  theLength,collections) => {
+	console.log('IN')
 	for(let key in data){
 		if(data[key].accountInfo.username == name){
 			db.ref('/users/'+String(key)+'/collections/'+theLength).update(collections);
+			userInfo = data[key];
+		}
+	}
+}
+
+export const setCollections = (name, collections) => {
+	for(let key in data){
+		if(data[key].accountInfo.username == name){
+			db.ref('/users/'+String(key)+'/collections/'+String(0)).set(collections);
 			userInfo = data[key];
 		}
 	}

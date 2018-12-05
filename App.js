@@ -12,7 +12,14 @@ import PlaneScreen from './components/PlaneScreen';
 import QuizScreen from './components/QuizScreen';
 import AnswerScreen from './components/AnswerScreen';
 
-global.userInfo = 'guest';
+global.userInfo = {
+                    "accountInfo" : 'guest',
+                    "collections" : "null"
+                  };
+global.guestDefault = {
+                        "accountInfo" : 'guest',
+                        "collections" : "null"
+                      };
 
 const RootStack = createStackNavigator(
   {

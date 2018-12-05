@@ -47,7 +47,7 @@ export default class MenuScreen extends Component {
     }
 
     componentDidMount(){
-      if(userInfo != 'guest'){
+      if(userInfo.accountInfo != 'guest'){
           this.setState({
             message: 'Welcome, '+ userInfo.accountInfo.fullname + '!'
           });
@@ -106,20 +106,18 @@ export default class MenuScreen extends Component {
                 <Text style={[styles.text]}>Alert</Text>
                 </View>
                 <View style={styles.menuBox}>
-                {userInfo != 'guest' && 
                 <TouchableHighlight
                      style={[styles.button]}
                      onPress={()=>{this.props.navigation.navigate('Collection');}}>
                      <Image style={{width:70, height:70, justifyContent:'center', alignItems:'center'}} source={require('../assets/plane.png')}/>
-                </TouchableHighlight>}
-                {userInfo != 'guest' && 
-                <Text style={[styles.text]}>Collection</Text>}
+                </TouchableHighlight>
+                <Text style={[styles.text]}>Collection</Text>
                 </View>
                 <View style={styles.menuBox}>
                 <TouchableHighlight
                      style={{alignItems: 'center', justifyContent: 'center', width:'100%'}}
                      onPress={()=>{
-                      global.userInfo = 'guest';
+                      global.userInfo = guestDefault;
                       this.props.navigation.navigate('Home')}}>
                     <Text style={{bottom: 0, left: 10, textDecorationLine:'underline', fontSize:18}}> {this.state.signOut} </Text>
                 </TouchableHighlight>

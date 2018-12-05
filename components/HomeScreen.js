@@ -16,7 +16,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = { header: null }
 
   signInPressed(){
-    if(userInfo == 'guest'){
+    if(userInfo.accountInfo == 'guest'){
       this.props.navigation.navigate('SignIn');
     }else{
       this.props.navigation.navigate('Menu');

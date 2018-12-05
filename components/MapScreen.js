@@ -25,8 +25,8 @@ export default class MapScreen extends Component {
                 latitudeDelta: 0.48, // approx 0.18 deg = 20 km, increase this for testing if no flights are within range
                 longitude: 6.721875704824924,
                 longitudeDelta: 0.48,
-}, buttonOpacity: 0
-        };
+            }
+        }
         this.onRegionChange = this.onRegionChange.bind(this);
     }
 
@@ -36,30 +36,18 @@ export default class MapScreen extends Component {
         },
         headerTintColor: '#fff',
         headerLeft: (
-          <Button
-            onPress={()=>{
-                global.userInfo = 'guest'
-                navigation.navigate('Home')
-            }}
-            // onPress={() => {this.props.navigation.navigate('Home')}}
-            title="Log Out"
-          />
-        ),
+            <Button
+                onPress={()=>navigation.navigate('Home')}
+                title="Go Back Home"
+            />),
         headerRight: (
-            
           <Button
-            onPress={() => {
-                if(userInfo != 'guest'){
-                    navigation.navigate('Collection')
-                }else{
-                    alert("YOU ARE A GUEST"); 
-                }
-            }}
+            onPress={() =>navigation.navigate('Collection')}
             title="Hangar"
           />
         )
-});
-
+    });
+    
     componentDidMount() {
         this._requestPermission();
         navigator.geolocation.getCurrentPosition((position) => {
@@ -69,14 +57,8 @@ export default class MapScreen extends Component {
             this.setState({
                 region: newRegion,
             });
-        },
-            (error) => console.log(error));
+        },(error) => console.log(error));
 
-         if(userInfo != 'guest'){
-            this.setState({
-                buttonOpacity: 1
-            })
-}
     }
 
     _requestPermission() {
