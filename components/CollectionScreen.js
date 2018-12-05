@@ -122,7 +122,14 @@ export default class CollectionScreen extends Component {
                 />
             {
                 userInfo.collections == "null" &&
-                <Text>You have nothing in your collection</Text>
+                <View style={{top:100, width:300,padding:10, height:200, borderWidth:1, borderColor:'black', borderRadius:20,alignItems: 'center',justifyContent: 'center',backgroundColor:'#625E5E'}}>
+                    <Text style={{fontSize:30, color:'white'}}>You have no collected plane yet!</Text>
+                    <TouchableHighlight
+                        style={{width:100,height:50, borderWidth:1, borderColor:'black',borderRadius:10, backgroundColor:'black', marginTop:30,alignItems: 'center',justifyContent: 'center'}}
+                        onPress={()=>this.props.navigation.navigate('Menu')}>
+                            <Text style={{fontSize:20, color:'white'}}>Go back</Text>
+                    </TouchableHighlight>
+                </View>
 
             }
             {
@@ -148,7 +155,8 @@ export default class CollectionScreen extends Component {
                                 name: item.name,
                                 image: item.image,
                                 date_collected: item.date_collected,
-                                location: item.location
+                                location: item.location,
+                                icao:item.icao
                             })
                               
                             }}>

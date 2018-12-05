@@ -82,7 +82,7 @@ export default class FlightsComponent extends Component {
                                 long: flight[5],
                                 answers: this.state.quizAnswers,
                                 icao: flight[0].trim(),
-                                keyNumber: userInfo.collections.length
+                                keyNumber: parseInt(userInfo.collections[userInfo.collections.length -1].key) +1
                         })}
                         }
                         

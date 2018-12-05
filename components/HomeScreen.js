@@ -79,7 +79,10 @@ export default class HomeScreen extends React.Component {
                   </View>
                   <TouchableHighlight
                      style={styles.guestButton}
-                     onPress={()=>{this.props.navigation.navigate('Menu');}}>
+                     onPress={()=>{
+                      userInfo = guestDefault;
+                      this.props.navigation.navigate('Menu');
+                    }}>
                      <Text style={styles.guestButtonText}> View as Guest </Text>
                     </TouchableHighlight>
                   </View>

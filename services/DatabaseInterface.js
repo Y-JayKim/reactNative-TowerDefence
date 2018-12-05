@@ -33,10 +33,10 @@ export const addCollections = (name,  theLength,collections) => {
 	}
 }
 
-export const setCollections = (name, collections) => {
+export const setCollections = (name, theNumber, collections) => {
 	for(let key in data){
 		if(data[key].accountInfo.username == name){
-			db.ref('/users/'+String(key)+'/collections/'+String(0)).set(collections);
+			db.ref('/users/'+String(key)+'/collections').set(collections);
 			userInfo = data[key];
 		}
 	}

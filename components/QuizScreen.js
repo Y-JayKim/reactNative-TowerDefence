@@ -24,7 +24,8 @@ export default class QuizScreen extends Component {
           name: '',
           lat: 0,
           long: 0,
-          picture: ''
+          picture: '',
+          keyNumber: 9999,
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
@@ -43,7 +44,8 @@ export default class QuizScreen extends Component {
             name: this.props.navigation.getParam('callsign', 'no name'),
             lat:this.props.navigation.getParam('lat', 'no lat'),
             long: this.props.navigation.getParam('long', 'no long'),
-            picture: this.props.navigation.getParam('picture', 'no picture') 
+            picture: this.props.navigation.getParam('picture', 'no picture'),
+            keyNumber: this.props.navigation.getParam('keyNumber', '9999') 
         });
         this.getAircraftImage();
     }
@@ -113,7 +115,7 @@ export default class QuizScreen extends Component {
             }else{
                 userInfo.collections.push({
                                             name: this.state.name,
-                                            key: this.props.navigation.getParam('keyNumber', '9999'),
+                                            key: this.state.keyNumber,
                                             date_collected: 2018-11-20,
                                             location: this.state.lat + ' ' + this.state.long,
                                             image: this.state.picture,
@@ -125,7 +127,7 @@ export default class QuizScreen extends Component {
                 if(fetchItems[i].accountInfo.username == userInfo.accountInfo.username){
                     if(fetchItems[i].collections == "null"){
                         setCollections(
-                            userInfo.accountInfo.username, 
+                            userInfo.accountInfo.username, String(0),
                             {
                                 name: this.state.name,
                                 key:0,
@@ -137,10 +139,10 @@ export default class QuizScreen extends Component {
                         )
                         i = fetchItems.length;
                     }else{
-                        addCollections(userInfo.accountInfo.username, this.props.navigation.getParam('keyNumber', '9999'),
+                        addCollections(userInfo.accountInfo.username, this.state.keyNumber,
                             {
                                 name: this.state.name,
-                                key: this.props.navigation.getParam('keyNumber', '9999'),
+                                key: this.state.keyNumber,
                                 date_collected: 2018-11-20,
                                 location: this.state.lat + ' ' + this.state.long,
                                 image: this.state.picture,
