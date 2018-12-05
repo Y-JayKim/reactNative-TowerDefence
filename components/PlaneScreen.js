@@ -34,11 +34,9 @@ export default class PlaneScreen extends React.Component {
     for(let item in userInfo.collections){
         if(userInfo.collections[item].icao == this.state.icao){
             userInfo.collections.splice(item,1)
-            
             if(userInfo.accountInfo != 'guest'){
                 setCollections(userInfo.accountInfo.username, '', userInfo.collections)
             }
-            
         }
     }
     this.props.navigation.navigate('Menu');
