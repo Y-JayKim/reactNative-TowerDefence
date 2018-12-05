@@ -12,7 +12,11 @@ export default class PlaneScreen extends React.Component {
         super(props);
         this.state = {
           fontLoaded: false,
-          
+          icao: props.navigation.getParam('icao', 'NO-ICAO'),
+          name: props.navigation.getParam('name', 'NO-ID'),
+          image: props.navigation.getParam('image', 'noimage'),
+          date: props.navigation.getParam('date_collected', 'no date'),
+          location: props.navigation.getParam('location', 'no location')
         }
     }
  static navigationOptions = { header: null }
@@ -29,7 +33,6 @@ export default class PlaneScreen extends React.Component {
 
     for(let item in userInfo.collections){
         if(userInfo.collections[item].icao == this.state.icao){
-            console.log(this.state.icao);
             userInfo.collections.splice(item,1)
             
             if(userInfo.accountInfo != 'guest'){
@@ -42,11 +45,6 @@ export default class PlaneScreen extends React.Component {
   }
 
     render() {
-        const { navigation } = this.props;
-        const name = navigation.getParam('name', 'NO-ID');
-        const image = navigation.getParam('image', 'noimage');
-        const date = navigation.getParam('date_collected', 'no date');
-        const location = navigation.getParam('location', 'no location');
         return (
           <View>
           {
@@ -59,18 +57,20 @@ export default class PlaneScreen extends React.Component {
                     </TouchableHighlight>
 
                 <View style={styles.titleAndButton}>
-                <Text style={styles.planeTitle}>{name}</Text>
+                <Text style={styles.planeTitle}>{this.state.name}</Text>
                     
                 
                 </View>
                 
                 <View style={styles.middleCont}>
-                <Image style={styles.image} source={{uri: image}}/>
-                <Text style={styles.text}>Found on: {date}</Text>
-                <Text style={styles.text}>Location: {location}</Text>
+                <Image style={styles.image} source={{uri: this.state.image}}/>
+                <Text style={styles.text}>Found on: {this.state.date}</Text>
+                <Text style={styles.text}>Location: {this.state.location}</Text>
                 </View>
                 <TouchableHighlight
-                    style={[styles.button, {backgroundColor:'red'}]}>
+                    style={[styles.button, {backgroundColor:'red'}]}
+                    onPress={()=>this.deletePlanes()}
+                >
                     <Text style={{color:'white', 
                                 fontSize:22, 
                                 fontFamily:'Nunito-Bold',
@@ -96,8 +96,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'darkcyan',
         height: height,
         flexDirection:'column',
-
-      
     },
     image: {
       width:width/1.5,
@@ -114,7 +112,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignSelf:'center',
         textAlign:'center'
-        
     },
     text: {
         marginTop:7,
@@ -122,23 +119,18 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         fontSize:30,
         fontFamily:'Nunito-Bold',
-        
         color:'darkorange',
-        
-       
         textAlign: 'center',
     },
     button: {
         width:130,
         height:70,
-        
         margin:40,
         backgroundColor:'#C4C4C4',
         alignSelf:'flex-end',
         justifyContent:'center',
         marginTop: 'auto',
         alignItems:'center',
-        
     },
     backButton: {
         width:70,
@@ -148,20 +140,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf:'flex-end',
         margin: 40,
-       
-        
     },
     titleAndButton: {
         flexDirection:'row',
         height:height/15,
         justifyContent:'center',
-        
     },
     middleCont: {
-       
         justifyContent:'center',
         alignItems:'center',
         alignSelf:'center'
     }
- 
 });
