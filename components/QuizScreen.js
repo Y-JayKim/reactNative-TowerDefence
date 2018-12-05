@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, TouchableHighlight, Dimensions, Modal, Image } from 'react-native';
 import { Font } from 'expo';
+import { NavigationActions } from 'react-navigation';
 
 import { AVEDGE_API_KEY, GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX } from '../db';
 import { fetchItems, addCollections, setCollections } from '../services/DatabaseInterface';
@@ -32,6 +33,7 @@ export default class QuizScreen extends Component {
         this.setMainVisible = this.setMainVisible.bind(this);
     }
     static navigationOptions = { header: null }
+        
 
     async componentDidMount() {
         await Font.loadAsync({
@@ -51,7 +53,7 @@ export default class QuizScreen extends Component {
     }
 
     componentWillMount() {
-        this.getAnswers()
+        this.getAnswers();
     }
 
     setCorrectVisible() {
@@ -89,7 +91,7 @@ export default class QuizScreen extends Component {
         })
     }
   
-    getAnswers() {
+    getAnswers = () => {
         const { navigation } = this.props;
         const answers = navigation.getParam('answers', 'no answers');
         this.state.questions.push(answers['correct'][0])
@@ -102,6 +104,11 @@ export default class QuizScreen extends Component {
     }
 
     saveToCollection = () =>{
+        // const resetAction = NavigationActions.reset({
+        //       index: 0,
+        //       actions: [NavigationActions.navigate({routeName: 'Collection'})],
+        //       key: null,
+        // });
         if(userInfo.accountInfo == 'guest'){
             if(userInfo.collections == "null"){
                 userInfo.collections = [{
@@ -158,11 +165,21 @@ export default class QuizScreen extends Component {
 
         this.setState({correctVisible: false})
         this.props.navigation.navigate('Collection')
+        this.props.navigation.state.routeName = 'Collection';
+        // this.props.navigation.dispatch(resetAction);
     }
-  
+
+    onBackButtonPressAndroid = () => {
+        
+    };
+    
     render() {  
         const { navigation } = this.props;
         const answers = navigation.getParam('answers', 'no answers');
+
+        // if(this.state.correctVisible == false && this.state.mainVisible == false && this.state.wrongVisible == false && this.props.navigation.state.routeName == 'Quiz'){
+        //     this.props.navigation.navigate("Menu");
+        // }
 
         return (
             <View>
