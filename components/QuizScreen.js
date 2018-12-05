@@ -165,7 +165,7 @@ export default class QuizScreen extends Component {
         }else{
             for(let i = 0; i < fetchItems.length; i++){
                 if(fetchItems[i].accountInfo.username == userInfo.accountInfo.username){
-                    if(fetchItems[i].collections == "null"){
+                    if(userInfo.collections == "null"){
                         setCollections(
                             userInfo.accountInfo.username, String(0),
                             {
