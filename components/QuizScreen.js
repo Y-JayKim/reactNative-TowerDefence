@@ -165,11 +165,11 @@ export default class QuizScreen extends Component {
                         setCollections(
                             userInfo.accountInfo.username, String(0),
                             {
-                                name: this.state.name,
+                                name: this.state.correctAnswer,
                                 key:0,
-                                date_collected: 2018-11-20,
+                                date_collected: today,
                                 location: this.state.lat + ' ' + this.state.long,
-                                image: this.state.picture,
+                                image: this.state.aircraftImageURL,
                                 icao: this.props.navigation.getParam('icao', 'NO ICAO')
                             }
                         )
@@ -177,11 +177,11 @@ export default class QuizScreen extends Component {
                     }else{
                         addCollections(userInfo.accountInfo.username, this.state.keyNumber,
                             {
-                                name: this.state.name,
+                                name: this.state.correctAnswer,
                                 key: this.state.keyNumber,
-                                date_collected: 2018-11-20,
+                                date_collected: today,
                                 location: this.state.lat + ' ' + this.state.long,
-                                image: this.state.picture,
+                                image: this.state.aircraftImageURL,
                                 icao: this.props.navigation.getParam('icao', 'NO ICAO')
                             }
                         );
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor:'darkcyan',
         height:height,
-        justifyContent:'flex-start',
+        
 
     },
     title: {
@@ -489,10 +489,10 @@ const styles = StyleSheet.create({
     },
     aircraftView: {
         top: 0,
-        width: width,
-        height: width,
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: width/2,
+        height: width/2,
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
     },
     aircraftImage: {
         height: '100%',
