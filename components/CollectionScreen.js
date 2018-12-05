@@ -7,28 +7,6 @@ const width = Dimensions.get('window').width;
 
 const todos = [];
 
-// const todos = [{    key:'1',
-//                     name: 'air canada',
-//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-//                     date_collected: '2018-11-20',
-//                     location: 'here'
-
-//                  },
-//                  {  key:'2',
-//                     name: 'DELTA',
-//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-//                     date_collected: '2018-11-20',
-//                     location: 'here'
-
-//                  },
-//                  {  key:'3',
-//                     name: 'not air canada',
-//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-//                     date_collected: '2018-11-20',
-//                     location: 'here'
-
-//                  }
-//               ];
 
 export default class CollectionScreen extends Component {
     constructor(props) {
@@ -101,29 +79,19 @@ export default class CollectionScreen extends Component {
         )
     }
 
-    static navigationOptions = {
-        title: 'Collection',
-        headerStyle: {
-            backgroundColor: '#625E5E'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
-    };
+    static navigationOptions = { header: null }
 
     render() {
-        console.log(userInfo);
-       return (
-            <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
-                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
-                    source={require('../assets/background.png')} 
-                    resizeMode="cover"
-                />
+
+        console.log(userInfo.collections);
+        return (
+            <View style={{flex: 1, backgroundColor: 'darkcyan', alignItems: 'center'}}>
+                
+
             {
                 userInfo.collections == "null" &&
                 <View style={{top:100, width:300,padding:10, height:200, borderWidth:1, borderColor:'black', borderRadius:20,alignItems: 'center',justifyContent: 'center',backgroundColor:'#625E5E'}}>
-                    <Text style={{fontSize:30, color:'white'}}>You have no collected plane yet!</Text>
+                    <Text style={{fontSize:30, color:'white'}}>You have no collected planes yet!</Text>
                     <TouchableHighlight
                         style={{width:100,height:50, borderWidth:1, borderColor:'black',borderRadius:10, backgroundColor:'black', marginTop:30,alignItems: 'center',justifyContent: 'center'}}
                         onPress={()=>this.props.navigation.navigate('Menu')}>
@@ -137,14 +105,16 @@ export default class CollectionScreen extends Component {
                 <View style={styles.container}>
 
                     <View style={{alignSelf:'center'}}>
-                    <View style={styles.titleAndButton}>
                     <TouchableHighlight
-                        style={styles.mapButton}
-                        onPress={()=>{this.props.navigation.navigate('Map')}}>
-                            <Text style={{fontSize:20, fontWeight:'bold'}}>Map</Text> 
-                    </TouchableHighlight>
-                    <Text style={styles.text}>Hangar</Text>
-                    </View>
+                                style={styles.mapButton}
+                                onPress={()=>{this.props.navigation.navigate('Map')}}>
+                                <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Map</Text> 
+                            </TouchableHighlight>
+                        <View style={styles.titleAndButton}>
+                            
+                        <Text style={styles.text}>Hangar</Text>
+                        </View>
+                        
                     <FlatList
                         data = {this.state.todos}
                         
@@ -182,26 +152,25 @@ export default class CollectionScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: 'darkcyan',
         height: height,
-        justifyContent: 'flex-start',
+        flexDirection:'column',
     },
     text: {
         fontFamily: 'Nunito-Bold',
-        color: 'white',
-        fontSize: 40,
+        color: 'darkorange',
+        fontSize: 50,
         margin: 30,
         justifyContent: 'flex-start',
         alignSelf:'center',
-        backgroundColor:'transparent',
-        textShadowColor: 'rgba(0, 0, 0, 0.75)',
-        textShadowOffset: {width: 1, height: 1},
-        textShadowRadius: 1,
+        textAlign:'center'
+        
     },
     row: {
         flex:1,
         flexDirection:'row',
         width:width/1.2,
-        backgroundColor:'white',
+        backgroundColor:'darkorange',
         borderRadius:50,
         height:70,
         margin: 10,
@@ -228,27 +197,29 @@ const styles = StyleSheet.create({
         fontFamily:'Nunito-Bold',
         justifyContent:'flex-start',
         alignSelf:'flex-start',
-        color:'#625E5E'
+        color:'maroon'
     },
     found: {
         marginLeft:7,
         fontFamily:'Nunito-Regular',
-        color:'#625E5E',
+        color:'maroon',
         alignSelf:'flex-start'
     },
     mapButton: {
         width:70,
         height:50,
-        borderWidth:7,
-        borderColor: "white",
-        borderRadius:50,
-        backgroundColor:'#FF8C00',
+        backgroundColor:'darkorange',
+        alignItems:'center',
         justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf:'flex-start',
-        margin: 20,
+        alignSelf:'flex-end',
+        marginTop:40,
+        marginRight:20
+       
     },
     titleAndButton: {
-        flexDirection:'row'
+        flexDirection:'row',
+        height:height/13,
+        justifyContent:'center',
+        
     }
 });

@@ -12,11 +12,7 @@ export default class PlaneScreen extends React.Component {
         super(props);
         this.state = {
           fontLoaded: false,
-          name: props.navigation.getParam('name', 'NO-ID'),
-          image: props.navigation.getParam('image', 'noimage'),
-          date: props.navigation.getParam('date_collected', 'no date'),
-          location: props.navigation.getParam('location', 'no location'),
-          icao: props.navigation.getParam('icao', 'No ICAO')
+          
         }
     }
  static navigationOptions = { header: null }
@@ -46,27 +42,35 @@ export default class PlaneScreen extends React.Component {
   }
 
     render() {
-      const { navigation } = this.props;
+        const { navigation } = this.props;
+        const name = navigation.getParam('name', 'NO-ID');
+        const image = navigation.getParam('image', 'noimage');
+        const date = navigation.getParam('date_collected', 'no date');
+        const location = navigation.getParam('location', 'no location');
         return (
           <View>
           {
                 this.state.fontLoaded ? (
               <View style={styles.container}>
-                <View style={styles.titleAndButton}>
-                    <TouchableHighlight
+              <TouchableHighlight
                         style={styles.backButton}
                         onPress={()=>{this.props.navigation.navigate('Collection')}}>
-                            <Text>back</Text> 
+                            <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Back</Text> 
                     </TouchableHighlight>
-                <Text style={styles.planeTitle}>{this.state.name}</Text>
-                </View>
-                <Image style={styles.image} source={{uri:this.state.image}}/>
-                <Text style={styles.text}>Found on: {this.state.date}</Text>
-                <Text style={styles.text}>Location: {this.state.location}</Text>
+
+                <View style={styles.titleAndButton}>
+                <Text style={styles.planeTitle}>{name}</Text>
+                    
                 
+                </View>
+                
+                <View style={styles.middleCont}>
+                <Image style={styles.image} source={{uri: image}}/>
+                <Text style={styles.text}>Found on: {date}</Text>
+                <Text style={styles.text}>Location: {location}</Text>
+                </View>
                 <TouchableHighlight
-                    onPress={()=>this.deletePlanes()}
-                    style={[styles.button,{alignItems: 'center',justifyContent: 'center'}]}>
+                    style={[styles.button, {backgroundColor:'red'}]}>
                     <Text style={{color:'white', 
                                 fontSize:22, 
                                 fontFamily:'Nunito-Bold',
@@ -74,6 +78,7 @@ export default class PlaneScreen extends React.Component {
                                 justifyContent:'center',
                                 alignSelf:'center',
                                 backgroundColor:'red'
+
                                 }}> Delete </Text>
                 </TouchableHighlight>
               </View>
@@ -88,51 +93,49 @@ export default class PlaneScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-        backgroundColor: '#E2E2E2',
+        backgroundColor: 'darkcyan',
         height: height,
-        flexDirection:'column'
+        flexDirection:'column',
+
       
     },
     image: {
-      width:width/1.1,
-      height:200,
+      width:width/1.5,
+      height:width/2.5,
       backgroundColor:'white',
-      alignSelf:'center'
+      alignSelf:'center',
+      margin:30
     },
     planeTitle: {
-        color: '#625E5E',
-        fontSize: 40,
+        fontFamily: 'Nunito-Bold',
+        color: 'darkorange',
+        fontSize: 50,
         margin: 30,
         justifyContent: 'flex-start',
-        alignItems:'flex-start',
-        fontFamily: 'Nunito-Bold',
-        backgroundColor: 'white',
-        alignSelf: 'center',
+        alignSelf:'center',
+        textAlign:'center'
         
     },
     text: {
         marginTop:7,
         marginLeft:7,
         flexDirection:'column',
-        fontSize:22,
+        fontSize:30,
         fontFamily:'Nunito-Bold',
-        justifyContent:'center',
-        color:'#625E5E',
-        alignSelf:'center',
+        
+        color:'darkorange',
+        
        
         textAlign: 'center',
     },
     button: {
         width:130,
         height:70,
-        borderWidth:7,
-        borderColor: "white",
-        borderRadius:50,
-        marginRight:30,
-        marginBottom:30,
+        
+        margin:40,
         backgroundColor:'#C4C4C4',
         alignSelf:'flex-end',
-        
+        justifyContent:'center',
         marginTop: 'auto',
         alignItems:'center',
         
@@ -140,19 +143,25 @@ const styles = StyleSheet.create({
     backButton: {
         width:70,
         height:50,
-        borderWidth:7,
-        borderColor: "white",
-        borderRadius:50,
-        
-        backgroundColor:'#C4C4C4',
-        alignSelf:'flex-start',
-        
-        margin: 20,
+        backgroundColor:'darkorange',
+        alignItems:'center',
+        justifyContent: 'center',
+        alignSelf:'flex-end',
+        margin: 40,
        
         
     },
     titleAndButton: {
-        flexDirection:'row'
+        flexDirection:'row',
+        height:height/15,
+        justifyContent:'center',
+        
+    },
+    middleCont: {
+       
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center'
     }
  
 });
