@@ -32,22 +32,26 @@ export default class MapScreen extends Component {
 
     static navigationOptions = ({ navigation  }) => ({
         headerStyle: {
-            backgroundColor:"grey"
+            backgroundColor:"darkcyan"
         },
-        headerTintColor: '#fff',
+        headerTintColor: 'darkcyan',
         headerLeft: (
-          <Button
+          <TouchableHighlight
+            style={styles.button}
             onPress={()=>{
                 global.userInfo = 'guest'
-                navigation.navigate('Home')
+                navigation.navigate('Menu')
             }}
             // onPress={() => {this.props.navigation.navigate('Home')}}
-            title="Log Out"
-          />
+            
+          >
+          <Text style={{color:'maroon', alignSelf:'center',}}>Settings</Text>
+          </TouchableHighlight>
         ),
         headerRight: (
             
-          <Button
+          <TouchableHighlight
+            style={styles.button}
             onPress={() => {
                 if(userInfo != 'guest'){
                     navigation.navigate('Collection')
@@ -55,8 +59,10 @@ export default class MapScreen extends Component {
                     alert("YOU ARE A GUEST"); 
                 }
             }}
-            title="Hangar"
-          />
+            
+          >
+          <Text style={{color:'maroon', alignSelf:'center', }}>Hangar</Text>
+          </TouchableHighlight>
         )
 });
 
@@ -116,5 +122,14 @@ export default class MapScreen extends Component {
 const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject
+    },
+    button: {
+        margin:10,
+        backgroundColor:'orange',
+        height:40,
+        width:70,
+        alignContent:'center',
+        justifyContent:'center'
+
     }
 })

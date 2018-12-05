@@ -81,9 +81,9 @@ export default class QuizScreen extends Component {
         const { navigation } = this.props;
         const answers = navigation.getParam('answers', 'no answers');
         this.state.questions.push(answers['correct'][0])
-        for(i = 0; i < 3; i++){
+        for(i = 0; i < answers['wrong'].length; i++){
 
-            this.state.questions.push(Math.round( (Math.random() * 1000) * 10 ) / 10)
+            this.state.questions.push(answers['wrong'][i])
   
         }
         this.state.questions.sort(() => Math.random() - 0.5);
@@ -110,7 +110,7 @@ export default class QuizScreen extends Component {
                         visible={this.state.mainVisible}
                         onRequestClose={ () => {this.setState({mainVisible: false})}}
                     >
-                    <Text style={styles.title}>How high is the plane?</Text>
+                    <Text style={styles.title}>What is the aircraft type?</Text>
 
                     <View style={styles.aircraftView}>
                         <Image 

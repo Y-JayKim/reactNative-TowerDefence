@@ -21,16 +21,7 @@ export default class MenuScreen extends Component {
         this.showAlert = this.showAlert.bind(this);
     }
 
-    static navigationOptions = {
-      title: 'Menu',
-      headerStyle: {
-          backgroundColor: '#625E5E'
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-          fontWeight: 'bold'
-      }
-    } 
+    static navigationOptions = { header: null }
 
     showAlert = (title, message) => {
       this.setState({
@@ -61,10 +52,7 @@ export default class MenuScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image style={{ position:'absolute', flex:1,opacity:0.6, backgroundColor: '#E2E2E2', }} 
-                  source={require('../assets/bg1.png')} 
-                  resizeMode="repeat"
-                />
+                
                 <View style={styles.menuBox}>
                 <TouchableHighlight
                      style={[styles.button]}
@@ -89,14 +77,7 @@ export default class MenuScreen extends Component {
                 </TouchableHighlight>
                 <Text style={[styles.text]}>Help</Text>
                 </View>
-                <View style={styles.menuBox}>
-                <TouchableHighlight
-                     style={[styles.button]}
-                     onPress={()=>this.showAlert('Setting Page','Sorry, Setting Page is \ncurrently not working')}>
-                     <Image style={{width:70, height:70, justifyContent:'center', alignItems:'center'}} source={require('../assets/setting.png')} />
-                </TouchableHighlight>
-                <Text style={[styles.text]}>Setting</Text>
-                </View>
+                
                 <View style={styles.menuBox}>
                 <TouchableHighlight
                      style={[styles.button]}
@@ -115,15 +96,15 @@ export default class MenuScreen extends Component {
                 {userInfo != 'guest' && 
                 <Text style={[styles.text]}>Collection</Text>}
                 </View>
-                <View style={styles.menuBox}>
+                
                 <TouchableHighlight
-                     style={{alignItems: 'center', justifyContent: 'center', width:'100%'}}
+                     style={{justifyContent:'center', alignSelf:'center', width:'100%'}}
                      onPress={()=>{
                       global.userInfo = 'guest';
                       this.props.navigation.navigate('Home')}}>
-                    <Text style={{bottom: 0, left: 10, textDecorationLine:'underline', fontSize:18}}> {this.state.signOut} </Text>
+                    <Text style={{ justifyContent:'center', alignSelf:'center', fontSize:20, color:'darkorange'}}> {this.state.signOut} </Text>
                 </TouchableHighlight>
-                </View>
+               
                 <AwesomeAlert
                   show={this.state.showAlert}
                   showProgress={false}
@@ -137,6 +118,7 @@ export default class MenuScreen extends Component {
                     this.hideAlert();
                   }}
                 />
+              
                 
             </View>
         )
@@ -148,8 +130,9 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     flexWrap:'wrap',
-    flexDirection:'row',
-    justifyContent: 'space-between'
+    flexDirection:'column',
+    justifyContent: 'center',
+    backgroundColor:'darkcyan',
   },
   text:{
     alignItems:'center',
@@ -179,9 +162,14 @@ const styles = StyleSheet.create({
   },
   menuBox: {
     height:150,
-    width:width/3.2,
+    width:width,
     flexDirection:'column',
     justifyContent:'center',
     alignItems:'center',
-  }
+    
+    marginTop:5,
+    
+  },
+  
 });
+
