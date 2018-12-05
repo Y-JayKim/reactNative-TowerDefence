@@ -38,7 +38,7 @@ export default class MenuScreen extends Component {
     }
 
     componentDidMount(){
-      if(userInfo != 'guest'){
+      if(userInfo.accountInfo != 'guest'){
           this.setState({
             message: 'Welcome, '+ userInfo.accountInfo.fullname + '!'
           });
@@ -87,24 +87,25 @@ export default class MenuScreen extends Component {
                 <Text style={[styles.text]}>Alert</Text>
                 </View>
                 <View style={styles.menuBox}>
-                {userInfo != 'guest' && 
                 <TouchableHighlight
                      style={[styles.button]}
                      onPress={()=>{this.props.navigation.navigate('Collection');}}>
                      <Image style={{width:70, height:70, justifyContent:'center', alignItems:'center'}} source={require('../assets/plane.png')}/>
-                </TouchableHighlight>}
-                {userInfo != 'guest' && 
-                <Text style={[styles.text]}>Collection</Text>}
+                </TouchableHighlight>
+                <Text style={[styles.text]}>Collection</Text>
                 </View>
-                
+
                 <TouchableHighlight
-                     style={{justifyContent:'center', alignSelf:'center', width:'100%'}}
+                     style={{alignItems: 'flex-end', justifyContent: 'center', width:'100%',margin:20}}
+
                      onPress={()=>{
-                      global.userInfo = 'guest';
+                      global.userInfo = guestDefault;
                       this.props.navigation.navigate('Home')}}>
-                    <Text style={{ justifyContent:'center', alignSelf:'center', fontSize:20, color:'darkorange'}}> {this.state.signOut} </Text>
+
+                    <Text style={{ fontSize:20, color:'darkorange'}}> {this.state.signOut} </Text>
                 </TouchableHighlight>
                
+
                 <AwesomeAlert
                   show={this.state.showAlert}
                   showProgress={false}
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     flexWrap:'wrap',
-    flexDirection:'column',
+    flexDirection:'row',
     justifyContent: 'center',
     backgroundColor:'darkcyan',
   },
@@ -157,17 +158,18 @@ const styles = StyleSheet.create({
     borderWidth:1.5, 
     borderColor:'black',
     borderRadius:10,
-    
     backgroundColor: '#625E5E'
   },
   menuBox: {
     height:150,
-    width:width,
+
+    width:width/2.5,
+
     flexDirection:'column',
     justifyContent:'center',
     alignItems:'center',
     
-    marginTop:5,
+    marginTop:20,
     
   },
   

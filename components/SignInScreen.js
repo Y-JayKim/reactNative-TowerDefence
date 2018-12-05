@@ -89,6 +89,7 @@ export default class SignInScreen extends Component {
     }
 
     render() {
+      console.log(userInfo);
       const { showAlert } = this.state;
           return (
               <View style={styles.container}>

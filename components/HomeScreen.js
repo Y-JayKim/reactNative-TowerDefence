@@ -16,7 +16,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = { header: null }
 
   signInPressed(){
-    if(userInfo == 'guest'){
+    if(userInfo.accountInfo == 'guest'){
       this.props.navigation.navigate('SignIn');
     }else{
       this.props.navigation.navigate('Menu');
@@ -74,7 +74,10 @@ export default class HomeScreen extends React.Component {
                   </View>
                   <TouchableHighlight
                      style={styles.guestButton}
-                     onPress={()=>{this.props.navigation.navigate('Menu');}}>
+                     onPress={()=>{
+                      userInfo = guestDefault;
+                      this.props.navigation.navigate('Menu');
+                    }}>
                      <Text style={styles.guestButtonText}> View as Guest </Text>
                     </TouchableHighlight>
                   </View>
@@ -100,8 +103,10 @@ const styles = StyleSheet.create({
     width:width/1.3,
     height:height/8,
     flexDirection:'row',
+
     marginTop:height/4,
     justifyContent:'space-between'
+
   },
  
   textStyle: {

@@ -7,28 +7,6 @@ const width = Dimensions.get('window').width;
 
 const todos = [];
 
-// const todos = [{    key:'1',
-//                     name: 'air canada',
-//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-//                     date_collected: '2018-11-20',
-//                     location: 'here'
-
-//                  },
-//                  {  key:'2',
-//                     name: 'DELTA',
-//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-//                     date_collected: '2018-11-20',
-//                     location: 'here'
-
-//                  },
-//                  {  key:'3',
-//                     name: 'not air canada',
-//                     image: 'https://pixabay.com/get/ed6a99fd0a76647_1280.jpg',
-//                     date_collected: '2018-11-20',
-//                     location: 'here'
-
-//                  }
-//               ];
 
 export default class CollectionScreen extends Component {
     constructor(props) {
@@ -61,16 +39,16 @@ export default class CollectionScreen extends Component {
 
         this.setState({ fontLoaded: true });
         this.fetchTodos();
-        const { navigation } = this.props;
+        // const { navigation } = this.props;
         
-        const image = navigation.getParam('image', 'noimage');
+        // const image = navigation.getParam('image', 'noimage');
 
-        if (image != 'noimage'){
-            const name = navigation.getParam('name', 'no name');
-            const date = navigation.getParam('date_collected', 'no date');
-            const location = navigation.getParam('location', 'no location');
-            this.state.todos.push({name: name, image:image, date_collected: date, location: location, key: JSON.stringify(todos.length + 1)})
-        }
+        // if (image != 'noimage'){
+        //     const name = navigation.getParam('name', 'no name');
+        //     const date = navigation.getParam('date_collected', 'no date');
+        //     const location = navigation.getParam('location', 'no location');
+        //     this.state.todos.push({name: name, image:image, date_collected: date, location: location, key: JSON.stringify(todos.length + 1)})
+        // }
     }
 
     pressRow(rowID) {
@@ -104,13 +82,22 @@ export default class CollectionScreen extends Component {
     static navigationOptions = { header: null }
 
     render() {
+
         console.log(userInfo.collections);
         return (
             <View style={{flex: 1, backgroundColor: 'darkcyan', alignItems: 'center'}}>
                 
+
             {
                 userInfo.collections == "null" &&
-                <Text>You have nothing in your collection</Text>
+                <View style={{top:100, width:300,padding:10, height:200, borderWidth:1, borderColor:'black', borderRadius:20,alignItems: 'center',justifyContent: 'center',backgroundColor:'#625E5E'}}>
+                    <Text style={{fontSize:30, color:'white'}}>You have no collected plane yet!</Text>
+                    <TouchableHighlight
+                        style={{width:100,height:50, borderWidth:1, borderColor:'black',borderRadius:10, backgroundColor:'black', marginTop:30,alignItems: 'center',justifyContent: 'center'}}
+                        onPress={()=>this.props.navigation.navigate('Menu')}>
+                            <Text style={{fontSize:20, color:'white'}}>Go back</Text>
+                    </TouchableHighlight>
+                </View>
 
             }
             {
@@ -138,7 +125,8 @@ export default class CollectionScreen extends Component {
                                 name: item.name,
                                 image: item.image,
                                 date_collected: item.date_collected,
-                                location: item.location
+                                location: item.location,
+                                icao:item.icao
                             })
                               
                             }}>

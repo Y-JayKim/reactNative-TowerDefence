@@ -2,37 +2,52 @@ import React from 'react';
 import { TouchableHighlight, Text, View, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { Font } from 'expo';
 
+import { setCollections } from '../services/DatabaseInterface';
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 export default class PlaneScreen extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           fontLoaded: false,
+          
         }
     }
  static navigationOptions = { header: null }
 
   async componentDidMount() {
     await Font.loadAsync({
- 
       'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
       'Nunito-Regular': require('../assets/fonts/Nunito-Regular.ttf'),
     });
 
     this.setState({ fontLoaded: true });
   }
+  deletePlanes = () => {
 
+    for(let item in userInfo.collections){
+        if(userInfo.collections[item].icao == this.state.icao){
+            console.log(this.state.icao);
+            userInfo.collections.splice(item,1)
+            
+            if(userInfo.accountInfo != 'guest'){
+                setCollections(userInfo.accountInfo.username, '', userInfo.collections)
+            }
+            
+        }
+    }
+    this.props.navigation.navigate('Menu');
+  }
 
     render() {
-      const { navigation } = this.props;
-      const name = navigation.getParam('name', 'NO-ID');
-      const image = navigation.getParam('image', 'noimage');
-      const date = navigation.getParam('date_collected', 'no date');
-      const location = navigation.getParam('location', 'no location');
+        const { navigation } = this.props;
+        const name = navigation.getParam('name', 'NO-ID');
+        const image = navigation.getParam('image', 'noimage');
+        const date = navigation.getParam('date_collected', 'no date');
+        const location = navigation.getParam('location', 'no location');
         return (
-          
           <View>
           {
                 this.state.fontLoaded ? (
@@ -42,6 +57,7 @@ export default class PlaneScreen extends React.Component {
                         onPress={()=>{this.props.navigation.navigate('Collection')}}>
                             <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Back</Text> 
                     </TouchableHighlight>
+
                 <View style={styles.titleAndButton}>
                 <Text style={styles.planeTitle}>{name}</Text>
                     
@@ -58,8 +74,11 @@ export default class PlaneScreen extends React.Component {
                     <Text style={{color:'white', 
                                 fontSize:22, 
                                 fontFamily:'Nunito-Bold',
-                                
-                                
+                                borderRadius:20,
+                                justifyContent:'center',
+                                alignSelf:'center',
+                                backgroundColor:'red'
+
                                 }}> Delete </Text>
                 </TouchableHighlight>
               </View>
