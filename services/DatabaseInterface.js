@@ -36,7 +36,16 @@ export const addCollections = (name,  theLength,collections) => {
 export const setCollections = (name, theNumber, collections) => {
 	for(let key in data){
 		if(data[key].accountInfo.username == name){
-			db.ref('/users/'+String(key)+'/collections').set(collections);
+			if(theNumber == String(0)){
+				console.log('update');
+				db.ref('/users/'+String(key)+'/collections/'+theNumber).set(collections);
+			}else if(theNumber == ''){
+				console.log('delete');
+				db.ref('/users/'+String(key)+'/collections').set(collections);
+			}else{
+				alert('Bug found');
+			}
+			// db.ref('/users/'+String(key)+'/collections').set(collections);
 			userInfo = data[key];
 		}
 	}
