@@ -40,7 +40,6 @@ export default class MapScreen extends Component {
           <TouchableHighlight
             style={styles.button}
             onPress={()=>{
-                global.userInfo = 'guest'
                 navigation.navigate('Menu')
             }}
             // onPress={() => {this.props.navigation.navigate('Home')}}
