@@ -6,9 +6,12 @@ import { NavigationActions } from 'react-navigation';
 
 import { AVEDGE_API_KEY, GOOGLE_SEARCH_API_KEY, GOOGLE_SEARCH_CX } from '../db';
 import { fetchItems, addCollections, setCollections } from '../services/DatabaseInterface';
+import aircraftModels from '../assets/aircraftModels.js';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
+
+let today = new Date().toISOString().slice(0, 10)
 
 export default class QuizScreen extends Component {
 
@@ -27,10 +30,18 @@ export default class QuizScreen extends Component {
           long: 0,
           picture: '',
           keyNumber: 9999,
+          correctAnswer: '',
+          qName:'What is the aircraft model?',
+          promiseIsResolved:false
         }
         this.setCorrectVisible = this.setCorrectVisible.bind(this);
         this.setWrongVisible = this.setWrongVisible.bind(this);
         this.setMainVisible = this.setMainVisible.bind(this);
+        this.getAircraftImage((call) => {
+            this.getAnswers(call)
+
+        });
+        
     }
     static navigationOptions = { header: null }
         
@@ -49,11 +60,9 @@ export default class QuizScreen extends Component {
             picture: this.props.navigation.getParam('picture', 'no picture'),
             keyNumber: this.props.navigation.getParam('keyNumber', '9999') 
         });
-        this.getAircraftImage();
-    }
-
-    componentWillMount() {
-        this.getAnswers();
+        
+        
+        
     }
 
     setCorrectVisible() {
@@ -66,7 +75,7 @@ export default class QuizScreen extends Component {
         this.setState({mainVisible: false});
     }
 
-    getAircraftImage() {
+    getAircraftImage(callback) {
         console.log('quiz on \'' + this.state.icao + '\'');
         fetch('https://aviation-edge.com/v2/public/airplaneDatabase?key=' + AVEDGE_API_KEY + '&hexIcaoAirplane=' + this.state.icao)
         .then((response) => response.json())
@@ -74,6 +83,7 @@ export default class QuizScreen extends Component {
             console.log(response);
             if (response && response.length && !("error" in response)) {
                 let productionLine = response[0].productionLine;
+                this.setState({correctAnswer: productionLine})
                 console.log(productionLine);
                 fetch(`https://www.googleapis.com/customsearch/v1?key=${GOOGLE_SEARCH_API_KEY}&cx=${GOOGLE_SEARCH_CX}&q=${productionLine}&num=1&searchType=image`)
                 .then((response2) => response2.json())
@@ -81,26 +91,44 @@ export default class QuizScreen extends Component {
                     if (response2) {
                         console.log(response2.items[0].image.thumbnailLink);
                         this.setState({aircraftImageURL: response2.items[0].image.thumbnailLink});
+                        
                     }
+
                 })
             }
             else {
                 console.log('fallback');
+                this.setState({qName:'How high is the aircraft?'})
                 this.setState({aircraftImageURL: 'https://cdn0.iconfinder.com/data/icons/airplane-safety/512/xxx034-2-512.png'});
             }
+            this.setState({promiseIsResolved: true})
+            callback(this.state.qName)
+            
         })
     }
-  
-    getAnswers = () => {
-        const { navigation } = this.props;
-        const answers = navigation.getParam('answers', 'no answers');
-        this.state.questions.push(answers['correct'][0])
-        for(i = 0; i < 3; i++){
 
-            this.state.questions.push(Math.round( (Math.random() * 1000) * 10 ) / 10)
-  
+    getAnswers(qName) {
+        console.log('qname is: '+ qName);
+        if (qName == 'What is the aircraft model?'){
+            console.log(this.state.correctAnswer);
+        
+            this.state.questions.push(this.state.correctAnswer)
+            for(i = 0; i < 3; i++){
+                this.state.questions.push(aircraftModels.aircraftModels[Math.floor(Math.random()*aircraftModels.aircraftModels.length)])
+            }
+        }else {
+            const { navigation } = this.props;
+            const answers = navigation.getParam('answers', 'no answers');
+            this.setState({correctAnswer:answers['correct'][0]})
+            this.state.questions.push(answers['correct'][0])
+            for(i = 0; i < 3; i++){
+                this.state.questions.push(Math.round( ((Math.random()*2 - 1) * 1000) * 10 ) / 10)
+            }
+            console.log('questions is numbers: '+ this.state.questions);
+
         }
         this.state.questions.sort(() => Math.random() - 0.5);
+        this.forceUpdate()
     }
 
     saveToCollection = () =>{
@@ -111,21 +139,22 @@ export default class QuizScreen extends Component {
         // });
         if(userInfo.accountInfo == 'guest'){
             if(userInfo.collections == "null"){
+
                 userInfo.collections = [{
-                                            name: this.state.name,
+                                            name: this.state.correctAnswer,
                                             key:0,
-                                            date_collected: 2018-11-20,
+                                            date_collected: today,
                                             location: this.state.lat + ' ' + this.state.long,
-                                            image: this.state.picture,
+                                            image: this.state.aircraftImageURL,
                                             icao: this.props.navigation.getParam('icao', 'NO ICAO')
                                         }]
             }else{
                 userInfo.collections.push({
-                                            name: this.state.name,
+                                            name: this.state.correctAnswer,
                                             key: this.state.keyNumber,
-                                            date_collected: 2018-11-20,
+                                            date_collected: today,
                                             location: this.state.lat + ' ' + this.state.long,
-                                            image: this.state.picture,
+                                            image: this.state.aircraftImageURL,
                                             icao: this.props.navigation.getParam('icao', 'NO ICAO')
                                         })
             }
@@ -174,8 +203,9 @@ export default class QuizScreen extends Component {
     };
     
     render() {  
-        const { navigation } = this.props;
-        const answers = navigation.getParam('answers', 'no answers');
+        
+        console.log(this.state.questions);
+        if(!this.state.promiseIsResolved){return null}
 
         // if(this.state.correctVisible == false && this.state.mainVisible == false && this.state.wrongVisible == false && this.props.navigation.state.routeName == 'Quiz'){
         //     this.props.navigation.navigate("Menu");
@@ -193,7 +223,18 @@ export default class QuizScreen extends Component {
                         visible={this.state.mainVisible}
                         onRequestClose={ () => {this.setState({mainVisible: true})}}
                     >
-                    <Text style={styles.title}>How high is the plane?</Text>
+
+                    
+                    <TouchableHighlight
+                                style={styles.mapButton}
+                                onPress={()=>{this.props.navigation.navigate('Map')}}>
+                                <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Map</Text> 
+                            </TouchableHighlight>
+                        <View style={styles.titleAndButton}>
+                            
+                        <Text style={styles.title}>{this.state.qName}</Text>
+                    </View>
+                    
 
                     <View style={styles.aircraftView}>
                         <Image 
@@ -206,7 +247,10 @@ export default class QuizScreen extends Component {
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                if (this.state.questions[0] == answers['correct'][0]){
+                                if (this.state.questions[0] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()
@@ -222,7 +266,10 @@ export default class QuizScreen extends Component {
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                if (this.state.questions[1] == answers['correct'][0]){
+                                if (this.state.questions[1] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()
@@ -238,7 +285,10 @@ export default class QuizScreen extends Component {
                             style={styles.button}
                             onPress={() => {
                                 this.state.answerName = this.state.questions[2]
-                                if (this.state.questions[2] == answers['correct'][0]){
+                                if (this.state.questions[2] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()
@@ -251,7 +301,10 @@ export default class QuizScreen extends Component {
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => {
-                                if (this.state.questions[3] == answers['correct'][0]){
+                                if (this.state.questions[3] == this.state.correctAnswer){
+                                    if (typeof this.state.correctAnswer === 'number'){
+                                        this.setState({correctAnswer: this.state.name})
+                                    }
                                     this.setCorrectVisible()
                                 } else {
                                     this.setWrongVisible()
@@ -277,7 +330,7 @@ export default class QuizScreen extends Component {
                     >
                     <View>
                                 <Text style={styles.title}> Correct! </Text>
-                                <Image source={{uri: 'https://media.wired.com/photos/5b3ac9899a7504731f8818f8/master/pass/Quiet-NASA-Transpo.jpg'}} style={styles.planeImage}/>
+                                <Image source={{uri: this.state.aircraftImageURL}} style={styles.planeImage}/>
                                 <Text style={styles.text}>Would you like to add the plane to your hangar?</Text>
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
@@ -311,7 +364,7 @@ export default class QuizScreen extends Component {
                       <View>
                                 <Text style={styles.title}> Wrong! </Text>
                                 <View style={styles.planeImage}></View>
-                                <Text style={styles.text}>The plane was not {this.state.answerName}m high!</Text>
+                                <Text style={styles.text}>The plane was not {this.state.answerName}!</Text>
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
                                     
@@ -349,17 +402,18 @@ export default class QuizScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:'#E2E2E2',
+        backgroundColor:'darkcyan',
         height:height,
         justifyContent:'flex-start',
 
     },
     title: {
         fontFamily: 'Nunito-Bold',
-        color: '#625E5E',
-        fontSize: 25,
+        color: 'darkorange',
+        fontSize: 40,
         margin: 30,
         justifyContent: 'flex-start',
+
     },
     answerButtons: {
         justifyContent:'flex-end',
@@ -368,18 +422,18 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         
         width:width/1.1,
-        height:height/3.5,
+        height:height/3.2,
         flexDirection:'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
 
     },
     button: {
-        backgroundColor:'#625E5E',
+        backgroundColor:'darkorange',
         width:'45%',
         borderWidth:7,
-        borderColor: "white",
-        borderRadius:50,
+        borderColor: "maroon",
+        
         height:'45%',
         margin: 5,
         alignItems:'center',
@@ -387,8 +441,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize:20,
-        fontFamily: 'Nunito-Bold',
-        color: 'white',
+        fontFamily: 'Nunito-Regular',
+        color: 'maroon',
         justifyContent:'center',
         alignSelf:'center'
     },
@@ -413,13 +467,7 @@ const styles = StyleSheet.create({
         alignSelf:'flex-end',
     
     },
-    buttonText: {
-        fontSize:20, 
-        color:'white',
-        fontFamily: 'Nunito-Bold',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+    
     text: {
         fontFamily: 'Nunito-Bold',
         color: '#625E5E',
@@ -451,4 +499,19 @@ const styles = StyleSheet.create({
         width: '100%',
         resizeMode: 'contain',
     },
+    mapButton: {
+        width:70,
+        height:50,
+        backgroundColor:'darkorange',
+        alignItems:'center',
+        justifyContent: 'center',
+        alignSelf:'flex-end',
+        marginTop:20,
+        marginRight:20
+       
+    },
+    titleAndButton: {
+        
+        height:height/13,
+    }
 });

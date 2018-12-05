@@ -43,10 +43,6 @@ export default class HomeScreen extends React.Component {
           {
                 this.state.fontLoaded ? (
             <View style={styles.container}>
-                  <Image style={{position:'absolute', height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
-                    source={require('../assets/bg1.png')} 
-                    resizeMode="repeat"
-                  />
                   <View style={styles.container2}>
                     <Text style={[styles.textStyle, {marginTop: 40 }]}>
                       Airplane
@@ -57,9 +53,8 @@ export default class HomeScreen extends React.Component {
                     <Text style={[styles.textStyle]}>
                       Me
                     </Text>
-                    <View style={styles.image}>
-                      <Image source={{uri: 'https://s17-us2.startpage.com/cgi-bin/serveimage?url=http%3A%2F%2Ft0.gstatic.com%2Fimages%3Fq%3Dtbn%3AANd9GcSd4xfU6KPjWq2217vnlkY1TYB2WwNkBLTZq1nQSqFgbB4ED49jzQ&sp=55b00af7d6ce4e61491a91512b7fe94f&anticache=599360'}} />
-                    </View>
+                    
+                    <View style={styles.endBox}>
                     
                     <View style={styles.bottomContainer}>
                       
@@ -86,6 +81,7 @@ export default class HomeScreen extends React.Component {
                      <Text style={styles.guestButtonText}> View as Guest </Text>
                     </TouchableHighlight>
                   </View>
+                  </View>
             </View>
             ) : null
               }
@@ -98,73 +94,69 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:'#E2E2E2',
+    backgroundColor:'darkcyan',
     height:height,
+    width:width,
     justifyContent:'flex-start'
   },
   bottomContainer: {
+    width:width/1.3,
+    height:height/8,
     flexDirection:'row',
-    alignItems:'flex-end',
-    justifyContent:'center', 
+
+    marginTop:height/4,
+    justifyContent:'space-between'
+
   },
-  image: {
-    flexDirection:'row',
-    alignItems:'flex-end',
-    justifyContent:'center', 
-    height:120,
-    width:100,
-    margin:20,
-  },
+ 
   textStyle: {
-    color:'#625E5E',
+    color:'darkorange',
     fontFamily: 'BebasNeueBold',
     width:'auto',
-    height:79,
+    height:height/8,
     alignSelf:'flex-start',
-    fontSize: 80,
-    marginLeft:20,
-    backgroundColor: 'transparent',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: 1.5, height: 1.5},
-    textShadowRadius: 5,
+    fontSize: width/4,
+    marginLeft:width/10,
+    
   },
   button: {
-    width:130,
-    height:70,
+    width:'43%',
+    height:'100%',
     borderWidth:3,
-    borderColor: "white",
-    borderRadius:5,
+    borderColor: "maroon",
+    
     marginLeft:10,
     marginRight:10,
-    backgroundColor:'#625E5E',
+    backgroundColor:'darkorange',
     alignItems:'center',
     justifyContent:'center',
-    alignSelf:'flex-end',
+    
   },
   buttonText: {
-    fontSize:20, 
-    color:'white',
+    fontSize:width/14, 
+    color:'maroon',
     fontFamily: 'Nunito-Bold',
     alignItems: 'center',
     justifyContent: 'center'
   },
   guestButton: {  
-    height:40, 
-    width:200,
+    
+    height:60,
+    
     alignSelf:'center',
-    alignItems:'center',
     justifyContent:'center', 
-    marginTop:10
+    marginTop:20,
+    
   },
   guestButtonText: {
-    fontSize:20, 
-    color:'#625E5E',
+    fontSize:width/13, 
+    color:'darkorange',
     fontFamily: 'Nunito-Regular',
     alignItems: 'center',
-    justifyContent: 'center',
-    textDecorationLine: 'underline',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: 0.5, height: 0.5},
-    textShadowRadius: 5,
+    justifyContent: 'center', 
   },
+  endBox: {
+    justifyContent:'flex-end',
+    alignSelf:'center'
+  }
 });

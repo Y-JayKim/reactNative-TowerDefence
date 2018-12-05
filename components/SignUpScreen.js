@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, Image, Text, View, StyleSheet, TextInput, TouchableHighlight, Alert } from 'react-native';
+import { ScrollView, Image, Text, View, StyleSheet, TextInput, TouchableHighlight, Alert, Dimensions } from 'react-native';
+
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 import { addItem, fetchItems } from '../services/DatabaseInterface';
 
@@ -18,16 +21,7 @@ export default class SignUpScreen extends Component {
         this.accountCreation = this._accountCreation.bind(this);
     }
 
-    static navigationOptions = {
-        title: 'Simple Sign Up',
-        headerStyle: {
-            backgroundColor: '#625E5E'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
-    };
+    static navigationOptions = { header: null }
 
     _accountCreation(){
         for(let i = 0; i < fetchItems.length; i++){
@@ -64,10 +58,12 @@ export default class SignUpScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
-                    source={require('../assets/background.png')} 
-                    resizeMode="cover"
-                />
+            <TouchableHighlight
+                                style={styles.mapButton}
+                                onPress={()=>{this.props.navigation.navigate('Home')}}>
+                                <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Back</Text> 
+                            </TouchableHighlight>
+                <Text style={styles.header}>Sign Up</Text>
                 <View style={styles.views}>
                     <TextInput
                         style={styles.textInput}
@@ -100,7 +96,7 @@ export default class SignUpScreen extends Component {
                         onPress={this.submitPressed}
 
                     >
-                        <Text style={{color:'white',fontWeight:'bold'}}>Submit</Text>
+                        <Text style={{color:'maroon',fontWeight:'bold'}}>Submit</Text>
                     </TouchableHighlight>
                 </View>
             </View>
@@ -110,12 +106,13 @@ export default class SignUpScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor:'darkcyan',
         justifyContent: 'center',
         alignItems: 'center',
         flex:1,
     },
     views:{
-        top:-70,
+        
         backgroundColor: '#625E5E',
         width:300,
         height:400,
@@ -125,10 +122,10 @@ const styles = StyleSheet.create({
     buttons: {
         width:100,
         height: 50,
-        backgroundColor:'grey',
+        backgroundColor:'darkorange',
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor:'white',
+        borderColor:'maroon',
         borderWidth:1,
         borderRadius:5,
         margin:10
@@ -141,5 +138,25 @@ const styles = StyleSheet.create({
         margin:10,
         borderColor:'white',
         color:'white'
+    },
+    header: {
+        fontSize:width/6,
+        justifyContent:'center',
+        color:'darkorange',
+        marginBottom:20
+    },
+    mapButton: {
+        position:'absolute',
+        right:20,
+        top:40,
+        width:70,
+        height:50,
+        backgroundColor:'darkorange',
+        alignItems:'center',
+        justifyContent: 'center',
+        alignSelf:'flex-end',
+        marginTop:40,
+        marginRight:20
+       
     },
 });
