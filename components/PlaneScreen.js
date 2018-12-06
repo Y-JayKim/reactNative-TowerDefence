@@ -33,9 +33,13 @@ export default class PlaneScreen extends React.Component {
 
     for(let item in userInfo.collections){
         if(userInfo.collections[item].icao == this.state.icao){
-            userInfo.collections.splice(item,1)
-            for(key in userInfo.collections){
-                userInfo.collections[key].key = key;
+            if(userInfo.collections.length == 1){
+                userInfo.collections = "null";
+            }else{
+                userInfo.collections.splice(item,1)
+                for(key in userInfo.collections){
+                    userInfo.collections[key].key = key;
+                }
             }
         }
     }
