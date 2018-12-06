@@ -26,6 +26,11 @@ export default class CollectionScreen extends Component {
         this.renderRow = this.renderRow.bind(this);
 
     }
+    componentWillMount(){
+        this.setState({
+            todos:this.state.todos
+        });
+    }
 
     async componentDidMount() {
         await Font.loadAsync({
