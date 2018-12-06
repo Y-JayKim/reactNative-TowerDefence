@@ -47,7 +47,9 @@ export default class PlaneScreen extends React.Component {
     if(userInfo.accountInfo != 'guest'){
         setCollections(userInfo.accountInfo.username, '', userInfo.collections)
     }
-    this.props.navigation.navigate('Menu');
+    this.forceUpdate();
+    this.props.navigation.navigate('Map');
+    
   }
 
     render() {
