@@ -139,7 +139,6 @@ export default class QuizScreen extends Component {
         // });
         if(userInfo.accountInfo == 'guest'){
             if(userInfo.collections == "null"){
-
                 userInfo.collections = [{
                                             name: this.state.correctAnswer,
                                             key:0,
@@ -192,8 +191,8 @@ export default class QuizScreen extends Component {
         }
         
 
-        this.setState({correctVisible: false})
-        this.props.navigation.navigate('Collection')
+        this.setState({correctVisible: false});
+        this.props.navigation.navigate('Collection');
         // this.props.navigation.state.routeName = 'Collection';
         // this.props.navigation.dispatch(resetAction);
     }
