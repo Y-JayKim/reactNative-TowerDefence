@@ -41,7 +41,7 @@ export default class PlaneScreen extends React.Component {
             
         }
     }
-    this.props.navigation.navigate('Menu');
+    this.props.navigation.navigate('Collection');
   }
 
     render() {

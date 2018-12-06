@@ -94,7 +94,7 @@ export default class CollectionScreen extends Component {
                     <Text style={{fontSize:30, color:'white'}}>You have no collected planes yet!</Text>
                     <TouchableHighlight
                         style={{width:100,height:50, borderWidth:1, borderColor:'black',borderRadius:10, backgroundColor:'black', marginTop:30,alignItems: 'center',justifyContent: 'center'}}
-                        onPress={()=>this.props.navigation.navigate('Menu')}>
+                        onPress={()=>this.props.navigation.navigate('Map')}>
                             <Text style={{fontSize:20, color:'white'}}>Go back</Text>
                     </TouchableHighlight>
                 </View>
