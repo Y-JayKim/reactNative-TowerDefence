@@ -194,7 +194,7 @@ export default class QuizScreen extends Component {
 
         this.setState({correctVisible: false})
         this.props.navigation.navigate('Collection')
-        this.props.navigation.state.routeName = 'Collection';
+        // this.props.navigation.state.routeName = 'Collection';
         // this.props.navigation.dispatch(resetAction);
     }
 
