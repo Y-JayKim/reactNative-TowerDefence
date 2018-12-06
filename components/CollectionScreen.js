@@ -66,7 +66,7 @@ export default class CollectionScreen extends Component {
             <Text>{task.name}</Text>
                 <View style={styles.line}></View>
                     <TouchableHighlight 
-                        onPress={()=>this.pressRow(task.name);}>
+                        onPress={()=>this.pressRow(task.name)}>
                     <View style={styles.row}>
                         <Image style={styles.small} source={{uri: task.image}}/>
                     </View>
@@ -75,16 +75,7 @@ export default class CollectionScreen extends Component {
         )
     }
 
-    static navigationOptions = {
-        title: 'Collection',
-        headerStyle: {
-            backgroundColor: '#625E5E'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
-    };
+    static navigationOptions = { header: null }
 
     render() {
        return (
@@ -110,12 +101,13 @@ export default class CollectionScreen extends Component {
                 <View style={styles.container}>
 
                     <View style={{alignSelf:'center'}}>
-                    <View style={styles.titleAndButton}>
+
                     <TouchableHighlight
                         style={styles.mapButton}
                         onPress={()=>{this.props.navigation.navigate('Map')}}>
-                            <Text style={{fontSize:20, fontWeight:'bold'}}>Map</Text> 
+                            <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Map</Text>
                     </TouchableHighlight>
+                    <View style={styles.titleAndButton}>
                     <Text style={styles.text}>Hangar</Text>
                     </View>
                     <FlatList
@@ -155,8 +147,9 @@ export default class CollectionScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: 'darkcyan',
         height: height,
-        justifyContent: 'flex-start',
+        flexDirection:'column'
     },
     emptyView: {
         top:100, 
@@ -183,21 +176,17 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: 'Nunito-Bold',
-        color: 'white',
-        fontSize: 40,
+        color: 'darkorange',
+        fontSize: 50,
         margin: 30,
         justifyContent: 'flex-start',
-        alignSelf:'center',
-        backgroundColor:'transparent',
-        textShadowColor: 'rgba(0, 0, 0, 0.75)',
-        textShadowOffset: {width: 1, height: 1},
-        textShadowRadius: 1
+        textAlign:'center'
     },
     row: {
         flex:1,
         flexDirection:'row',
         width:width/1.2,
-        backgroundColor:'white',
+        backgroundColor:'darkorange',
         borderRadius:50,
         height:70,
         margin: 10
@@ -224,7 +213,7 @@ const styles = StyleSheet.create({
         fontFamily:'Nunito-Bold',
         justifyContent:'flex-start',
         alignSelf:'flex-start',
-        color:'#625E5E'
+        color:'maroon'
     },
     found: {
         marginLeft:7,
@@ -235,16 +224,16 @@ const styles = StyleSheet.create({
     mapButton: {
         width:70,
         height:50,
-        borderWidth:7,
-        borderColor: "white",
-        borderRadius:50,
-        backgroundColor:'#FF8C00',
+        backgroundColor:'darkorange',
+        alignItems:'center',
         justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf:'flex-start',
-        margin: 20
+        alignSelf:'flex-end',
+        marginTop:40,
+        marginRight:20
     },
     titleAndButton: {
-        flexDirection:'row'
+        flexDirection:'row',
+        height:height/13,
+        justifyContent:'center'
     }
 });
