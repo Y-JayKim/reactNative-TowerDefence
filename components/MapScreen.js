@@ -94,7 +94,7 @@ export default class MapScreen extends Component {
 }
 
     render() {
-
+        // console.log(userInfo);
         return (
             <MapView
                 region={this.state.region}

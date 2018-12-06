@@ -78,9 +78,6 @@ export default class CollectionScreen extends Component {
     static navigationOptions = { header: null }
 
     render() {
-        this.setState({
-            todos: userInfo.collections
-        })
        return (
              <View style={{flex: 1, backgroundColor: 'darkcyan', alignItems: 'center'}}>
                 
