@@ -79,11 +79,8 @@ export default class CollectionScreen extends Component {
 
     render() {
        return (
-            <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
-                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
-                    source={require('../assets/background.png')} 
-                    resizeMode="cover"
-                />
+             <View style={{flex: 1, backgroundColor: 'darkcyan', alignItems: 'center'}}>
+                
             {
                 userInfo.collections == "null" &&
                 <View style={styles.emptyView}>
@@ -179,6 +176,7 @@ const styles = StyleSheet.create({
         color: 'darkorange',
         fontSize: 50,
         margin: 30,
+        alignSelf:'center',
         justifyContent: 'flex-start',
         textAlign:'center'
     },

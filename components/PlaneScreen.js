@@ -50,7 +50,7 @@ export default class PlaneScreen extends React.Component {
               <View style={styles.container}>
               <TouchableHighlight
                         style={styles.backButton}
-                        onPress={()=>{this.props.navigation.navigate('Menu')}}>
+                        onPress={()=>{this.props.navigation.navigate('Collection')}}>
                             <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Back</Text> 
                     </TouchableHighlight>
 
