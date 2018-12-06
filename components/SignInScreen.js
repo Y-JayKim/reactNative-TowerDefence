@@ -213,9 +213,7 @@ const styles = StyleSheet.create({
         marginBottom:20
     },
     mapButton: {
-        position:'absolute',
-        right:20,
-        top:40,
+        
         width:70,
         height:50,
         backgroundColor:'darkorange',

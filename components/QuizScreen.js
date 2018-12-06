@@ -232,14 +232,15 @@ export default class QuizScreen extends Component {
                         <View style={styles.titleAndButton}>
                             
                         <Text style={styles.title}>{this.state.qName}</Text>
-                    </View>
-                    
-
-                    <View style={styles.aircraftView}>
+                        <View style={styles.aircraftView}>
                         <Image 
                             source={{uri: this.state.aircraftImageURL}}
                             style={styles.aircraftImage}
                         />
+                    </View>
+                    
+
+                    
                     </View>
 
                     <View style={styles.answerButtons}>
@@ -362,7 +363,8 @@ export default class QuizScreen extends Component {
                       >
                       <View>
                                 <Text style={styles.title}> Wrong! </Text>
-                                <View style={styles.planeImage}></View>
+                                <Image style={styles.wrongCont} source={require('../assets/wrong.png')}/>
+                                
                                 <Text style={styles.text}>The plane was not {this.state.answerName}!</Text>
                                 <View style={styles.buttonContainer}>
                                     <TouchableHighlight
@@ -412,6 +414,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
         margin: 30,
         justifyContent: 'flex-start',
+   
 
     },
     answerButtons: {
@@ -448,9 +451,9 @@ const styles = StyleSheet.create({
     planeImage: {
         width:width/1.3,
         height:width/1.3,
-        backgroundColor:'white',
-        borderRadius:width/2.7,
-        alignSelf:'center'
+        justifyContent:'center',
+        
+        alignSelf:'center',
     },
     answerButton: {
         width:120,
@@ -475,14 +478,14 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     buttonContainer: {
-        justifyContent:'flex-end',
+        
         marginTop:'auto',
         marginBottom:20,
         alignSelf:'center',
         flexDirection:'row',
         width:width/1.1,
         height:height/3.5,
-        flexDirection:'row',
+     
         
         justifyContent: 'space-between',
     },
@@ -490,8 +493,9 @@ const styles = StyleSheet.create({
         top: 0,
         width: width/2,
         height: width/2,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end'
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf:'center'
     },
     aircraftImage: {
         height: '100%',
@@ -510,7 +514,12 @@ const styles = StyleSheet.create({
        
     },
     titleAndButton: {
-        
         height:height/13,
+    },
+    wrongCont: {
+        width:width/1.3,
+        height:width/1.3,
+        justifyContent:'center',
+        alignSelf:'center',
     }
 });
