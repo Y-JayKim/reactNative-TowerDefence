@@ -79,64 +79,65 @@ export default class CollectionScreen extends Component {
 
     render() {
        return (
-             <View style={{flex: 1, backgroundColor: 'darkcyan', alignItems: 'center'}}>
-                
-            {
-                userInfo.collections == "null" &&
-                <View style={styles.emptyView}>
-                    <Text style={{fontSize:30, color:'white'}}>You have no collected plane yet!</Text>
-                    <TouchableHighlight
-                        style={styles.emptyHighlight}
-                        onPress={()=>this.props.navigation.navigate('Menu')}>
-                            <Text style={{fontSize:20, color:'white'}}>Go back</Text>
-                    </TouchableHighlight>
-                </View>
-
-            }
-            {
+            <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
+                <Image style={{position:'absolute', right:-60,height:'100%',opacity:0.6, backgroundColor: '#E2E2E2'}} 
+                    source={require('../assets/background.png')} 
+                    resizeMode="cover"
+                />
+                {
+                    userInfo.collections == "null" &&
+                    <View style={styles.emptyView}>
+                        <Text style={{fontSize:30, color:'white'}}>You have no collected plane yet!</Text>
+                        <TouchableHighlight
+                            style={styles.emptyHighlight}
+                            onPress={()=>this.props.navigation.navigate('Menu')}>
+                                <Text style={{fontSize:20, color:'white'}}>Go back</Text>
+                        </TouchableHighlight>
+                    </View>
+                }
+                {
                 userInfo.collections != "null" && this.state.fontLoaded ? (
-                <View style={styles.container}>
+                    <View style={styles.container}>
 
-                    <View style={{alignSelf:'center'}}>
-
+                        <View style={{alignSelf:'center'}}>
+             
                     <TouchableHighlight
                         style={styles.mapButton}
                         onPress={()=>{this.props.navigation.navigate('Map')}}>
-                            <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Map</Text>
+                            <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold'}}>Map</Text> 
                     </TouchableHighlight>
-                    <View style={styles.titleAndButton}>
                     <Text style={styles.text}>Hangar</Text>
+                    <View style={styles.titleAndButton}>
+                            <Text style={styles.text}>Hangar</Text>
                     </View>
                     <FlatList
                         data = {this.state.todos}
                         
                         renderItem = {({item}) => 
-                            <TouchableHighlight onPress={() => {
-                                this.pressRow(item.key);
-                                this.props.navigation.navigate('Plane', {
-                                    name: item.name,
-                                    image: item.image,
-                                    date_collected: item.date_collected,
-                                    location: item.location,
-                                    icao:item.icao
-                                })  
+                        <TouchableHighlight onPress={() => {
+                              this.pressRow(item.key);
+                              this.props.navigation.navigate('Plane', {
+                                name: item.name,
+                                image: item.image,
+                                date_collected: item.date_collected,
+                                location: item.location,
+                                icao:item.icao
+                            })
+                              
                             }}>
-                                <View style={styles.row}>
-                                    <Image style={styles.image} source={{uri: item.image}} />
-                                    <View style={styles.textContainer}>
-                                        <Text style={styles.planeTitle}>{item.name}</Text>
-                                        <Text style={styles.found}>Found on: {item.date_collected}</Text>
-                                    </View>
-                                </View>
-                            </TouchableHighlight>
-                        }
-                    />
-                </View>
-            </View>
-
-
-            ) : null
-              }
+                        <View style={styles.row}>
+                            <Image style={styles.image} source={{uri: item.image}} />
+                            <View style={styles.textContainer}>
+                                <Text style={styles.planeTitle}>{item.name}</Text>
+                                <Text style={styles.found}>Found on: {item.date_collected}</Text>
+                            </View>
+                        </View>
+                                </TouchableHighlight>}
+                            />
+                        </View>
+                    </View>
+                  ) : null
+                }
               </View>
         )
     }
@@ -176,7 +177,6 @@ const styles = StyleSheet.create({
         color: 'darkorange',
         fontSize: 50,
         margin: 30,
-        alignSelf:'center',
         justifyContent: 'flex-start',
         textAlign:'center'
     },

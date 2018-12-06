@@ -490,7 +490,7 @@ const styles = StyleSheet.create({
         top: 0,
         width: width/2,
         height: width/2,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
         alignItems: 'flex-end'
     },
     aircraftImage: {

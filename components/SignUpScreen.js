@@ -58,11 +58,6 @@ export default class SignUpScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-            <TouchableHighlight
-                                style={styles.mapButton}
-                                onPress={()=>{this.props.navigation.navigate('Home')}}>
-                                <Text style={{fontSize:20, color:'maroon',fontFamily: 'Nunito-Bold',}}>Back</Text> 
-                            </TouchableHighlight>
                 <Text style={styles.header}>Sign Up</Text>
                 <View style={styles.views}>
                     <TextInput
@@ -98,6 +93,11 @@ export default class SignUpScreen extends Component {
                     >
                         <Text style={{color:'maroon',fontWeight:'bold'}}>Submit</Text>
                     </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.buttons}
+                        onPress={()=>{this.props.navigation.navigate('Home')}}>
+                        <Text style={{color:'maroon',fontWeight:'bold'}}>Back</Text> 
+                    </TouchableHighlight>
                 </View>
             </View>
         )
@@ -107,12 +107,10 @@ export default class SignUpScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor:'darkcyan',
-        justifyContent: 'center',
         alignItems: 'center',
         flex:1,
     },
     views:{
-        
         backgroundColor: '#625E5E',
         width:300,
         height:400,
@@ -121,14 +119,15 @@ const styles = StyleSheet.create({
     },
     buttons: {
         width:100,
-        height: 50,
+        height: 100,
         backgroundColor:'darkorange',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor:'maroon',
         borderWidth:1,
         borderRadius:5,
-        margin:10
+        margin:10,
+        flex:0.4
     },
     textInput:{
         height: 50,
@@ -143,18 +142,6 @@ const styles = StyleSheet.create({
         fontSize:width/6,
         justifyContent:'center',
         color:'darkorange',
-        marginBottom:20
-    },
-    mapButton: {
-        
-        width:70,
-        height:50,
-        backgroundColor:'darkorange',
-        alignItems:'center',
-        justifyContent: 'center',
-        alignSelf:'flex-end',
-        marginTop:40,
-        marginRight:20
-       
-    },
+        margin:20
+    }
 });
